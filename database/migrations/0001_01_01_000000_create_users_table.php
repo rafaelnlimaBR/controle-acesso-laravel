@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('nome_completo')->nullable();
             $table->string('email')->unique();
+            $table->boolean('ativo')->default(1);
             $table->string('imagem')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

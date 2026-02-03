@@ -23,12 +23,14 @@ class DatabaseSeeder extends Seeder
             'nome_completo' => 'Rafael Lima',
             'email' => 'rafael@tecvelautomotiva.com.br',
             'password' => bcrypt('3024'),
+            'ativo'     =>  true
         ]);
         User::factory()->create([
             'name' => 'Usuario Tecnico',
             'nome_completo' => 'Usuario Tecnico',
             'email' => 'tecnico@tecnico.com.br',
             'password' => bcrypt('3024'),
+            'ativo'     =>  true
         ]);
 
 
@@ -43,10 +45,12 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'usuario-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'usuario-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'usuario-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'usuario-visualizar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-lista','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'grupo-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([
@@ -63,9 +67,11 @@ class DatabaseSeeder extends Seeder
            ['grupo_id'=>1,'permissao_id'=>6],
            ['grupo_id'=>1,'permissao_id'=>7],
            ['grupo_id'=>1,'permissao_id'=>8],
+            ['grupo_id'=>1,'permissao_id'=>9],
+            ['grupo_id'=>1,'permissao_id'=>10],
 
             ['grupo_id'=>2,'permissao_id'=>1],
-            ['grupo_id'=>2,'permissao_id'=>5],
+            ['grupo_id'=>2,'permissao_id'=>6],
 
 
         ]);

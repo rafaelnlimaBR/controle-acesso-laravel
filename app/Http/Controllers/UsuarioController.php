@@ -130,10 +130,7 @@ class UsuarioController extends Controller
                 return redirect()->back()->withErrors($validacao)->withInput()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher com dados válidos!."]);
             }
 
-            $contato    =   new Contato();
-            $contato    = $contato->gravar(\request()->get('numero'));
-
-            $usuario->contatos()->save($contato,['observacao'=>request()->input('observacao'),'whatsapp'=>\request()->has('whatsapp')?1:0]);
+            $usuario->adicionarContato(\request()->get('numero'),\request()->has('whatsapp')?true:false,\request()->get('observacao'));
 
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Contato cadastrado com sucesso!."]);
 
@@ -147,7 +144,8 @@ class UsuarioController extends Controller
     {
         try{
 
-            $usuario->contatos()->detach(request()->get('contato'));
+            $usuario->removerContato(\request()->get('contato'));
+
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Contato removido com sucesso!."]);
 
         }catch (\Exception $e){

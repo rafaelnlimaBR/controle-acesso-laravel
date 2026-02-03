@@ -75,7 +75,9 @@
                 <div class="card-footer">
                     @if(isset($grupo))
                         <button class="btn btn-warning" type="submit">Editar</button>
+                        @can('grupo-deletar')
                         <a href="{{route('grupo.excluir',['grupo'=>$grupo])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
+                        @endcan
                     @else
                         <button class="btn btn-success" type="submit">Cadastrar</button>
                     @endif

@@ -11,16 +11,11 @@
                     <div class="row g-3">
                         <div class="col-md-3">
                             <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="nome"  >
+                            <input type="text" class="form-control" name="nome"  value="{{request()->has('nome')?request()->get('nome'):""}}">
 
 
                         </div>
-                        <div class="col-md-3">
-                            <label  class="form-label">Número<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="numero"  >
 
-
-                        </div>
                         <div class="col-md-1 ">
                             <label  class="form-label">Pesquisar<span class="sr-only"> </span></label>
                             <button type="submit" class="form-control btn btn-primary"   ><i class="bi bi-search"></i></button>
@@ -40,7 +35,9 @@
         <div class="card mb-5">
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
+                    @can('grupo-criar')
                     <a href="{{route('grupo.novo')}}"><i class="bi bi-plus-circle-fill"></i> Novo</a>
+                    @endcan
                 </div></div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -60,9 +57,15 @@
                             <td>{{$grupo->id}}</td>
                             <td>{{$grupo->nome}}</td>
                             <td>
+                                @can('grupo-visualizar')
+                                <a title="detalhar" href=""><i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                </a>
+                                @endcan
+                                @can('grupo-editar')
                                 <a href="{{route('grupo.editar',['grupo'=>$grupo])}}" class="text-decoration-none">
                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
                                 </a>
+                                @endcan
                             </td>
 
 

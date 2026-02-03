@@ -57,9 +57,14 @@ class User extends Authenticatable
             'nome'          =>  'required|min:3|max:100',
             'email'         =>  'required|email|unique:App\Models\User,email'.(is_null($id) ? '' : ",$id"),
             'nome_completo' =>  'required|min:3|max:100',
-            is_null($id)?"'senha'         =>  'required|min:3|max:8',":'',
+            'senha'         =>  'required|min:3|max:8',
+            'contato'          =>  'required',
             'grupos'        =>  'required|array|min:1',
         ];
+        if(is_null($id)){
+            $regras['password'] =  'required|min:3|max:8';
+            $regras['contato'] =  'required';
+        }
 
         return Validator::make($dados, $regras);
 
@@ -110,11 +115,28 @@ class User extends Authenticatable
         $this->nome_completo    =   strtoupper($request->get('nome_completo'));
         $this->email             =   strtolower($request->get('email'));
         $this->password          =   Hash::make($request->get('senha'));
+        $this->ativo            =   $request->get('ativo')=="1"?1:0;
 
         $this->save();
 
         $this->grupos()->sync($request->get('grupos'));
+        if ($request->has('contatos')) {
+
+        }
     }
 
+    public function adicionarContato(String $numero,bool $whatsapp, $observacao)
+    {
+
+        $contato        =   new Contato();
+        $contato        =   $contato->gravar($numero);
+
+        $this->contatos()->save($contato,['observacao'=>$observacao,'whatsapp'=>$whatsapp]);
+    }
+
+    public function removerContato(String $contato)
+    {
+        $this->contatos()->detach($contato);
+    }
 
 }

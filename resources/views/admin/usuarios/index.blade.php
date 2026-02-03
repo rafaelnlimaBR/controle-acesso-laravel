@@ -11,13 +11,13 @@
                     <div class="row g-3">
                         <div class="col-md-3">
                             <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="nome"  >
+                            <input type="text" class="form-control" name="nome" value="{{request()->has('nome')?request()->get('nome'):""}}" >
 
 
                         </div>
                         <div class="col-md-3">
                             <label  class="form-label">Número<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="numero"  >
+                            <input type="text" class="form-control" name="numero" value="{{request()->has('numero')?request()->get('numero'):""}}" >
 
 
                         </div>
@@ -50,6 +50,7 @@
                         <th style="width: 10px" scope="col">#</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Ativo</th>
                         <th scope="col">Grupos</th>
 
                         <th style="width: 5%" scope="col">Ações</th>
@@ -62,12 +63,22 @@
                             <td>{{$usuario->id}}</td>
                             <td>{{$usuario->name}}</td>
                             <td>{{$usuario->email}}</td>
-
-                            <td>{{$usuario->grupos->pluck('nome')->join(' ,')}}</td>
                             <td>
-                                <a href="{{route('usuario.editar',['usuario'=>$usuario])}}" class="text-decoration-none">
+                                <span class="badge  {{$usuario->ativo==1?"bg-success":"bg-danger"}}">{{$usuario->ativo==1?"Sim":"Não"}}</span>
+                            </td>
+
+                            <td>{{$usuario->grupos->pluck('nome')->join(', ')}}</td>
+                            <td>
+                                @can('usuario-visualizar')
+                                <a title="detalhar" href=""><i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                </a>
+                                @endcan
+                                @can('usuario-editar')
+                                <a title="entrar" href="{{route('usuario.editar',['usuario'=>$usuario])}}" class="text-decoration-none">
                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
                                 </a>
+                                @endcan
+
                             </td>
 
 

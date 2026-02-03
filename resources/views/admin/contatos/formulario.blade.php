@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" name="observacao"  >
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">Observações<span class="required-indicator sr-only"> </span></label>
+                        <label class="form-label">APP<span class="required-indicator sr-only"> </span></label>
                         <div class="form-check">
                             <input class="form-check-input" name="whatsapp" type="checkbox" >
                             <label class="form-check-label" >
@@ -40,7 +40,7 @@
 
                     <div class="col-md-2">
                         <label class="form-label">Adicionar<span class="required-indicator sr-only"> </span></label>
-                        <button type="text" class="form-control btn btn-success" name="nome_completo" value="{{isset($nome_completo)?$nome_completo:old('nome_completo',isset($usuario)?$usuario->nome_completo:'')}}" ><i class="bi bi-plus-circle-fill"></i></button>
+                        <button type="text" class="form-control btn btn-success"  value="{{isset($nome_completo)?$nome_completo:old('nome_completo',isset($usuario)?$usuario->nome_completo:'')}}" ><i class="bi bi-plus-circle-fill"></i></button>
                     </div>
 
 

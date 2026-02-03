@@ -16,10 +16,18 @@ class GrupoController extends Controller
         $this->dados = [
 
         ];
+
+        /*if (auth()->user()->cannot('grupo-lista')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }*/
     }
 
     public function index()
     {
+        if (auth()->user()->cannot('grupo-lista')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
+
         $this->dados    += [
             'titulo_pagina'     =>  'Tecvel - Grupos',
             'titulo'            =>  'Grupos',
@@ -35,6 +43,10 @@ class GrupoController extends Controller
 
     public function novo()
     {
+
+        if (auth()->user()->cannot('grupo-criar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         $this->dados    += [
             'titulo_pagina'    =>  'Tecvel - Novo Grupo',
             'titulo'            =>  'Novo Grupo',
@@ -46,6 +58,9 @@ class GrupoController extends Controller
 
     public function cadastrar()
     {
+        if (auth()->user()->cannot('grupo-criar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try{
 
             $r              =   \request();
@@ -67,6 +82,9 @@ class GrupoController extends Controller
 
     public function editar(Grupo $grupo)
     {
+        if (auth()->user()->cannot('grupo-editar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try{
             $this->dados    += [
                 'titulo_pagina'    =>  'Tecvel - Editar Grupo',
@@ -84,6 +102,9 @@ class GrupoController extends Controller
 
     public function atualizar(Grupo $grupo)
     {
+        if (auth()->user()->cannot('grupo-editar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try{
 
             $r              =   \request();
@@ -105,6 +126,9 @@ class GrupoController extends Controller
 
     public function excluir(Grupo $grupo)
     {
+        if (auth()->user()->cannot('grupo-deletar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try {
 
             $grupo->delete();

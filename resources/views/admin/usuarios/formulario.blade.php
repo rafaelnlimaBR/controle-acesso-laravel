@@ -15,7 +15,25 @@
                     <!--begin::Row-->
                     <div class="row g-3">
                         <!--begin::Col-->
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <label  class="form-label">Ativo<span class="sr-only"> </span></label>
+                            <select  class="form-control" name="ativo"  >
+                                @if(isset($usuario))
+                                    @if($usuario->ativo == 1)
+                                        <option value="1" selected>Sim</option>
+                                        <option value="0">Não</option>
+                                    @else
+                                        <option value="1" >Sim</option>
+                                        <option value="0" selected>Não</option>
+                                    @endif
+                                @else
+                                    <option value="1" selected>Sim</option>
+                                    <option value="0">Não</option>
+                                @endif
+                            </select>
+
+                        </div>
+                        <div class="col-md-4">
                             <label  class="form-label">Nome<span class="sr-only"> </span></label>
                             <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($usuario)?$usuario->name:'')}}" >
                             @error('nome')
@@ -72,6 +90,27 @@
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror
                         </div>
+                        @if(!isset($usuario))
+                            <div class="col-md-3">
+
+                                <label  class="form-label">Contato<span class="required-indicator sr-only"> </span></label>
+                                <input type="text" class="form-control"  name="contato" value="{{isset($contato)?$contato:old('contato')}}">
+                                @error('contato')
+                                <div class="invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">APP<span class="required-indicator sr-only"> </span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="whatsapp" type="checkbox" >
+                                    <label class="form-check-label" >
+                                        Whatsapp
+                                    </label>
+
+                                </div>
+                            </div>
+                        @endif
+
 
                     </div>
                     <!--end::Row-->
@@ -81,7 +120,9 @@
                 <div class="card-footer">
                     @if(isset($usuario))
                         <button class="btn btn-warning" type="submit">Editar</button>
+                    @can('usuario-deletar')
                         <a href="{{route('usuario.excluir',['usuario'=>$usuario])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
+                    @endcan
                     @else
                         <button class="btn btn-success" type="submit">Cadastrar</button>
                     @endif

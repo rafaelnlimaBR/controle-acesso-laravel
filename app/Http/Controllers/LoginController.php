@@ -30,6 +30,9 @@ class LoginController extends Controller
             }
 
             if(Auth::attempt($credentials, request()->get('lembrar'))){
+                if (!\auth()->user()->ativo){
+                    return $this->logout();
+                }
                 \request()->session()->regenerate();
 
                 return redirect()->intended();
