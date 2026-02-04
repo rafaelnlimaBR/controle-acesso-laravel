@@ -302,10 +302,16 @@
                     data-accordion="false"
                     id="navigation"
                 >
+                    <li class="nav-item">
+                        <a href="{{route('dashboard.index')}}" class="nav-link">
+                            <i class="fa fa-tachometer" aria-hidden="true"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
                     @can('usuario-lista')
                     <li class="nav-item">
                         <a href="{{route('usuario.index')}}" class="nav-link">
-                            <i class="nav-icon bi bi-person"></i>
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                             <p>Usuários</p>
                         </a>
                     </li>
@@ -313,7 +319,8 @@
                     @can('grupo-lista')
                     <li class="nav-item">
                         <a href="{{route('grupo.index')}}" class="nav-link">
-                            <i class="nav-icon bi bi-person"></i>
+                            <i class="fa fa-cubes" aria-hidden="true"></i>
+
                             <p>Grupos</p>
                         </a>
                     </li>

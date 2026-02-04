@@ -27,7 +27,7 @@
                         <div class="col-md-3">
 
                             <div class="form-check">
-                                <input class="form-check-input" name="admin" type="checkbox" >
+                                <input class="form-check-input" {{isset($grupo)?$grupo->admin?'checked':'':''}}  name="admin" type="checkbox" >
                                 <label class="form-check-label" >
                                     Admin
                                 </label>
@@ -37,7 +37,7 @@
                         <div class="col-md-3">
 
                             <div class="form-check">
-                                <input class="form-check-input" name="tecnico" type="checkbox" >
+                                <input class="form-check-input" {{isset($grupo)?$grupo->tecnico?'checked':'':''}}  name="tecnico" type="checkbox" >
                                 <label class="form-check-label" >
                                     Técnico
                                 </label>

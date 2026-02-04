@@ -57,12 +57,10 @@ class User extends Authenticatable
             'nome'          =>  'required|min:3|max:100',
             'email'         =>  'required|email|unique:App\Models\User,email'.(is_null($id) ? '' : ",$id"),
             'nome_completo' =>  'required|min:3|max:100',
-            'senha'         =>  'required|min:3|max:8',
-            'contato'          =>  'required',
             'grupos'        =>  'required|array|min:1',
         ];
         if(is_null($id)){
-            $regras['password'] =  'required|min:3|max:8';
+            $regras['senha'] =  'required|min:3|max:8';
             $regras['contato'] =  'required';
         }
 
@@ -120,9 +118,6 @@ class User extends Authenticatable
         $this->save();
 
         $this->grupos()->sync($request->get('grupos'));
-        if ($request->has('contatos')) {
-
-        }
     }
 
     public function adicionarContato(String $numero,bool $whatsapp, $observacao)

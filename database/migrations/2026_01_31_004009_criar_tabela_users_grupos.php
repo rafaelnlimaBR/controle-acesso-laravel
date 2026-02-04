@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_grupo', function (Blueprint $t   ) {
             $t->id('id');
-            $t->foreignId('user_id')->references('id')->on('users');
-            $t->foreignId('grupo_id')->references('id')->on('grupos');
+            $t->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $t->foreignId('grupo_id')->references('id')->on('grupos')->onDelete('cascade');
         });
     }
 

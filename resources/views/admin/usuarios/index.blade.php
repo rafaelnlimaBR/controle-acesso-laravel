@@ -40,7 +40,7 @@
         <div class="card mb-5">
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
-                    <a href="{{route('usuario.novo')}}"><i class="bi bi-plus-circle-fill"></i> Novo</a>
+                    <button class="btn btn-sm btn-primary" href="{{route('usuario.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</button>
                 </div></div>
             <!-- /.card-header -->
             <div class="card-body">

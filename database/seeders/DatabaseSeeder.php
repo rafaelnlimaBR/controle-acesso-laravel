@@ -51,6 +51,8 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'grupo-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-deletar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'configuracao-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'configuracao-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([
@@ -70,8 +72,7 @@ class DatabaseSeeder extends Seeder
             ['grupo_id'=>1,'permissao_id'=>9],
             ['grupo_id'=>1,'permissao_id'=>10],
 
-            ['grupo_id'=>2,'permissao_id'=>1],
-            ['grupo_id'=>2,'permissao_id'=>6],
+
 
 
         ]);

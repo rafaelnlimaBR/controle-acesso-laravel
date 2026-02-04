@@ -36,7 +36,7 @@
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
                     @can('grupo-criar')
-                    <a href="{{route('grupo.novo')}}"><i class="bi bi-plus-circle-fill"></i> Novo</a>
+                    <button class="btn btn-sm btn-primary" href="{{route('grupo.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</button>
                     @endcan
                 </div></div>
             <!-- /.card-header -->
@@ -46,7 +46,8 @@
                     <tr>
                         <th style="width: 10px" scope="col">#</th>
                         <th scope="col">Nome</th>
-
+                        <th style="width: 15%" scope="col">Admin</th>
+                        <th style="width: 15%" scope="col">Técnico</th>
                         <th style="width: 5%" scope="col">Ações</th>
 
                     </tr>
@@ -56,6 +57,8 @@
                         <tr class="align-middle">
                             <td>{{$grupo->id}}</td>
                             <td>{{$grupo->nome}}</td>
+                            <td><span class="badge  {{$grupo->admin==1?"bg-success":"bg-danger"}}">{{$grupo->admin==1?"Sim":"Não"}}</span></td>
+                            <td><span class="badge  {{$grupo->tecnico==1?"bg-success":"bg-danger"}}">{{$grupo->tecnico==1?"Sim":"Não"}}</span></td>
                             <td>
                                 @can('grupo-visualizar')
                                 <a title="detalhar" href=""><i class="fa fa-newspaper-o" aria-hidden="true"></i>

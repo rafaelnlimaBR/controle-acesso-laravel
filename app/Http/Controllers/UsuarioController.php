@@ -21,6 +21,9 @@ class UsuarioController extends Controller
 
     public function index()
     {
+        if (auth()->user()->cannot('usuario-lista')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         $this->dados    += [
             'titulo_pagina'     =>  'Tecvel - Usuarios',
             'titulo'            =>  'Usuários',
@@ -39,6 +42,9 @@ class UsuarioController extends Controller
 
     public function novo()
     {
+        if (auth()->user()->cannot('usuario-criar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         $this->dados    += [
             'titulo_pagina'    =>  'Tecvel - Novo Usuário',
             'titulo'            =>  'Novo Usuário',
@@ -50,6 +56,7 @@ class UsuarioController extends Controller
 
     public function cadastrar()
     {
+
         try{
 
             $r              =   \request();
@@ -60,6 +67,7 @@ class UsuarioController extends Controller
             }
             $usuario        =   new User();
             $usuario->gravar(request());
+            $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
 
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
@@ -71,6 +79,9 @@ class UsuarioController extends Controller
 
     public function editar(User $usuario)
     {
+        if (auth()->user()->cannot('usuario-editar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try{
             $this->dados    += [
                 'titulo_pagina'    =>  'Tecvel - Editar Usuário',
@@ -109,6 +120,9 @@ class UsuarioController extends Controller
 
     public function excluir(User $usuario)
     {
+        if (auth()->user()->cannot('usuario-deletar')){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
+        }
         try {
 
             $usuario->delete();
