@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('grupos', function (Blueprint $tabela) {
             $tabela->id('id');
+            $tabela->boolean('visivel')->default(true);
             $tabela->string('nome');
-            $tabela->boolean('admin');
-            $tabela->boolean('tecnico');
             $tabela->timestamps();
-
         });
     }
 

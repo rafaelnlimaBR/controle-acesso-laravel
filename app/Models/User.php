@@ -9,11 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use \Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +40,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+    }
 
 
     /**
@@ -85,10 +94,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        if($this->grupos()->where('admin',1)->count() >= 1){
+        if( $this->grupos()->find(Configuracao::getConfig()->grupo_admin_id) != null){
             return true;
         }
         return false;
+
     }
 
     public function habilidades()
@@ -112,12 +122,28 @@ class User extends Authenticatable
         $this->name             = strtoupper($request->get('nome'));
         $this->nome_completo    =   strtoupper($request->get('nome_completo'));
         $this->email             =   strtolower($request->get('email'));
-        $this->password          =   Hash::make($request->get('senha'));
+        if($request->get('senha') != ""){
+            $this->password          =   Hash::make($request->get('senha'));
+        }
+
         $this->ativo            =   $request->get('ativo')=="1"?1:0;
+
+        if (!file_exists(public_path('/layout/imagens/users/'))){
+            mkdir(public_path('/layout/imagens/users/'), 0777, true);
+        }
+        $filename="";
+        $image       =   $request->file('imagem');
+        $filename = Str::random(16).'.'.$image->getClientOriginalExtension();
+
+        $resize  =  ImageManager::gd()->read($image->getRealPath());
+        $resize->save(public_path('/layout/imagens/users/').$filename);
+
+        $this->imagem   =   $filename;
 
         $this->save();
 
         $this->grupos()->sync($request->get('grupos'));
+
     }
 
     public function adicionarContato(String $numero,bool $whatsapp, $observacao)
@@ -134,4 +160,13 @@ class User extends Authenticatable
         $this->contatos()->detach($contato);
     }
 
+    public function deletar()
+    {
+        if(File::exists(public_path('/layout/imagens/users/').$this->imagem)){
+            if($this->imagem =! "user-01.png"){
+                File::delete(public_path('/layout/imagens/users/').$this->imagem);
+            }
+        }
+        $this->delete();
+    }
 }

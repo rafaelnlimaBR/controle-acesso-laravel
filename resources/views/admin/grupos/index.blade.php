@@ -36,7 +36,7 @@
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
                     @can('grupo-criar')
-                    <button class="btn btn-sm btn-primary" href="{{route('grupo.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</button>
+                    <a class="btn btn-sm btn-primary" href="{{route('grupo.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
                     @endcan
                 </div></div>
             <!-- /.card-header -->

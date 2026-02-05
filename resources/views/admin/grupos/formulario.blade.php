@@ -24,26 +24,7 @@
 
 
                         </div>
-                        <div class="col-md-3">
 
-                            <div class="form-check">
-                                <input class="form-check-input" {{isset($grupo)?$grupo->admin?'checked':'':''}}  name="admin" type="checkbox" >
-                                <label class="form-check-label" >
-                                    Admin
-                                </label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-
-                            <div class="form-check">
-                                <input class="form-check-input" {{isset($grupo)?$grupo->tecnico?'checked':'':''}}  name="tecnico" type="checkbox" >
-                                <label class="form-check-label" >
-                                    Técnico
-                                </label>
-
-                            </div>
-                        </div>
                         <div class="col-md-12">
 
                             <label for="inputEmail4">Permissões</label>

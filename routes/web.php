@@ -47,5 +47,6 @@ View::composer(['admin.grupos.formulario'],function($view){
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    $user   =   auth()->user()->grupos()->find(2);
+    dd( $user);
 });

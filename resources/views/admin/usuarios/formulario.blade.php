@@ -8,7 +8,7 @@
             <div class="card-header"><div class="card-title">{{$titulo_card}}</div></div>
             <!--end::Header-->
             <!--begin::Body-->
-            <form class="needs-validation" novalidate="" method="post" action="{{isset($usuario)?route('usuario.atualizar',['usuario'=>$usuario]):route('usuario.cadastrar')}}">
+            <form enctype="multipart/form-data" class="needs-validation" novalidate="" method="post" action="{{isset($usuario)?route('usuario.atualizar',['usuario'=>$usuario]):route('usuario.cadastrar')}}">
                 {{csrf_field()}}
                 <!--begin::Body-->
                 <div class="card-body">
@@ -90,7 +90,16 @@
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror
                         </div>
+
                         @if(!isset($usuario))
+                            <div class="col-md-5">
+
+                                <label  class="form-label">Imagem<span class="required-indicator sr-only"> </span></label>
+                                <input type="file" class="form-control"  name="imagem" >
+                                @error('imagem')
+                                <div class="invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
                             <div class="col-md-3">
 
                                 <label  class="form-label">Contato<span class="required-indicator sr-only"> </span></label>
@@ -110,6 +119,7 @@
                                 </div>
                             </div>
                         @endif
+
 
 
                     </div>

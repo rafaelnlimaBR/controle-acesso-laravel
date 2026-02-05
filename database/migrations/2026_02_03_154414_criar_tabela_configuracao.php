@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configuracao', function (Blueprint $t) {
+        Schema::create('configuracoes', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome_simples')->nullable();
-            $t->string('nome_complemento')->nullable();
+            $t->string('nome_completo')->nullable();
+            $t->string('email')->nullable();
             $t->string('whatsapp')->nullable();
             $t->string('endereco')->nullable();
             $t->string('bairro')->nullable();
             $t->string('cidade')->nullable();
             $t->string('estado')->nullable();
+            $t->string('cep')->nullable();
             $t->string('cnpj')->nullable();
             $t->string('instagran')->nullable();
+            $t->foreignId('grupo_admin_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
+            $t->foreignId('grupo_tecnico_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configuracao');
+        Schema::dropIfExists('configuracoes');
     }
 };

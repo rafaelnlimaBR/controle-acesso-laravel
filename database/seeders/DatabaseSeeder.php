@@ -23,20 +23,22 @@ class DatabaseSeeder extends Seeder
             'nome_completo' => 'Rafael Lima',
             'email' => 'rafael@tecvelautomotiva.com.br',
             'password' => bcrypt('3024'),
-            'ativo'     =>  true
+            'ativo'     =>  true,
+            'imagem'    =>  'user-01.png'
         ]);
         User::factory()->create([
             'name' => 'Usuario Tecnico',
             'nome_completo' => 'Usuario Tecnico',
             'email' => 'tecnico@tecnico.com.br',
             'password' => bcrypt('3024'),
-            'ativo'     =>  true
+            'ativo'     =>  true,
+            'imagem'    =>  'user-01.png'
         ]);
 
 
         DB::table('grupos')->insert([
-            ['nome'=>'Admin','admin'=>1,'tecnico'=>0,'created_at'=>now(),'updated_at'=>now()],
-            ['nome'=>'Técnico','admin'=>0,'tecnico'=>1,'created_at'=>now(),'updated_at'=>now()]
+            ['nome'=>'ADMIN','visivel'=>false,'created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'TéCNICO','visivel'=>false,'created_at'=>now(),'updated_at'=>now()]
         ]
         );
 
@@ -87,6 +89,24 @@ class DatabaseSeeder extends Seeder
            ['user_id'=>1,'contato_id'=>1],
            ['user_id'=>1,'contato_id'=>2],
            ['user_id'=>2,'contato_id'=>3],
+        ]);
+
+
+
+        DB::table('configuracoes')->insert([
+            'nome_simples'      =>'NOME EMPRESA',
+            'nome_completo'     =>'EMPRESA COMPLETO',
+            'email'             => 'empresa@empresa.com.br',
+            'whatsapp'          => '+55 11 987654321',
+            'endereco'          => 'endereco endereco',
+            'bairro'            => 'bairro bairro',
+            'cidade'            => 'cidade cidade',
+            'estado'            => 'estado estado',
+            'cep'               => 'cep cep',
+            'cnpj'              => '28727291000133',
+            'instagran'         =>  'tecvel',
+            'grupo_admin_id'    =>  1,
+            'grupo_tecnico_id'  =>  2
         ]);
 
 

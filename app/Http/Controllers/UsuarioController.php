@@ -125,7 +125,7 @@ class UsuarioController extends Controller
         }
         try {
 
-            $usuario->delete();
+            $usuario->deletar();
             return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Registro excluido com sucesso!']);
         }catch (\Exception $e){
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);

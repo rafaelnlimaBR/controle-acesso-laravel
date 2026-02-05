@@ -15,6 +15,12 @@ class Grupo extends Model
     {
         return $query->where('nome','like','%'.$nome.'%');
     }
+
+    public function scopeVisiveis($query)
+    {
+        return $query->where('visivel',true);
+    }
+
     public static function validacao($dados, $id = null)
     {
         $regras =   [
@@ -25,6 +31,8 @@ class Grupo extends Model
 
 
     }
+
+
 
     public function usuarios()
     {
@@ -39,8 +47,6 @@ class Grupo extends Model
     public function gravar(Request $r)
     {
         $this->nome             =   strtoupper($r->get('nome'));
-        $this->admin             =   $r->has('admin') ? 1 : 0;
-        $this->tecnico           =   $r->has('tecnico') ? 1 : 0;
 
         $this->save();
         $this->permissoes()->sync($r->input('permissoes'));

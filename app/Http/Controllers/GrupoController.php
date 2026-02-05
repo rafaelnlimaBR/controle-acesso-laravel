@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Configuracao;
 use App\Models\Contato;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
@@ -11,19 +12,18 @@ class GrupoController extends Controller
 {
     private $dados;
 
+
     public function __construct()
     {
         $this->dados = [
 
         ];
 
-        /*if (auth()->user()->cannot('grupo-lista')){
-            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
-        }*/
     }
 
     public function index()
     {
+
         if (auth()->user()->cannot('grupo-lista')){
             return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
         }
@@ -32,7 +32,7 @@ class GrupoController extends Controller
             'titulo_pagina'     =>  'Tecvel - Grupos',
             'titulo'            =>  'Grupos',
             'titulo_tabela'     =>  'Lista de Grupos',
-            'grupos'          =>  Grupo::PesquisarPorNome(\request()->get('nome'))
+            'grupos'          =>  Grupo::visiveis()->PesquisarPorNome(\request()->get('nome'))
                 ->paginate(15)
                 ->withQueryString()
         ];
@@ -82,7 +82,8 @@ class GrupoController extends Controller
 
     public function editar(Grupo $grupo)
     {
-        if (auth()->user()->cannot('grupo-editar')){
+
+        if (auth()->user()->cannot('grupo-editar') or $grupo->visivel == false){
             return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Acesso negado!"]);
         }
         try{
