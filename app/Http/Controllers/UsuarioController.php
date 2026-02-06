@@ -29,7 +29,7 @@ class UsuarioController extends Controller
             'titulo_pagina'     =>  'Tecvel - Usuarios',
             'titulo'            =>  'Usuários',
             'titulo_tabela'     =>  'Lista de Usuários',
-            'usuarios'          =>  User::PesquisarPorNome(\request()->get('nome'))
+            'usuarios'          =>  User::Visiveis()->PesquisarPorNome(\request()->get('nome'))
                 ->PesquisarPorTelefone(\request()
                 ->get('numero'))
                 ->orderBy('created_at', 'desc')

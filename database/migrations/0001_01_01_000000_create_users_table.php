@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('ativo')->default(1);
             $table->string('imagem')->nullable();
+            $table->boolean('deletavel')->default(1);
+            $table->boolean('editavel')->default(1);
+            $table->boolean('visivel')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

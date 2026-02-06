@@ -24,7 +24,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'rafael@tecvelautomotiva.com.br',
             'password' => bcrypt('3024'),
             'ativo'     =>  true,
-            'imagem'    =>  'user-01.png'
+            'imagem'    =>  'user-01.png',
+            'deletavel'  =>  true,
+            'editavel'  =>  true,
+            'visivel'  =>  true,
         ]);
         User::factory()->create([
             'name' => 'Usuario Tecnico',
@@ -32,7 +35,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'tecnico@tecnico.com.br',
             'password' => bcrypt('3024'),
             'ativo'     =>  true,
-            'imagem'    =>  'user-01.png'
+            'imagem'    =>  'user-01.png',
+            'deletavel'  =>  true,
+            'editavel'  =>  true,
+            'visivel'  =>  true,
+        ]);
+        User::factory()->create([
+            'name' => 'Administrador',
+            'nome_completo' => 'Administrador',
+            'email' => 'admin@admin.com.br',
+            'password' => bcrypt('30242789Rafa@'),
+            'ativo'     =>  true,
+            'imagem'    =>  'user-01.png',
+            'deletavel'  =>  false,
+            'editavel'  =>  false,
+            'visivel'  =>  false,
         ]);
 
 
@@ -60,6 +77,7 @@ class DatabaseSeeder extends Seeder
         DB::table('user_grupo')->insert([
            ['user_id'=>1,'grupo_id'=>1],
            ['user_id'=>2,'grupo_id'=>2],
+           ['user_id'=>3,'grupo_id'=>1],
         ]);
 
         DB::table('grupo_permissao')->insert([

@@ -74,6 +74,11 @@ class User extends Authenticatable
         });
     }
 
+    public function scopeVisiveis($query)
+    {
+        return $query->where('visivel',1);
+    }
+
     public function isAdmin()
     {
         if( $this->grupos()->find(Configuracao::getConfig()->grupo_admin_id) != null){

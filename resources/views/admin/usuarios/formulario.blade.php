@@ -132,9 +132,14 @@
                 <!--begin::Footer-->
                 <div class="card-footer">
                     @if(isset($usuario))
-                        <button class="btn btn-warning" type="submit">Editar</button>
+                        @if($usuario->editavel)
+                            <button class="btn btn-warning" type="submit">Editar</button>
+                        @endif
+
                     @can('usuario-deletar')
-                        <a href="{{route('usuario.excluir',['usuario'=>$usuario])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
+                        @if($usuario->indeletavel == 1)
+                            <a href="{{route('usuario.excluir',['usuario'=>$usuario])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
+                        @endif
                     @endcan
                     @else
                         <button class="btn btn-success" type="submit">Cadastrar</button>
