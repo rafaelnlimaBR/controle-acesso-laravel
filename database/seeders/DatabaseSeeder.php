@@ -55,7 +55,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('grupos')->insert([
             ['nome'=>'ADMIN','visivel'=>false,'created_at'=>now(),'updated_at'=>now()],
-            ['nome'=>'TéCNICO','visivel'=>false,'created_at'=>now(),'updated_at'=>now()]
+            ['nome'=>'TéCNICO','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'CLIENTE','visivel'=>true,'created_at'=>now(),'updated_at'=>now()]
         ]
         );
 
@@ -124,7 +125,8 @@ class DatabaseSeeder extends Seeder
             'cnpj'              => '28727291000133',
             'instagran'         =>  'tecvel',
             'grupo_admin_id'    =>  1,
-            'grupo_tecnico_id'  =>  2
+            'grupo_tecnico_id'  =>  2,
+            'grupo_cliente_id'  =>  3,
         ]);
 
 

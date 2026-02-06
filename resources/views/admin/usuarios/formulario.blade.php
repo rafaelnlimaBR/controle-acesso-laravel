@@ -95,14 +95,7 @@
                         </div>
 
                         @if(!isset($usuario))
-                            <div class="col-md-5">
 
-                                <label  class="form-label">Imagem<span class="required-indicator sr-only"> </span></label>
-                                <input type="file" class="form-control"  name="imagem" >
-                                @error('imagem')
-                                <div class="invalid-feedback">{{$message}}</div>
-                                @enderror
-                            </div>
                             <div class="col-md-3">
 
                                 <label  class="form-label">Contato<span class="required-indicator sr-only"> </span></label>
@@ -137,7 +130,7 @@
                         @endif
 
                     @can('usuario-deletar')
-                        @if($usuario->indeletavel == 1)
+                        @if($usuario->deletavel == 1)
                             <a href="{{route('usuario.excluir',['usuario'=>$usuario])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
                         @endif
                     @endcan

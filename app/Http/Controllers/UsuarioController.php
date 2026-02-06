@@ -68,7 +68,7 @@ class UsuarioController extends Controller
                 'grupos'        =>  'required|array|min:1',
                 'senha'         =>  'required|min:3|max:8',
                 'contato'       =>  'required',
-                'imagem'        =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                /*'imagem'        =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){

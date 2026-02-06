@@ -24,8 +24,9 @@ return new class extends Migration
             $t->string('cep')->nullable();
             $t->string('cnpj')->nullable();
             $t->string('instagran')->nullable();
-            $t->foreignId('grupo_admin_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
-            $t->foreignId('grupo_tecnico_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
+            $t->integer('grupo_admin_id');
+            $t->integer('grupo_tecnico_id');
+            $t->integer('grupo_cliente_id');
         });
     }
 

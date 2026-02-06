@@ -15,6 +15,7 @@ return new class extends Migration
             $tabela->id('id');
             $tabela->boolean('visivel')->default(true);
             $tabela->string('nome');
+            $tabela->boolean('descricao');
             $tabela->timestamps();
         });
     }

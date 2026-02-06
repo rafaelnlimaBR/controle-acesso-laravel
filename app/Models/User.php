@@ -47,16 +47,11 @@ class User extends Authenticatable
     }
 
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed'
         ];
     }
 
@@ -74,10 +69,12 @@ class User extends Authenticatable
         });
     }
 
+
     public function scopeVisiveis($query)
     {
         return $query->where('visivel',1);
     }
+
 
     public function isAdmin()
     {
