@@ -61,14 +61,17 @@
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        @if(!isset($usuario))
+                            <div class="col-md-4">
 
-                            <label  class="form-label">Senha<span class="required-indicator sr-only"> </span></label>
-                            <input type="password" class="form-control"  name="senha" >
-                            @error('senha')
-                            <div class="invalid-feedback">{{$message}}</div>
-                            @enderror
-                        </div>
+                                <label  class="form-label">Senha<span class="required-indicator sr-only"> </span></label>
+                                <input type="password" class="form-control"  name="senha" >
+                                @error('senha')
+                                <div class="invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                        @endif
+
                         <div class="col-md-4">
 
                             <label  class="form-label">Grupos<span class="required-indicator sr-only"> </span></label>

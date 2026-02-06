@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contato;
 use App\Models\User;
 use Illuminate\Http\Request;
+use \Illuminate\Support\Facades\Validator;
 
 
 class UsuarioController extends Controller
@@ -60,8 +61,16 @@ class UsuarioController extends Controller
         try{
 
             $r              =   \request();
-
-            $validacao      =   User::validacao($r->all());
+            $regras =   [
+                'nome'          =>  'required|min:3|max:100',
+                'email'         =>  'required|email|unique:App\Models\User,email',
+                'nome_completo' =>  'required|min:3|max:100',
+                'grupos'        =>  'required|array|min:1',
+                'senha'         =>  'required|min:3|max:8',
+                'contato'       =>  'required',
+                'imagem'        =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ];
+            $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
@@ -102,8 +111,14 @@ class UsuarioController extends Controller
         try{
 
             $r              =   \request();
+            $regras =   [
+                'nome'          =>  'required|min:3|max:100',
+                'email'         =>  'required|email|unique:App\Models\User,email,'.$usuario->id,
+                'nome_completo' =>  'required|min:3|max:100',
+                'grupos'        =>  'required|array|min:1',
+            ];
+            $validacao      =   Validator::make($r->all(),$regras);
 
-            $validacao      =   User::validacao($r->all(),$usuario->id);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
@@ -136,9 +151,10 @@ class UsuarioController extends Controller
     {
         try{
 
-
-
-            $validacao =   Contato::validacao(request()->all());
+            $regras =   [
+                'contato'        =>  'required',
+            ];
+            $validacao      =   Validator::make(request()->all(),$regras);
 
             if($validacao->fails()){
                 return redirect()->back()->withErrors($validacao)->withInput()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher com dados válidos!."]);
@@ -157,7 +173,9 @@ class UsuarioController extends Controller
     public function removerContato(User $usuario)
     {
         try{
-
+            if($usuario->contatos()->count() == 1){
+                return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Não foi possível excluir. O usuários tem que ter pelo menos um registro de contato!."]);
+            }
             $usuario->removerContato(\request()->get('contato'));
 
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Contato removido com sucesso!."]);
@@ -165,6 +183,39 @@ class UsuarioController extends Controller
         }catch (\Exception $e){
             return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
+    }
+
+    public function formularioNovaSenha()
+    {
+        $this->dados    += [
+            'titulo_pagina'     =>  'Tecvel - Usuarios',
+            'titulo'            =>  'Usuários',
+            'titulo_card'       =>  "Mudar sua senha"
+        ];
+        return view('admin.usuarios.formulario-nova-senha',$this->dados);
+    }
+
+    public function postNovaSenha()
+    {
+        try{
+
+            $regras =   [
+                'senha'         =>  'required|min:4|max:8',
+            ];
+            $validacao      =   Validator::make(request()->all(),$regras);
+
+            if($validacao->fails()){
+                return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+            }
+
+            auth()->user()->mudarSenha(\request()->get('senha'));
+            return redirect()->route('usuario.mudar.senha')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Senha alterada com sucesso!."]);
+
+        }catch (\Exception $e){
+            return redirect()->route('usuario.mudar.senha')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+
+
     }
 
 }

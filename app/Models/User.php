@@ -60,24 +60,6 @@ class User extends Authenticatable
         ];
     }
 
-    public static function validacao($dados, $id = null)
-    {
-        $regras =   [
-            'nome'          =>  'required|min:3|max:100',
-            'email'         =>  'required|email|unique:App\Models\User,email'.(is_null($id) ? '' : ",$id"),
-            'nome_completo' =>  'required|min:3|max:100',
-            'grupos'        =>  'required|array|min:1',
-        ];
-        if(is_null($id)){
-            $regras['senha'] =  'required|min:3|max:8';
-            $regras['contato'] =  'required';
-        }
-
-        return Validator::make($dados, $regras);
-
-
-    }
-
     public function scopePesquisarPorNome($query, $nome)
     {
         return $query->where('name','like','%'.$nome.'%');
@@ -122,23 +104,25 @@ class User extends Authenticatable
         $this->name             = strtoupper($request->get('nome'));
         $this->nome_completo    =   strtoupper($request->get('nome_completo'));
         $this->email             =   strtolower($request->get('email'));
-        if($request->get('senha') != ""){
-            $this->password          =   Hash::make($request->get('senha'));
-        }
+        $this->password          =   Hash::make($request->get('senha'));
 
         $this->ativo            =   $request->get('ativo')=="1"?1:0;
 
-        if (!file_exists(public_path('/layout/imagens/users/'))){
-            mkdir(public_path('/layout/imagens/users/'), 0777, true);
+
+        if(is_null($this)){
+            if (!file_exists(public_path('/layout/imagens/users/'))){
+                mkdir(public_path('/layout/imagens/users/'), 0777, true);
+            }
+            $filename="";
+            $image       =   $request->file('imagem');
+            $filename = Str::random(16).'.'.$image->getClientOriginalExtension();
+
+            $resize  =  ImageManager::gd()->read($image->getRealPath());
+            $resize->save(public_path('/layout/imagens/users/').$filename);
+
+            $this->imagem   =   $filename;
         }
-        $filename="";
-        $image       =   $request->file('imagem');
-        $filename = Str::random(16).'.'.$image->getClientOriginalExtension();
 
-        $resize  =  ImageManager::gd()->read($image->getRealPath());
-        $resize->save(public_path('/layout/imagens/users/').$filename);
-
-        $this->imagem   =   $filename;
 
         $this->save();
 
@@ -157,6 +141,8 @@ class User extends Authenticatable
 
     public function removerContato(String $contato)
     {
+
+
         $this->contatos()->detach($contato);
     }
 
@@ -168,5 +154,12 @@ class User extends Authenticatable
             }
         }
         $this->delete();
+    }
+
+    public function mudarSenha(String $senha)
+    {
+
+        $this->password         =   Hash::make($senha);
+        $this->save();
     }
 }

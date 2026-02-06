@@ -258,6 +258,7 @@
                         <li class="user-footer">
 {{--                            <a href="#" class="btn btn-default btn-flat">Profile</a>--}}
                             <button type="submit"  class="btn btn-default btn-flat float-end">Sair</button>
+                            <a class="btn btn-default btn-flat float-md-left" href="{{route('usuario.mudar.senha')}}">Mudar Senha</a>
                         </li>
                         </form>
                         <!--end::Menu Footer-->

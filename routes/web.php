@@ -18,6 +18,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/usuario/{usuario}/remover/contato', [App\Http\Controllers\UsuarioController::class, 'removerContato'])->name('usuario.remover.contato');
     Route::post('/usuario/atualizar/{usuario}', [App\Http\Controllers\UsuarioController::class, 'atualizar'])->name('usuario.atualizar');
     Route::get('/usuario/excluir/{usuario}', [App\Http\Controllers\UsuarioController::class, 'excluir'])->name('usuario.excluir');
+    Route::get('/usuario/mudar/senha', [App\Http\Controllers\UsuarioController::class, 'formularioNovaSenha'])->name('usuario.mudar.senha');
+    Route::post('/usuario/cadastrar/nova/senha', [App\Http\Controllers\UsuarioController::class, 'postNovaSenha'])->name('usuario.cadastrar.nova.senha');
 
 //GRUPOS
     Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupo.index');
