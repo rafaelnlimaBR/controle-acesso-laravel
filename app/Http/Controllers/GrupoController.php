@@ -7,6 +7,7 @@ use App\Models\Configuracao;
 use App\Models\Contato;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GrupoController extends Controller
 {
@@ -65,14 +66,15 @@ class GrupoController extends Controller
 
             $r              =   \request();
 
-            $validacao      =   Grupo::validacao($r->all());
+            $regras         =   ['nome'=>'required|min:3|max:100|unique:App\Models\Grupo,nome'];
+            $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
             $grupo        =   new Grupo();
             $grupo->gravar(request());
 
-            return redirect()->route('grupo.editar',['grupo'=>$grupo])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
@@ -110,14 +112,15 @@ class GrupoController extends Controller
 
             $r              =   \request();
 
-            $validacao      =   Grupo::validacao($r->all(),$grupo->id);
+            $regras         =   ['nome'=>'required|min:3|max:100|unique:App\Models\Grupo,nome'.$grupo->id];
+            $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
             $grupo->gravar(request());
 
-            return redirect()->route('grupo.editar',['grupo'=>$grupo])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){

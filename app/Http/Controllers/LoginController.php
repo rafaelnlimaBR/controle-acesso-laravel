@@ -30,7 +30,7 @@ class LoginController extends Controller
             }
 
             if(Auth::attempt($credentials, request()->get('lembrar'))){
-                if (!\auth()->user()->ativo){
+                if (!\auth()->user()->ativo or \auth()->user()->grupos()->where('ativo',false)->count() > 0){
                     return $this->logout();
                 }
                 \request()->session()->regenerate();

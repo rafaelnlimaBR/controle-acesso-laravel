@@ -326,6 +326,15 @@
                         </a>
                     </li>
                     @endcan
+                    @can('veiculo-lista')
+                        <li class="nav-item">
+                            <a href="{{route('veiculo.index')}}" class="nav-link">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+
+                                <p>Veiculo</p>
+                            </a>
+                        </li>
+                    @endcan
 
 
 

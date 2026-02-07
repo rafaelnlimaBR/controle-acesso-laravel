@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos', function (Blueprint $tabela) {
-            $tabela->id('id');
-            $tabela->boolean('ativo')->default(1);
-            $tabela->boolean('visivel')->default(true);
-            $tabela->string('nome');
-            $tabela->timestamps();
+        Schema::create('montadoras', function (Blueprint $t) {
+            $t->id('id');
+            $t->string('nome')->unique();
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos');
+        Schema::dropIfExists('montadoras');
     }
 };

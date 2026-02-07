@@ -29,6 +29,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/grupo/atualizar/{grupo}', [App\Http\Controllers\GrupoController::class, 'atualizar'])->name('grupo.atualizar');
     Route::get('/grupo/excluir/{grupo}', [App\Http\Controllers\GrupoController::class, 'excluir'])->name('grupo.excluir');
 
+//VEICULOS
+    Route::get('/veiculos', [App\Http\Controllers\VeiculoController::class, 'index'])->name('veiculo.index');
+    Route::get('/veiculo/novo', [App\Http\Controllers\VeiculoController::class, 'novo'])->name('veiculo.novo');
+    Route::get('/veiculo/editar/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'editar'])->name('veiculo.editar');
+    Route::post('/veiculo/cadastrar', [App\Http\Controllers\VeiculoController::class, 'cadastrar'])->name('veiculo.cadastrar');
+    Route::post('/veiculo/atualizar/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'atualizar'])->name('veiculo.atualizar');
+    Route::get('/veiculo/excluir/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'excluir'])->name('veiculo.excluir');
 
 });
 
@@ -36,7 +43,7 @@ Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->na
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::post('/logar', [App\Http\Controllers\LoginController::class, 'logar'])->name('logar');
 
-View::composer(['admin.usuarios.formulario','admin.usuarios.index'],function($view){
+View::composer(['admin.usuarios.includes.form','admin.usuarios.index'],function($view){
     $grupos    =   \App\Models\Grupo::visiveis()->get();
 
     $view->with(['grupos'=>$grupos]);
@@ -48,7 +55,13 @@ View::composer(['admin.grupos.formulario'],function($view){
     $view->with(['permissoes'=>$permissoes]);
 });
 
+View::composer(['admin.veiculos.includes.form','admin.veiculos.index'],function($view){
+    $modelos    =   \App\Models\Modelo::all();
+
+    $view->with(['modelos'=>$modelos]);
+});
+
 Route::get('/', function () {
-    $user   =   auth()->user()->grupos()->find(2);
+    $user   =   \auth()->user()->grupos()->where('ativo',false)->count();
     dd( $user);
 });

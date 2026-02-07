@@ -7,13 +7,22 @@
             <div class="card-header"><h3 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> Pesquisa </h3></div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form  action="{{route('grupo.index')}}">
+                <form  action="{{route('veiculo.index')}}">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="nome"  value="{{request()->has('nome')?request()->get('nome'):""}}">
+                            <label  class="form-label">Placa<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="placa"  value="{{request()->has('placa')?request()->get('placa'):""}}">
+                        </div>
 
+                        <div class="col-md-3">
+                            <label  class="form-label">Modelo<span class="sr-only"> </span></label>
+                            <select name="modelo" class="form-control">
+                                <option value="0" {{request()->has('modelo')?request()->get('modelo')==0?'selected':'':''}}>Todos</option>
+                                @foreach($modelos as $modelo)
 
+                                    <option value="{{$modelo->id}}"  {{request()->has('modelo')?request()->get('modelo')==$modelo->id?'selected':'':''}}>{{$modelo->nome}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-1 ">
@@ -35,8 +44,8 @@
         <div class="card mb-5">
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
-                    @can('grupo-criar')
-                    <a class="btn btn-sm btn-primary" href="{{route('grupo.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
+                    @can('veiculo-criar')
+                    <a class="btn btn-sm btn-primary" href="{{route('veiculo.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
                     @endcan
                 </div></div>
             <!-- /.card-header -->
@@ -44,28 +53,27 @@
                 <table class="table table-bordered" role="table">
                     <thead>
                     <tr>
-                        <th style="width: 10px" scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th style="width: 10%"  scope="col">Qnt</th>
-                        <th style="width: 15%" scope="col">Ativo</th>
+                        <th style="width: 2%" scope="col">#</th>
+                        <th style="width: 35%" scope="col">Placa</th>
+                        <th style="width: 30%" scope="col">Modelo</th>
                         <th style="width: 5%" scope="col">Ações</th>
 
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($grupos as $grupo)
+                    @foreach($veiculos as $veiculo)
                         <tr class="align-middle">
-                            <td>{{$grupo->id}}</td>
-                            <td>{{$grupo->nome}}</td>
-                            <td>{{$grupo->usuarios->count()}}</td>
-                            <td><span class="badge  {{$grupo->ativo==1?"bg-success":"bg-danger"}}">{{$grupo->ativo==1?"Sim":"Não"}}</span></td>
+                            <td>{{$veiculo->id}}</td>
+                            <td>{{$veiculo->placa}}</td>
+
+                            <td>{{$veiculo->modelo->nome}}</td>
                             <td>
-                                @can('grupo-visualizar')
+                                @can('veiculo-visualizar')
                                 <a title="detalhar" href=""><i class="fa fa-newspaper-o" aria-hidden="true"></i>
                                 </a>
                                 @endcan
-                                @can('grupo-editar')
-                                <a href="{{route('grupo.editar',['grupo'=>$grupo])}}" class="text-decoration-none">
+                                @can('veiculo-editar')
+                                <a href="{{route('veiculo.editar',['veiculo'=>$veiculo])}}" class="text-decoration-none">
                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
                                 </a>
                                 @endcan
@@ -80,7 +88,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$grupos->links()}}
+                {{$veiculos->links()}}
             </div>
         </div>
         <!-- /.card -->

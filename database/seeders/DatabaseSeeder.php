@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
+        \Laravel\Prompts\info('Inserindo usuarios');
         User::factory()->create([
             'name' => 'Rafael',
             'nome_completo' => 'Rafael Lima',
@@ -51,15 +51,14 @@ class DatabaseSeeder extends Seeder
             'editavel'  =>  false,
             'visivel'  =>  false,
         ]);
-
-
+        \Laravel\Prompts\info('Inserindo grupos');
         DB::table('grupos')->insert([
             ['nome'=>'ADMIN','visivel'=>false,'created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'TéCNICO','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'CLIENTE','visivel'=>true,'created_at'=>now(),'updated_at'=>now()]
         ]
         );
-
+        \Laravel\Prompts\info('Inserindo permissoes');
         DB::table('permissoes')->insert([
             ['nome'=>'usuario-lista','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'usuario-criar','created_at'=>now(),'updated_at'=>now()],
@@ -71,6 +70,21 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'grupo-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-deletar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'grupo-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'veiculo-lista','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'veiculo-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'veiculo-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'veiculo-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'veiculo-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'montadora-lista','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'montadora-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'montadora-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'montadora-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'montadora-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'modelo-lista','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'modelo-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'modelo-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'modelo-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'modelo-visualizar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
@@ -97,7 +111,7 @@ class DatabaseSeeder extends Seeder
 
 
         ]);
-
+        \Laravel\Prompts\info('Inserindo contatos');
         DB::table('contatos')->insert([
            ['numero'=>'85987067785'],
            ['numero'=>'85986607785'],
@@ -111,7 +125,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-
+        \Laravel\Prompts\info('Inserindo configuracoes');
         DB::table('configuracoes')->insert([
             'nome_simples'      =>'NOME EMPRESA',
             'nome_completo'     =>'EMPRESA COMPLETO',
@@ -129,6 +143,32 @@ class DatabaseSeeder extends Seeder
             'grupo_cliente_id'  =>  3,
         ]);
 
+        \Laravel\Prompts\info('Inserindo montadoras');
+        DB::table('montadoras')->insert([
+            ['nome'=>'Ford'],
+            ['nome'=>'VW'],
+            ['nome'=>'GM'],
+            ['nome'=>'Fiat'],
+            ['nome'=>'Renault'],
+            ['nome'=>'Peugeot'],
+            ['nome'=>'BYD'],
+        ]);
 
+        \Laravel\Prompts\info('Inserindo modelos de veiculos');
+        DB::table('modelos')->insert([
+            ['nome'=>'Ka','montadora_id'=>1],
+            ['nome'=>'Fiesta','montadora_id'=>1],
+            ['nome'=>'Gol Bola','montadora_id'=>2],
+            ['nome'=>'Voyage G5','montadora_id'=>2],
+            ['nome'=>'Celta','montadora_id'=>3],
+            ['nome'=>'Classic','montadora_id'=>3],
+        ]);
+        \Laravel\Prompts\info('Inserindo veiculos');
+        DB::table('veiculos')->insert([
+            ['placa'=>'HUI3024','ano'=>'2012','cor'=>'Preto','modelo_id'=>1],
+            ['placa'=>'PNC0A80','ano'=>'2012','cor'=>'Preto','modelo_id'=>3],
+            ['placa'=>'OCA2A12','ano'=>'2012','cor'=>'Preto','modelo_id'=>5],
+            ['placa'=>'OIB1212','ano'=>'2012','cor'=>'Preto','modelo_id'=>6],
+        ]);
     }
 }

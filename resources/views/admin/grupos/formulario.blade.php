@@ -15,7 +15,7 @@
                     <!--begin::Row-->
                     <div class="row g-3">
                         <!--begin::Col-->
-                        <div class="col-md-12">
+                        <div class="col-md-9">
                             <label  class="form-label">Nome<span class="sr-only"> </span></label>
                             <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($grupo)?$grupo->nome:'')}}" >
                             @error('nome')
@@ -24,6 +24,26 @@
 
 
                         </div>
+                        <div class="col-md-3">
+                            <label  class="form-label">Ativo<span class="sr-only"> </span></label>
+                            <select  class="form-control" name="ativo" >
+                                @if(isset($grupo))
+                                    @if($grupo->ativo == '1')
+                                        <option value="1" selected> Sim</option>
+                                        <option value="0" > Não</option>
+                                    @else
+                                        <option value="1" > Sim</option>
+                                        <option value="0" selected> Não</option>
+                                    @endif
+                                @else
+                                    <option value="1" > Sim</option>
+                                    <option value="0" > Não</option>
+                                @endif
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
 
                         <div class="col-md-12">
 

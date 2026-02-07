@@ -24,16 +24,6 @@
                 </select>
 
             </div>
-            <div class="col-md-4">
-                <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($usuario)?$usuario->name:'')}}" >
-                @error('nome')
-                <div class="invalid-feedback">{{@$message}}</div>
-                @enderror
-
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
             <div class="col-md-6">
                 <label  class="form-label">Nome Completo<span class="required-indicator sr-only"> </span></label>
                 <input type="text" class="form-control" name="nome_completo" value="{{isset($nome_completo)?$nome_completo:old('nome_completo',isset($usuario)?$usuario->nome_completo:'')}}" >
@@ -42,6 +32,17 @@
                 @enderror
 
             </div>
+            <div class="col-md-4">
+                <label  class="form-label">Nick<span class="sr-only"> </span></label>
+                <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($usuario)?$usuario->name:'')}}" >
+                @error('nome')
+                <div class="invalid-feedback">{{@$message}}</div>
+                @enderror
+
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+
             <!--end::Col-->
             <!--begin::Col-->
             <div class="col-md-4">
@@ -66,15 +67,15 @@
             <div class="col-md-4">
 
                 <label  class="form-label">Grupos <span class="required-indicator sr-only"> </span></label>
-                @if(isset($grupo_selected_id))
+                @if(request()->has('grupo_id'))
                     <select   class="form-control"  name="grupos[]" >
                 @else
                     <select   class="form-control"  name="grupos[]" multiple size="1">
                 @endif
 
                     @foreach($grupos as $grupo)
-                        @if(isset($grupo_selected_id))
-                            @if($grupo_selected_id == $grupo->id)
+                        @if(request()->has('grupo_id'))
+                            @if(request()->get('grupo_id') == $grupo->id)
                                 <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
                             @endif
                         @else

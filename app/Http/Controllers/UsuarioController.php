@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Configuracao;
 use App\Models\Contato;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,13 +12,12 @@ use \Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    private $dados;
-
+    private $dados ;
+    private $conf;
     public function __construct()
     {
-        $this->dados = [
-
-        ];
+        $this->dados    =   [];
+        $this->conf =   Configuracao::getConfig();
     }
 
     public function index()
@@ -29,6 +29,7 @@ class UsuarioController extends Controller
             'titulo_pagina'     =>  'Tecvel - Usuarios',
             'titulo'            =>  'Usuários',
             'titulo_tabela'     =>  'Lista de Usuários',
+            'conf'              =>  $this->conf,
             'usuarios'          =>  User::Visiveis()
                 ->PesquisarPorGrupo(request()->get('grupo'))
                 ->PesquisarPorNome(\request()->get('nome'))
@@ -53,6 +54,7 @@ class UsuarioController extends Controller
             'titulo'            =>  'Novo Usuário',
             'titulo_card'       =>  'Dados do Usuário',
             'route_back'        =>  route('usuario.index'),
+            'conf'              =>  $this->conf,
         ];
 
         return view('admin.usuarios.formulario',$this->dados);
@@ -65,7 +67,6 @@ class UsuarioController extends Controller
 
             $r              =   \request();
             $regras =   [
-                'nome'          =>  'required|min:3|max:100',
                 'email'         =>  'required|email|unique:App\Models\User,email',
                 'nome_completo' =>  'required|min:3|max:100',
                 'grupos'        =>  'required|array|min:1',
@@ -81,7 +82,7 @@ class UsuarioController extends Controller
             $usuario->gravar(request());
             $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
 
-            return redirect()->route('usuarios.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
@@ -101,6 +102,7 @@ class UsuarioController extends Controller
                 'titulo_card'       =>  'Dados do Usuário',
                 'usuario'           =>  $usuario,
                 'route_back'        =>  route('usuario.index'),
+                'conf'              =>  $this->conf,
             ];
 
             return view('admin.usuarios.formulario',$this->dados);
@@ -116,7 +118,6 @@ class UsuarioController extends Controller
 
             $r              =   \request();
             $regras =   [
-                'nome'          =>  'required|min:3|max:100',
                 'email'         =>  'required|email|unique:App\Models\User,email,'.$usuario->id,
                 'nome_completo' =>  'required|min:3|max:100',
                 'grupos'        =>  'required|array|min:1',

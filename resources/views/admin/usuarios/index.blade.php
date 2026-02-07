@@ -61,6 +61,7 @@
             <div class="card-header"><h3 class="card-title"><i class="bi bi-database"></i> {{$titulo_tabela}} </h3>
                 <div class="card-tools">
                     <a class="btn btn-sm btn-primary" href="{{route('usuario.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
+                    <a class="btn btn-sm btn-primary" href="{{route('usuario.novo',['grupo_id'=>$conf->grupo_cliente_id],)}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo Cliente</a>
                 </div></div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -81,7 +82,7 @@
                     @foreach($usuarios as $usuario)
                         <tr class="align-middle">
                             <td>{{$usuario->id}}</td>
-                            <td>{{$usuario->name}}</td>
+                            <td>{{$usuario->nome_completo}}</td>
                             <td>{{$usuario->email}}</td>
                             <td>
                                 <span class="badge  {{$usuario->ativo==1?"bg-success":"bg-danger"}}">{{$usuario->ativo==1?"Sim":"Não"}}</span>

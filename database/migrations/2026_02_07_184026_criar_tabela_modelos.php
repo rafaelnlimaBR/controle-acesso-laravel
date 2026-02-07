@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos', function (Blueprint $tabela) {
-            $tabela->id('id');
-            $tabela->boolean('ativo')->default(1);
-            $tabela->boolean('visivel')->default(true);
-            $tabela->string('nome');
-            $tabela->timestamps();
+        Schema::create('modelos', function (Blueprint $t) {
+            $t->id('id');
+            $t->string('nome')->unique();
+            $t->foreignId('montadora_id')->references('id')->on('montadoras')->onDelete('cascade');
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos');
+        Schema::dropIfExists('modelos');
     }
 };

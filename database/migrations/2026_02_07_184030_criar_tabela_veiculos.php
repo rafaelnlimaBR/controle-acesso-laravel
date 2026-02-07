@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos', function (Blueprint $tabela) {
-            $tabela->id('id');
-            $tabela->boolean('ativo')->default(1);
-            $tabela->boolean('visivel')->default(true);
-            $tabela->string('nome');
-            $tabela->timestamps();
+        Schema::create('veiculos', function (Blueprint $t) {
+            $t->id('id');
+            $t->string('placa')->unique();
+            $t->string('ano');
+            $t->string('cor')->nullable();
+            $t->foreignId('modelo_id')->references('id')->on('modelos');
+            $t->timestamps();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos');
+        Schema::dropIfExists('veiculos');
     }
 };

@@ -47,7 +47,7 @@ class Grupo extends Model
     public function gravar(Request $r)
     {
         $this->nome             =   strtoupper($r->get('nome'));
-
+        $this->ativo            =   $r->get('ativo');
         $this->save();
         $this->permissoes()->sync($r->input('permissoes'));
 
