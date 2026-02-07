@@ -29,7 +29,9 @@ class UsuarioController extends Controller
             'titulo_pagina'     =>  'Tecvel - Usuarios',
             'titulo'            =>  'Usuários',
             'titulo_tabela'     =>  'Lista de Usuários',
-            'usuarios'          =>  User::Visiveis()->PesquisarPorNome(\request()->get('nome'))
+            'usuarios'          =>  User::Visiveis()
+                ->PesquisarPorGrupo(request()->get('grupo'))
+                ->PesquisarPorNome(\request()->get('nome'))
                 ->PesquisarPorTelefone(\request()
                 ->get('numero'))
                 ->orderBy('created_at', 'desc')
@@ -49,7 +51,8 @@ class UsuarioController extends Controller
         $this->dados    += [
             'titulo_pagina'    =>  'Tecvel - Novo Usuário',
             'titulo'            =>  'Novo Usuário',
-            'titulo_card'       =>  'Dados do Usuário'
+            'titulo_card'       =>  'Dados do Usuário',
+            'route_back'        =>  route('usuario.index'),
         ];
 
         return view('admin.usuarios.formulario',$this->dados);
@@ -78,7 +81,7 @@ class UsuarioController extends Controller
             $usuario->gravar(request());
             $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
 
-            return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('usuarios.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
@@ -97,6 +100,7 @@ class UsuarioController extends Controller
                 'titulo'            =>  'Editar Usuário',
                 'titulo_card'       =>  'Dados do Usuário',
                 'usuario'           =>  $usuario,
+                'route_back'        =>  route('usuario.index'),
             ];
 
             return view('admin.usuarios.formulario',$this->dados);
@@ -125,7 +129,7 @@ class UsuarioController extends Controller
 
             $usuario->gravar(request());
 
-            return redirect()->route('usuario.editar',['usuario'=>$usuario])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){

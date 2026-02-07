@@ -29,16 +29,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/grupo/atualizar/{grupo}', [App\Http\Controllers\GrupoController::class, 'atualizar'])->name('grupo.atualizar');
     Route::get('/grupo/excluir/{grupo}', [App\Http\Controllers\GrupoController::class, 'excluir'])->name('grupo.excluir');
 
-//CLIENTES
-    Route::get('/clientes', [App\Http\Controllers\ClienteController::class, 'index'])->name('cliente.index');
+
 });
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::post('/logar', [App\Http\Controllers\LoginController::class, 'logar'])->name('logar');
 
-View::composer(['admin.usuarios.formulario'],function($view){
-    $grupos    =   \App\Models\Grupo::all();
+View::composer(['admin.usuarios.formulario','admin.usuarios.index'],function($view){
+    $grupos    =   \App\Models\Grupo::visiveis()->get();
 
     $view->with(['grupos'=>$grupos]);
 });

@@ -21,6 +21,26 @@
 
 
                         </div>
+                        <div class="col-md-3">
+                            <label  class="form-label">Grupos<span class="sr-only"> </span></label>
+
+                            <select class="form-control" name="grupo">
+                                <option value="0">Todos</option>
+                                @foreach($grupos as $g)
+                                    @if(request()->has('grupo'))
+                                        @if(request()->get('grupo')== $g->id)
+                                            <option selected value="{{$g->id}}">{{$g->nome}}</option>
+                                        @else
+                                            <option value="{{$g->id}}">{{$g->nome}}</option>
+                                        @endif
+                                    @else
+                                        <option value="{{$g->id}}">{{$g->nome}}</option>
+                                    @endif
+
+                                @endforeach
+                            </select>
+
+                        </div>
                         <div class="col-md-1 ">
                             <label  class="form-label">Pesquisar<span class="sr-only"> </span></label>
                             <button type="submit" class="form-control btn btn-primary"   ><i class="bi bi-search"></i></button>

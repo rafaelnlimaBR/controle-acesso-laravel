@@ -55,6 +55,17 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopePesquisarPorGrupo($query,$grupo_id)
+    {
+        if($grupo_id >0){
+            return $query->whereHas('grupos', function ($query) use ($grupo_id) {
+                return $query->where('grupo_id', $grupo_id);
+            });
+        }
+        return $query;
+
+    }
+
     public function scopePesquisarPorNome($query, $nome)
     {
         return $query->where('name','like','%'.$nome.'%');
