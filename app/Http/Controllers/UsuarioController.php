@@ -157,7 +157,7 @@ class UsuarioController extends Controller
         try{
 
             $regras =   [
-                'contato'        =>  'required',
+                'numero'        =>  'required',
             ];
             $validacao      =   Validator::make(request()->all(),$regras);
 
@@ -219,7 +219,33 @@ class UsuarioController extends Controller
         }catch (\Exception $e){
             return redirect()->route('usuario.mudar.senha')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
+    }
 
+    public function pesquisarClienteAjax(Request $r)
+    {
+        try{
+            $clientes    =   "";
+            if(is_numeric($r->get('q'))){
+                $clientes   =   User::PesquisarPorGrupo($this->conf->grupo_cliente_id)->PesquisarPorTelefone($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
+            }else{
+                $clientes = User::PesquisarPorGrupo($this->conf->grupo_cliente_id)->PesquisarPorNome($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
+            }
+
+            $retorno    =   [];
+
+            foreach ($clientes as $key => $value) {
+
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->nome_completo;
+                $retorno[$key]['nome'] = $value->nome_completo;
+
+                $retorno[$key]['telefone'] = ($value->contatos()->count() == 0?'Sem Numero':$value->contatos()->pluck('numero')->join(', '));
+
+            }
+            return response()->json($retorno);
+        }catch (\Exception $e){
+            return response()->json($e->getMessage());
+        }
 
     }
 

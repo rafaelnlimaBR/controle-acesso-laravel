@@ -150,5 +150,28 @@ class VeiculoController extends Controller
         }
     }
 
+    public function pesquisarVeiculoAjax(Request $r)
+    {
+        try{
+            $veiculos = Veiculo::pesquisarPorPlaca($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
+
+
+            $retorno    =   [];
+
+            foreach ($veiculos as $key => $value) {
+
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['placa'] = $value->placa;
+                $retorno[$key]['text'] = $value->placa.' - '.$value->modelo->nome;
+                $retorno[$key]['modelo'] = $value->modelo->nome;
+
+                $retorno[$key]['montadora'] = $value->modelo->montadora->nome;
+
+            }
+            return response()->json($retorno);
+        }catch (\Exception $e){
+            return response()->json($e->getMessage());
+        }
+    }
 
 }

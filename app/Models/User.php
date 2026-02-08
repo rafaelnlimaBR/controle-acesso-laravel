@@ -117,12 +117,12 @@ class User extends Authenticatable
         $this->name             = strtoupper($request->get('nome'));
         $this->nome_completo    =   strtoupper($request->get('nome_completo'));
         $this->email             =   strtolower($request->get('email'));
-        $this->password          =   Hash::make($request->get('senha'));
-
+        if ($request->has('senha')){
+            $this->password          =   Hash::make($request->get('senha'));
+        }
         $this->ativo            =   $request->get('ativo')=="1"?1:0;
 
-
-        if(is_null($this)){
+       /* if(is_null($this)){
             if (!file_exists(public_path('/layout/imagens/users/'))){
                 mkdir(public_path('/layout/imagens/users/'), 0777, true);
             }
@@ -134,7 +134,7 @@ class User extends Authenticatable
             $resize->save(public_path('/layout/imagens/users/').$filename);
 
             $this->imagem   =   $filename;
-        }
+        }*/
 
 
         $this->save();

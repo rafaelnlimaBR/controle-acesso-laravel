@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Aplicativo;
+use App\Models\Contrato;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/usuario/excluir/{usuario}', [App\Http\Controllers\UsuarioController::class, 'excluir'])->name('usuario.excluir');
     Route::get('/usuario/mudar/senha', [App\Http\Controllers\UsuarioController::class, 'formularioNovaSenha'])->name('usuario.mudar.senha');
     Route::post('/usuario/cadastrar/nova/senha', [App\Http\Controllers\UsuarioController::class, 'postNovaSenha'])->name('usuario.cadastrar.nova.senha');
-
+    Route::post('usuario/pesquisar/cliente',[App\Http\Controllers\UsuarioController::class, 'pesquisarClienteAjax'])->name('cliente.pesquisar.json');
 //GRUPOS
     Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupo.index');
     Route::get('/grupo/novo', [App\Http\Controllers\GrupoController::class, 'novo'])->name('grupo.novo');
@@ -36,6 +37,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/veiculo/cadastrar', [App\Http\Controllers\VeiculoController::class, 'cadastrar'])->name('veiculo.cadastrar');
     Route::post('/veiculo/atualizar/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'atualizar'])->name('veiculo.atualizar');
     Route::get('/veiculo/excluir/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'excluir'])->name('veiculo.excluir');
+    Route::post('/veiculo/pesquisar/cliente',[App\Http\Controllers\VeiculoController::class, 'pesquisarVeiculoAjax'])->name('veiculo.pesquisar.json');
+
+//CONTRATOS
+    Route::get('/contratos', [App\Http\Controllers\ContratoController::class, 'index'])->name('contrato.index');
+    Route::get('/contrato/novo', [App\Http\Controllers\ContratoController::class, 'novo'])->name('contrato.novo');
+    Route::get('/contrato/editar/{contrato}', [App\Http\Controllers\ContratoController::class, 'editar'])->name('contrato.editar');
+    Route::post('/contrato/cadastrar', [App\Http\Controllers\ContratoController::class, 'cadastrar'])->name('contrato.cadastrar');
+    Route::post('/contrato/atualizar/{contrato}', [App\Http\Controllers\ContratoController::class, 'atualizar'])->name('contrato.atualizar');
+    Route::get('/contrato/excluir/{contrato}', [App\Http\Controllers\ContratoController::class, 'excluir'])->name('contrato.excluir');
 
 });
 
@@ -62,6 +72,7 @@ View::composer(['admin.veiculos.includes.form','admin.veiculos.index'],function(
 });
 
 Route::get('/', function () {
-    $user   =   \auth()->user()->grupos()->where('ativo',false)->count();
-    dd( $user);
+    $c          =   Contrato::find(2);
+
+    dd($c->historicos);
 });

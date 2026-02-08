@@ -27,6 +27,13 @@ return new class extends Migration
             $t->integer('grupo_admin_id');
             $t->integer('grupo_tecnico_id');
             $t->integer('grupo_cliente_id');
+            $t->integer('orcamento_id');
+            $t->integer('andamento_id');
+            $t->integer('concluido_id');
+            $t->integer('retorno_id');
+            $t->integer('cancelado_id');
+            $t->integer('nao_autorizado_id');
+
         });
     }
 

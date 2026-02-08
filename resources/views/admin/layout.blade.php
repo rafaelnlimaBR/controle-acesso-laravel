@@ -60,6 +60,9 @@
     />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
+
+
+    <link rel="stylesheet" href="{{ URL::asset('layout/plugins/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('layout/css/adminlte.css') }}" />
     <!--end::Required Plugin(AdminLTE)-->
 </head>
@@ -336,6 +339,17 @@
                         </li>
                     @endcan
 
+                    @can('contrato-lista')
+                        <li class="nav-item">
+                            <a href="{{route('contrato.index')}}" class="nav-link">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
+
+
+                                <p>Contratos</p>
+                            </a>
+                        </li>
+                    @endcan
+
 
 
 
@@ -430,6 +444,9 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
     crossorigin="anonymous"
 ></script>
+
+<script src="{{ URL::asset('layout/plugins/select2/select2.full.min.js') }}"></script>
+
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="{{ URL::asset('layout/js/adminlte.js') }}"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
@@ -456,6 +473,32 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.datepicker').datepicker(
+            {   dateFormat: "dd/mm/yy",
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                nextText: 'Próximo',
+                prevText: 'Anterior'
+            }
+        );
+        $('#summernote-contrato').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
         $('.mult-select').multiSelect({
             selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'>",
             selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
@@ -500,6 +543,106 @@
             return false;
         })
 
+
+        $("#pesquisa-veiculo").select2({
+            width: '100%',
+            ajax: {
+                type: 'POST',
+                url: "{{route('veiculo.pesquisar.json')}}",
+                dataType: 'json',
+
+                beforeSend: function (xhr) {
+                    var token = "{{csrf_token()}}";
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                quietMillis: 400,
+                delay:400,
+                data: function (term, page) {
+
+                    return {
+                        q: term.term, //search term
+                        // page size
+                    };
+                },
+                processResults: function (data) {
+
+                    return {
+                        results: data
+                    };
+                },
+            },
+            templateResult: function (data) {
+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.modelo+" - "+data.placa+'</h5>' +
+                    '<h6>Montadora: <b>'+data.montadora+'</b></h6>'+
+
+                    '</div>'
+                );
+                return html;
+            },
+            templateSelection:function (data) {
+                var rota    =   "{{route('veiculo.editar',['veiculo'=>':id'])}}";
+                rota = rota.replace(':id',data.id);
+                $('#editar-veiculo').html(' <a class="btn btn-sm btn-warning"  href="'+rota+'" target="_new">Editar</a>');
+                var html    =   $('<div class="select2-user-result"><b>Veículo: </b>'+data.text+'</div><br>');
+                return html;
+            },
+
+        });
+        $("#pesquisa-cliente").select2({
+            width: '100%',
+            // placeholder: "Selecione um cliente",
+            ajax: {
+                type: 'POST',
+                url: "{{route('cliente.pesquisar.json')}}",
+                dataType: 'json',
+
+                beforeSend: function (xhr) {
+                    var token = '{{csrf_token()}}'
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                quietMillis: 400,
+                delay:400,
+                data: function (term, page) {
+
+                    return {
+                        q: term.term, //search term
+                        // page size
+                    };
+                },
+                processResults: function (data) {
+
+                    return {
+                        results: data
+                    };
+                },
+            },
+            templateResult: function (data) {
+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+'</h5>' +
+                    '<h6>Telefone: <b>'+data.telefone+'</b></h6>'+
+
+                    '</div>'
+                );
+                return html;
+            },
+            templateSelection:function (data) {
+                var rota    =   "{{route('usuario.editar',['usuario'=>':cliente','grupo_id'=>3])}}";
+                rota = rota.replace(':cliente',data.id);
+
+                $('#editar-cliente').html(' <a class="btn btn-sm btn-warning"  href="'+rota+'" target="_new">Editar</a>');
+                var html    =   $('<div class="select2-user-result"><b>Cliente: </b>'+data.text+'</div><br>'
+                );
+                return html;
+            },
+
+        });
     });
 </script>
 <!--end::OverlayScrollbars Configure-->

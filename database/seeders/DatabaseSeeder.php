@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Console\View\Components\Info;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +55,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \Laravel\Prompts\info('Inserindo grupos');
         DB::table('grupos')->insert([
-            ['nome'=>'ADMIN','visivel'=>false,'created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'ADMIN','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'TéCNICO','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'CLIENTE','visivel'=>true,'created_at'=>now(),'updated_at'=>now()]
         ]
@@ -85,6 +87,11 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'modelo-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'modelo-deletar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'modelo-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-lista','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-deletar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-visualizar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
@@ -141,6 +148,12 @@ class DatabaseSeeder extends Seeder
             'grupo_admin_id'    =>  1,
             'grupo_tecnico_id'  =>  2,
             'grupo_cliente_id'  =>  3,
+            'orcamento_id'      =>  1,
+            'andamento_id'     =>  2,
+            'concluido_id'      =>  3,
+            'retorno_id'        =>  4,
+            'cancelado_id'      =>  5,
+            'nao_autorizado_id'  =>  6,
         ]);
 
         \Laravel\Prompts\info('Inserindo montadoras');
@@ -170,5 +183,42 @@ class DatabaseSeeder extends Seeder
             ['placa'=>'OCA2A12','ano'=>'2012','cor'=>'Preto','modelo_id'=>5],
             ['placa'=>'OIB1212','ano'=>'2012','cor'=>'Preto','modelo_id'=>6],
         ]);
+
+        \Laravel\Prompts\info('Inserindo Status');
+        DB::table('status')->insert([
+            ['nome'=>'Orçamento','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'E8EB50','cor_letra'=>'3D3D3D'],
+            ['nome'=>'Não Autorizado','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'EB5050','cor_letra'=>'FCFCFC'],
+            ['nome'=>'Andamento','cobrar'=>true,'renovar_garantia'=>false,'cor_fundo'=>'50EB9B','cor_letra'=>'FCFCFC'],
+            ['nome'=>'Concluido','cobrar'=>true,'renovar_garantia'=>true,'cor_fundo'=>'465AE8','cor_letra'=>'FCFCFC'],
+            ['nome'=>'Retorno','cobrar'=>true,'renovar_garantia'=>false,'cor_fundo'=>'465AE8','cor_letra'=>'FCFCFC'],
+            ['nome'=>'Cancelado','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'E88446','cor_letra'=>'FCFCFC'],
+        ]);
+        DB::table('status_proximos')->insert([
+            ['atual_status_id'=>'1','proximo_status_id'=>'1'],
+            ['atual_status_id'=>'1','proximo_status_id'=>'2'],  //ORçamento
+            ['atual_status_id'=>'1','proximo_status_id'=>'6'],
+
+            ['atual_status_id'=>'3','proximo_status_id'=>'4'],  //Andamento
+            ['atual_status_id'=>'3','proximo_status_id'=>'6'],
+
+            ['atual_status_id'=>'4','proximo_status_id'=>'5'],  //Concluido
+            ['atual_status_id'=>'4','proximo_status_id'=>'6'],
+
+            ['atual_status_id'=>'5','proximo_status_id'=>'3'],  //Retorno
+            ['atual_status_id'=>'5','proximo_status_id'=>'6'],
+        ]);
+
+
+        \Laravel\Prompts\info('Inserindo Contratos');
+        DB::table('contratos')->insert([
+             ['descricao_cliente'=>'teste teste','observacao'=>'teste','solucao'=>'tete','data_inicio'=>Carbon::now(),'data_garantia'=>Carbon::now(),'criador_id'=>1,'tecnico_id'=>1,'cliente_id'=>1,'veiculo_id'=>1,'desconto_peca'=>5,'desconto_servico'=>5],
+        ]);
+
+        DB::table('historicos')->insert([
+            ['contrato_id'=>1,'status_id'=>1,'descricao'=>'tesate','data'=>Carbon::now()],
+        ]);
+
+
+
     }
 }

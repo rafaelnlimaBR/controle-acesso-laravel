@@ -74,7 +74,7 @@ class GrupoController extends Controller
             $grupo        =   new Grupo();
             $grupo->gravar(request());
 
-            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Grupo cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
@@ -120,7 +120,7 @@ class GrupoController extends Controller
 
             $grupo->gravar(request());
 
-            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Grupo cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
