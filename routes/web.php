@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/atualizar/{contrato}/historico/{historico}', [App\Http\Controllers\ContratoController::class, 'atualizar'])->name('contrato.atualizar');
     Route::get('/contrato/excluir/{contrato}', [App\Http\Controllers\ContratoController::class, 'excluir'])->name('contrato.excluir');
     Route::post('/contrato/mudar/status/{contrato}', [App\Http\Controllers\ContratoController::class, 'mudarStatus'])->name('contrato.mudar.status');
+    Route::post('/contrato/{contrato}/historico/editar/{historico}/',[App\Http\Controllers\ContratoController::class, 'atualizarHistorico'])->name('contrato.editar.historico');
 
 });
 

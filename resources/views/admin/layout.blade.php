@@ -60,7 +60,10 @@
     />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css"
+    />
 
     <link rel="stylesheet" href="{{ URL::asset('layout/plugins/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('layout/css/adminlte.css') }}" />
@@ -446,6 +449,7 @@
 ></script>
 
 <script src="{{ URL::asset('layout/plugins/select2/select2.full.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
 
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="{{ URL::asset('layout/js/adminlte.js') }}"></script>
@@ -477,6 +481,13 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+        Fancybox.bind(document.getElementById("gallery-wrap"), "[data-fancybox]", {
+            Carousel: {
+                Thumbs: {
+                    type: "classic",
+                },
+            },
         });
         $('.botao-mudar-status').click(function(){
             var status      =   $(this).attr('status-id');

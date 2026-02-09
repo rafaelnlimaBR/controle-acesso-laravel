@@ -218,6 +218,23 @@ class DatabaseSeeder extends Seeder
             ['contrato_id'=>1,'status_id'=>1,'autor_id'=>1,'descricao'=>'tesate','data'=>Carbon::now()],
         ]);
 
+        \Laravel\Prompts\info('Inserindo Tipor de Registros');
+        DB::table('tipos_registros')->insert([
+            ['nome'=>'Recebimento','compartilhavel'=>true,'icon'=>'bi bi-file-earmark-text'],
+            ['nome'=>'Testes em bancada','compartilhavel'=>true,'icon'=>'bi bi-joystick'],
+            ['nome'=>'Defeito','compartilhavel'=>true,'icon'=>'bi bi-exclamation-triangle-fill']
+        ]);
+
+        \Laravel\Prompts\info('Inserindo Registros');
+        DB::table('registros')->insert([
+            ['historico_id'=>1,'descricao'=>'Defeito na placa, curto por conta de agua','tipo_id'=>3,'data'=>Carbon::now(),'autor_id'=>1],
+        ]);
+
+        \Laravel\Prompts\info('Inserindo Imagens');
+        DB::table('registros_imagens')->insert([
+            ['nome'=>'usar-01.png','registro_id'=>1],
+        ]);
+
 
 
     }

@@ -81,8 +81,11 @@ class Contrato extends Model
         $this->descricao_cliente        =   $r->get('descricao');
         $this->observacao               =   $r->get('observacao');
         $this->solucao                  =   $r->get('solucao');
-        $this->data_inicio              =   Carbon::parse($r->get('data_inicio'))->format('Y-m-d');
-        $this->data_garantia            =   Carbon::parse($r->get('data_garantia'))->format('Y-m-d');
+        $this->data_inicio              =   Carbon::createFromFormat('d/m/Y',$r->get('data_inicio'));
+        if ($r->get('data_garantia')) {
+            $this->data_garantia            =   Carbon::createFromFormat('d/m/Y',$r->get('data_garantia'));
+        }
+
         $this->autor()->associate(auth()->user());
         $this->tecnico()->associate($r->get('tecnico'));
 

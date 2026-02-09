@@ -156,7 +156,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label  class="form-label">Observação<span class="sr-only"> </span></label>
-                            <textarea name="observacao" class="form-control"></textarea>
+                            <textarea name="descricao" class="form-control"></textarea>
                             @error('cliente')
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror

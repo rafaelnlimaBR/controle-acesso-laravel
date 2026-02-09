@@ -19,7 +19,7 @@
                             <label  class="form-label">Nome<span class="sr-only"> </span></label>
                             <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($grupo)?$grupo->nome:'')}}" >
                             @error('nome')
-                            <div class="invalid-feedback">{{@$message}}</div>
+                            <div class="invalid-feedback">{{$message}}</div>
                             @enderror
 
 
