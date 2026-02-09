@@ -1,6 +1,7 @@
 @extends('admin.layout')
 
 @section('conteudo')
+
 <div class="row">
     <div class="col-12 col-sm-12">
         <div class="card card-dark card-outline card-tabs">
@@ -15,6 +16,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Messages</a>
                     </li>
+
 
                 </ul>
             </div>
@@ -36,6 +38,7 @@
             </div>
             <!-- /.card -->
         </div>
+
     </div>
 
 </div>

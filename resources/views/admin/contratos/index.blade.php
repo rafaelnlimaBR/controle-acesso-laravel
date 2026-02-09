@@ -1,6 +1,7 @@
 @extends('admin.layout')
 
 @section('conteudo')
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-5">
@@ -9,11 +10,17 @@
             <div class="card-body">
                 <form  action="{{route('contrato.index')}}">
                     <div class="row g-3">
-                        <div class="col-md-3">
-                            <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="nome"  value="{{request()->has('nome')?request()->get('nome'):""}}">
-
-
+                        <div class="col-md-2">
+                            <label  class="form-label">Nome Cliente / Número Telefone<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="cliente"  value="{{request()->has('cliente')?request()->get('cliente'):""}}">
+                        </div>
+                        <div class="col-md-2">
+                            <label  class="form-label">Placa do Veículo<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="placa"  value="{{request()->has('placa')?request()->get('placa'):""}}">
+                        </div>
+                        <div class="col-md-2">
+                            <label  class="form-label">Data Criação<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control datepicker" name="data"  value="{{request()->has('data')?request()->get('data'):""}}">
                         </div>
 
                         <div class="col-md-1 ">
@@ -74,7 +81,7 @@
                                 </a>
                                 @endcan
                                 @can('contrato-editar')
-                                <a href="{{route('contrato.editar',['contrato'=>$c])}}" class="text-decoration-none">
+                                <a href="{{route('contrato.editar',['contrato'=>$c,'historico'=>$c->historicos->last()])}}" class="text-decoration-none">
                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
                                 </a>
                                 @endcan

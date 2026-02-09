@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Types\Relations\Car;
+use mysql_xdevapi\Exception;
 
 class Contrato extends Model
 {
@@ -37,7 +38,38 @@ class Contrato extends Model
 
     public function status()
     {
-        return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data')->withTimestamps();
+        return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data','autor_id')->withTimestamps();
+    }
+
+    public function scopePesquisarPorVeiculo($query, $placa)
+    {
+        return $query->whereHas('veiculo', function($query) use ($placa){
+            $query->where('placa', 'like','%'.$placa.'%');
+        });
+    }
+
+    public function scopePesquisarPorData($query, $data)
+    {
+        if(is_null($data)){
+            return $query;
+        }
+        $data   =   Carbon::parse($data)->format('Y-m-d');
+        return $query->whereDate('data_inicio','like','%'.$data.'%');
+    }
+
+    public function scopePesquisarPorCliente($query,$cliente)
+    {
+        if(is_numeric($cliente)) {
+            return $query->whereHas('cliente', function($query) use($cliente){
+                 $query->whereHas('contatos', function($query) use($cliente){
+                    $query->where('numero', 'like','%'.$cliente.'%');
+                });
+            });
+        }else{
+            return $query->whereHas('cliente', function($query) use($cliente){
+                return $query->where('name','LIKE',"%$cliente%");
+            });
+        }
     }
 
     public function gravar(Request $r)
@@ -56,5 +88,11 @@ class Contrato extends Model
 
         $this->save();
         return $this;
+    }
+
+    public function deletar()
+    {
+
+        $this->delete();
     }
 }

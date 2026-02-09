@@ -194,8 +194,8 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'Cancelado','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'E88446','cor_letra'=>'FCFCFC'],
         ]);
         DB::table('status_proximos')->insert([
-            ['atual_status_id'=>'1','proximo_status_id'=>'1'],
-            ['atual_status_id'=>'1','proximo_status_id'=>'2'],  //ORçamento
+            ['atual_status_id'=>'1','proximo_status_id'=>'2'],
+            ['atual_status_id'=>'1','proximo_status_id'=>'3'],  //ORçamento
             ['atual_status_id'=>'1','proximo_status_id'=>'6'],
 
             ['atual_status_id'=>'3','proximo_status_id'=>'4'],  //Andamento
@@ -215,7 +215,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('historicos')->insert([
-            ['contrato_id'=>1,'status_id'=>1,'descricao'=>'tesate','data'=>Carbon::now()],
+            ['contrato_id'=>1,'status_id'=>1,'autor_id'=>1,'descricao'=>'tesate','data'=>Carbon::now()],
         ]);
 
 

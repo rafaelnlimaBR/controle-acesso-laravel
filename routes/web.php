@@ -42,10 +42,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 //CONTRATOS
     Route::get('/contratos', [App\Http\Controllers\ContratoController::class, 'index'])->name('contrato.index');
     Route::get('/contrato/novo', [App\Http\Controllers\ContratoController::class, 'novo'])->name('contrato.novo');
-    Route::get('/contrato/editar/{contrato}', [App\Http\Controllers\ContratoController::class, 'editar'])->name('contrato.editar');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}', [App\Http\Controllers\ContratoController::class, 'editar'])->name('contrato.editar');
     Route::post('/contrato/cadastrar', [App\Http\Controllers\ContratoController::class, 'cadastrar'])->name('contrato.cadastrar');
-    Route::post('/contrato/atualizar/{contrato}', [App\Http\Controllers\ContratoController::class, 'atualizar'])->name('contrato.atualizar');
+    Route::post('/contrato/atualizar/{contrato}/historico/{historico}', [App\Http\Controllers\ContratoController::class, 'atualizar'])->name('contrato.atualizar');
     Route::get('/contrato/excluir/{contrato}', [App\Http\Controllers\ContratoController::class, 'excluir'])->name('contrato.excluir');
+    Route::post('/contrato/mudar/status/{contrato}', [App\Http\Controllers\ContratoController::class, 'mudarStatus'])->name('contrato.mudar.status');
 
 });
 

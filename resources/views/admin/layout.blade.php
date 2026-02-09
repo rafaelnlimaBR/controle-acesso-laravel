@@ -478,6 +478,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('.botao-mudar-status').click(function(){
+            var status      =   $(this).attr('status-id');
+
+            $('#id-modal-status').val(status);
+            $('#modal-mudar-status').modal("show")
+        });
+
         $('.datepicker').datepicker(
             {   dateFormat: "dd/mm/yy",
                 dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],

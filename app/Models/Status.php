@@ -10,6 +10,6 @@ class Status extends Model
 
     public function proximos()
     {
-        return $this->belongsToMany('App\Models\Status', 'proximo_status', 'status_id', 'proximo_id');
+        return $this->belongsToMany('App\Models\Status', 'status_proximos', 'atual_status_id', 'proximo_status_id');
     }
 }

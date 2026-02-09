@@ -1,6 +1,17 @@
+@if(isset($contrato))
+    @if($proximos_status->count() > 0)
+        <div class="card-header">
+            <h4>Opções de Status</h4>
+            @foreach($proximos_status as $proximo)
+                <a status-id="{{$proximo->id}}" class="btn btn-app proximo-status botao-mudar-status" data-toggle="modal" data-target="#proximo-status" style="color: {{'#'.$proximo->cor_letra}}; background-color: {{'#'.$proximo->cor_fundo}}">{{$proximo->nome}}</a>
+            @endforeach
+
+        </div>
+    @endif
+@endif
 
 <div class="row">
-            <form class="needs-validation" novalidate="" method="post" action="{{isset($contrato)?route('contrato.atualizar',['contrato'=>$contrato]):route('contrato.cadastrar')}}">
+            <form class="needs-validation" novalidate="" method="post" action="{{isset($contrato)?route('contrato.atualizar',['contrato'=>$contrato,'historico'=>$historico_selecionado]):route('contrato.cadastrar')}}">
                 {{csrf_field()}}
                 <!--begin::Body-->
                 <div class="card-body">
@@ -8,6 +19,7 @@
                     <div class="row g-3">
                         <!--begin::Col-->
                         <div class="col-md-6">
+                            {{ csrf_field() }}
                             <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span></label>
                             <select name="cliente" class="form-control " id="pesquisa-cliente">
                                 @if(isset($contrato))
@@ -55,7 +67,16 @@
                             <label  class="form-label">Técnico<span class="sr-only"> </span></label>
                             <select name="tecnico" class="form-control">
                                 @foreach($tecnicos as $tecnico)
-                                    <option value="{{$tecnico->id}}">{{$tecnico->name}}</option>
+                                    @if(isset($contrato))
+                                        @if($contrato->tecnico->id == $tecnico->id)
+                                            <option selected value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                        @else
+                                            <option value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                        @endif
+                                    @else
+                                        <option value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                    @endif
+
                                 @endforeach
                             </select>
                             @error('tecnico')
@@ -66,14 +87,14 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label  class="form-label">Descrição<span class="sr-only"> </span></label>
-                            <textarea rows="5"  class="form-control" name="descricao"></textarea>
+                            <textarea rows="5"  class="form-control" name="descricao">{{isset($contrato)?$contrato->descricao_cliente:""}}</textarea>
                             @error('descricao')
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="col-md-6">
                             <label  class="form-label">Observações<span class="sr-only"> </span></label>
-                            <textarea rows="5"  class="form-control" name="observacao"></textarea>
+                            <textarea rows="5"  class="form-control" name="observacao">{{isset($contrato)?$contrato->observacao:""}}</textarea>
                             @error('observacao')
                             <div class="invalid-feedback">{{@$message}}</div>
                             @enderror
@@ -83,7 +104,7 @@
                     <div class="row g-3">
                         <div class="col-md-12">
                             <label  class="form-label">Solução<span class="sr-only"> </span></label>
-                            <textarea class="form-control" name="solucao" id="summernote-contrato"></textarea>
+                            <textarea class="form-control" name="solucao" id="summernote-contrato">{{isset($contrato)?$contrato->solucao:""}}</textarea>
                             @error('solucao')
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror
@@ -96,15 +117,19 @@
                 <!--begin::Footer-->
                 <div class="card-footer">
                     @if(isset($contrato))
-                        <button class="btn btn-warning" type="submit">Editar</button>
+                        <button class="btn btn-warning" onclick="return confirm('Deseja editar esse registro?')" type="submit">Editar</button>
                         @can('contrato-deletar')
                             <a href="{{route('contrato.excluir',['contrato'=>$contrato])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
                         @endcan
+
+
+
                     @else
                         <button class="btn btn-success" type="submit">Cadastrar</button>
                     @endif
 
                     <a href="{{route('contrato.index')}}" class="btn btn-dark" type="submit">Voltar </a>
+
                 </div>
                 <!--end::Footer-->
             </form>
@@ -112,3 +137,39 @@
 
 
 </div>
+@if(isset($contrato))
+<!-- Modal -->
+<div class="modal fade" id="proximo-status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{route('contrato.mudar.status',['contrato'=>$contrato])}}">
+                {{csrf_field()}}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Mudar Status</h5>
+
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  class="form-label">Observação<span class="sr-only"> </span></label>
+                            <textarea name="observacao" class="form-control"></textarea>
+                            @error('cliente')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <input name="status_id" id="id-modal-status">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif

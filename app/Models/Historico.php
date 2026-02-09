@@ -13,4 +13,9 @@ class Historico extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function autor()
+    {
+        return $this->belongsTo(User::class,'autor_id');
+    }
 }
