@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('registros',function (Blueprint $t){
             $t->id();
             $t->text('descricao');
-            $t->foreignId('tipo_id')->references('id')->on('tipos_registros')->onDelete('cascade');
+            $t->foreignId('tipo_id')->references('id')->on('registros_tipos')->onDelete('cascade');
             $t->foreignId('historico_id')->references('id')->on('historicos')->onDelete('cascade');
             $t->dateTime('data');
             $t->foreignId('autor_id')->references('id')->on('users')->onDelete('cascade');

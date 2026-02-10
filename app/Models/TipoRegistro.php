@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoRegistro extends Model
 {
-    protected $table = 'tipos_registros';
+    protected $table = 'registros_tipos';
 }

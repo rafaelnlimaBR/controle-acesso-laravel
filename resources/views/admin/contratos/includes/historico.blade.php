@@ -138,36 +138,6 @@
         </div>
     </div>
     <div class="col-md-4">
-        <form method="post" action="{{route('contrato.editar.historico',['contrato'=>$contrato,'historico'=>$historico_selecionado])}}">
-            {{csrf_field()}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Editar Historico - {{$historico_selecionado->status->nome}}</div>
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
-                    <!--begin::Col-->
-                    <div class="col-md-12">
-                        <label  class="form-label">Descrição<span class="sr-only"> </span></label>
-                        <textarea class="form-control" name="descricao" >{{$historico_selecionado->descricao}}</textarea>
-                    </div>
-                </div>
-                <div class="row g-3">
-                    <!--begin::Col-->
-                    <div class="col-md-4">
-                        <label  class="form-label">Data<span class="sr-only"> </span></label>
-                        <input type="text" class="form-control datepicker" name="data" value="{{\Carbon\Carbon::parse($historico_selecionado->data)->format('d/m/Y')}}" >
-                        @error('data')
-                        <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
-                    </div>
-                </div>
-
-            </div>
-            <div class="card-footer">
-                <button  class="btn btn-warning" type="submit">Editar</button>
-            </div>
-        </div>
-        </form>
+        @include('admin.contratos.form.historico')
     </div>
 </div>

@@ -32,7 +32,7 @@
                     <div class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='historicos'?'active':'':''}}" id="historicos" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                         @include('admin.contratos.includes.historico')
                     </div>
-                    <div class="tab-pane fade" id="registros" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                    <div class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='registros'?'active':'':''}}" id="registros" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                         @include('admin.contratos.includes.registros')
                     </div>
                     @endif

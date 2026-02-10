@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipos_registros', function (Blueprint $t) {
+        Schema::create('registros_tipos', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome');
             $t->boolean('compartilhavel')->default(false);
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipos_registros');
+        Schema::dropIfExists('registros_tipos');
     }
 };

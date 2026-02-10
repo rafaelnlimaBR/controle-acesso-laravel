@@ -48,6 +48,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/excluir/{contrato}', [App\Http\Controllers\ContratoController::class, 'excluir'])->name('contrato.excluir');
     Route::post('/contrato/mudar/status/{contrato}', [App\Http\Controllers\ContratoController::class, 'mudarStatus'])->name('contrato.mudar.status');
     Route::post('/contrato/{contrato}/historico/editar/{historico}/',[App\Http\Controllers\ContratoController::class, 'atualizarHistorico'])->name('contrato.editar.historico');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/novo',[App\Http\Controllers\RegistroController::class, 'novo'])->name('contrato.registro.novo');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/cadastrar',[App\Http\Controllers\RegistroController::class, 'cadastrar'])->name('contrato.registro.cadastrar');
+
 
 });
 
@@ -71,6 +74,12 @@ View::composer(['admin.veiculos.includes.form','admin.veiculos.index'],function(
     $modelos    =   \App\Models\Modelo::all();
 
     $view->with(['modelos'=>$modelos]);
+});
+
+View::composer(['admin.contratos.form.registro'],function($view){
+    $tipos          =   \App\Models\TipoRegistro::all();
+
+    $view->with(['tipos_registros'=>$tipos]);
 });
 
 Route::get('/', function () {

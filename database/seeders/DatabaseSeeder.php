@@ -87,11 +87,19 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'modelo-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'modelo-deletar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'modelo-visualizar','created_at'=>now(),'updated_at'=>now()],
+
+
             ['nome'=>'contrato-lista','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-deletar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-registro-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-registro-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-registro-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-registro-deletar','created_at'=>now(),'updated_at'=>now()],
+
+
             ['nome'=>'configuracao-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
@@ -219,7 +227,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \Laravel\Prompts\info('Inserindo Tipor de Registros');
-        DB::table('tipos_registros')->insert([
+        DB::table('registros_tipos')->insert([
             ['nome'=>'Recebimento','compartilhavel'=>true,'icon'=>'bi bi-file-earmark-text'],
             ['nome'=>'Testes em bancada','compartilhavel'=>true,'icon'=>'bi bi-joystick'],
             ['nome'=>'Defeito','compartilhavel'=>true,'icon'=>'bi bi-exclamation-triangle-fill']
@@ -232,7 +240,7 @@ class DatabaseSeeder extends Seeder
 
         \Laravel\Prompts\info('Inserindo Imagens');
         DB::table('registros_imagens')->insert([
-            ['nome'=>'usar-01.png','registro_id'=>1],
+            ['nome'=>'user-01.png','registro_id'=>1],
         ]);
 
 
