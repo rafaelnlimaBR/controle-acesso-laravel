@@ -11,7 +11,7 @@
 
                 <th scope="col">Orçamento</th>
                 <th scope="col">Tipo</th>
-                <th scope="col">Progress</th>
+                <th scope="col">Data</th>
                 <th style="width: 40px" scope="col">Label</th>
             </tr>
             </thead>
@@ -22,12 +22,9 @@
 
                         <td>{{$r->historico->status->nome}}</td>
                         <td>{{$r->tipo->nome}}</td>
-                        <td>
-                            <div class="progress progress-xs">
-                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                            </div>
+                        <td>{{\Carbon\Carbon::parse($r->data)->format('d/m/Y')}}
                         </td>
-                        <td><span class="badge text-bg-danger">55%</span></td>
+                        <td><a href="{{route('contrato.registro.editar',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$r])}}" style="text-decoration: none"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a></td>
                     </tr>
                 @endforeach
             @endforeach
