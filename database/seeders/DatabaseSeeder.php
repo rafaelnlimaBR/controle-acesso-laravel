@@ -43,6 +43,17 @@ class DatabaseSeeder extends Seeder
             'visivel'  =>  true,
         ]);
         User::factory()->create([
+            'name' => 'CT',
+            'nome_completo' => 'Cliente Teste',
+            'email' => 'cliente@cliente.com.br',
+            'password' => bcrypt('3024'),
+            'ativo'     =>  true,
+            'imagem'    =>  'user-01.png',
+            'deletavel'  =>  true,
+            'editavel'  =>  true,
+            'visivel'  =>  true,
+        ]);
+        User::factory()->create([
             'name' => 'Administrador',
             'nome_completo' => 'Administrador',
             'email' => 'admin@admin.com.br',
@@ -107,7 +118,8 @@ class DatabaseSeeder extends Seeder
         DB::table('user_grupo')->insert([
            ['user_id'=>1,'grupo_id'=>1],
            ['user_id'=>2,'grupo_id'=>2],
-           ['user_id'=>3,'grupo_id'=>1],
+           ['user_id'=>3,'grupo_id'=>3],
+           ['user_id'=>4,'grupo_id'=>1],
         ]);
 
         DB::table('grupo_permissao')->insert([
@@ -137,6 +149,7 @@ class DatabaseSeeder extends Seeder
            ['user_id'=>1,'contato_id'=>1],
            ['user_id'=>1,'contato_id'=>2],
            ['user_id'=>2,'contato_id'=>3],
+           ['user_id'=>4,'contato_id'=>3],
         ]);
 
 
@@ -219,7 +232,7 @@ class DatabaseSeeder extends Seeder
 
         \Laravel\Prompts\info('Inserindo Contratos');
         DB::table('contratos')->insert([
-             ['descricao_cliente'=>'teste teste','observacao'=>'teste','solucao'=>'tete','data_inicio'=>Carbon::now(),'data_garantia'=>Carbon::now(),'criador_id'=>1,'tecnico_id'=>1,'cliente_id'=>1,'veiculo_id'=>1,'desconto_peca'=>5,'desconto_servico'=>5],
+             ['descricao_cliente'=>'teste teste','observacao'=>'teste','solucao'=>'tete','data_inicio'=>Carbon::now(),'data_garantia'=>Carbon::now(),'criador_id'=>1,'tecnico_id'=>1,'cliente_id'=>3,'veiculo_id'=>1,'desconto_peca'=>5,'desconto_servico'=>5],
         ]);
 
         DB::table('historicos')->insert([

@@ -52,6 +52,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/editar/{registro}',[App\Http\Controllers\RegistroController::class, 'editar'])->name('contrato.registro.editar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/cadastrar',[App\Http\Controllers\RegistroController::class, 'cadastrar'])->name('contrato.registro.cadastrar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/{registro}',[App\Http\Controllers\RegistroController::class, 'atualizar'])->name('contrato.registro.atualizar');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/{registro}/adicionar/imagens',[App\Http\Controllers\RegistroController::class, 'adicionarImagens'])->name('contrato.registro.adicionar.imagens');
 
 
 });
@@ -85,7 +86,7 @@ View::composer(['admin.contratos.form.registro'],function($view){
 });
 
 Route::get('/', function () {
-    $c          =   Contrato::find(2);
+    $registro       =   \App\Models\Registro::find(1);
 
-    dd($c->historicos);
+    return $registro->historico->contrato;
 });

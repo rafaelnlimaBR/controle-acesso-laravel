@@ -40,4 +40,5 @@ class Registro extends Model
 
         $this->save();
     }
+
 }

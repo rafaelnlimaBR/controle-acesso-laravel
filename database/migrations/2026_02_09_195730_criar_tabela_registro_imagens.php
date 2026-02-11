@@ -17,6 +17,7 @@ return new class extends Migration
             $t->foreignId('registro_id')->references('id')->on('registros')->onDelete('cascade');
 
             $t->text('descricao')->nullable();
+            $t->timestamps();
         });
     }
 

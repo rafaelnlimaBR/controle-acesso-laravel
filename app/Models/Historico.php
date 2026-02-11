@@ -11,6 +11,11 @@ class Historico extends Model
     protected $table = 'historicos';
 
 
+    public function contrato()
+    {
+        return $this->belongsTo(Contrato::class);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class);

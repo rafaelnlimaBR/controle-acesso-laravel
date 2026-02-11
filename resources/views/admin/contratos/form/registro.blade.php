@@ -85,14 +85,61 @@
 
     <div class="col-md-8">
         <div class="card card-dark card-outline mb-4">
+            <form enctype="multipart/form-data" action="{{route('contrato.registro.adicionar.imagens',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$registro])}}" method="post">
+                {{csrf_field()}}
             <div class="card-header">
                 <div class="card-title">Imagens</div>
             </div>
             <div class="card-body">
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <label  class="form-label">Descrição<span class="sr-only"> </span></label>
+                        <textarea name="descricao" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label  class="form-label">Imagens<span class="sr-only"> </span></label>
+                        <input MULTIPLE accept="image/*;capture=camera" name="imagens[]" type="file" class="form-control" value="{{old('imagens[]')}}">
+                        @error('imagens')
+                        <div class="invalid-feedback">{{@$message}}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
+            <div class="card-body">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+            </form>
 
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+
+                        <th>Imagem</th>
+                        <th>Descrição</th>
+                        <th>Data</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($registro->imagens as $imagem)
+                        <tr>
+
+                            <td><img style="height: 70px" src="{{url('/layout/imagens/registros/'.$imagem->nome)}}"> </td>
+                            <td>{{$imagem->descricao}}</td>
+                            <td>{{\Carbon\Carbon::parse($imagem->created_at)->format('d/m/Y')}}</td>
+
+                        </tr>
+
+                    @endforeach
+
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

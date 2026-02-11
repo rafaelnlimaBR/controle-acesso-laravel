@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contrato;
 use App\Models\Historico;
 use App\Models\Registro;
+use App\Models\RegistroImagem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,6 +106,31 @@ class RegistroController extends Controller
 
         }catch (\Exception $e){
             return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'registros'])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    public function adicionarImagens(Contrato $contrato,Historico $historico, Registro $registro)
+    {
+        try{
+            $r              =   \request();
+//            $regras     =   [
+//                'imagens' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+//            ];
+//
+//            $validacao   =   Validator::make($r->all(),$regras);
+//            if($validacao->fails()){
+//                return redirect()->back()->withInput()->withErrors($validacao);
+//            }
+            foreach($r->file('imagens') as $i=> $image){
+
+                $imagem = new RegistroImagem();
+                $imagem->gravar($registro,$image,$r->get('descricao'));
+            }
+
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Imagens adicionais cadastradas com sucesso!.']);
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
 }

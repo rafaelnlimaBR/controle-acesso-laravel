@@ -23,7 +23,7 @@
                             <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span></label>
                             <select name="cliente" class="form-control " id="pesquisa-cliente">
                                 @if(isset($contrato))
-                                    <option value="{{$contrato->cliente->id}}">{{$contrato->cliente->name}}</option>
+                                    <option value="{{$contrato->cliente->id}}">{{$contrato->cliente->nome_completo}}</option>
                                 @endif
                             </select>
                             @error('cliente')

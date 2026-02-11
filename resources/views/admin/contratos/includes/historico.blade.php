@@ -70,12 +70,12 @@
                                         @foreach($registro->imagens as $imagens)
 
                                             <a
-                                                href="{{url('/layout/imagens/users/'.$imagens->nome)}}"
+                                                href="{{url('/layout/imagens/registros/'.$imagens->nome)}}"
                                                 data-fancybox="{{$registro->tipo->nome}}"
                                                 data-caption="Optional caption,&lt;br /&gt;that can contain &lt;em&gt;HTML&lt;/em&gt; code"
                                             >
                                                 <img
-                                                    src="{{url('/layout/imagens/users/'.$imagens->nome)}}"
+                                                    src="{{url('/layout/imagens/registros/'.$imagens->nome)}}"
                                                     width="200"
                                                     height="150"
                                                     alt="Sample image #1"
