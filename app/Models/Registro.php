@@ -17,7 +17,7 @@ class Registro extends Model
 
     public function imagens()
     {
-        return $this->hasMany(ImagemRegistro::class,'registro_id');
+        return $this->hasMany(RegistroImagem::class,'registro_id');
     }
 
     public function autor()
@@ -39,6 +39,15 @@ class Registro extends Model
         $this->autor()->associate(auth()->user());
 
         $this->save();
+    }
+
+    public function excluir()
+    {
+
+        foreach ($this->imagens as $imagem) {
+            $imagem->excluir();
+        }
+        $this->delete();
     }
 
 }

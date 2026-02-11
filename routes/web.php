@@ -47,13 +47,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/atualizar/{contrato}/historico/{historico}', [App\Http\Controllers\ContratoController::class, 'atualizar'])->name('contrato.atualizar');
     Route::get('/contrato/excluir/{contrato}', [App\Http\Controllers\ContratoController::class, 'excluir'])->name('contrato.excluir');
     Route::post('/contrato/mudar/status/{contrato}', [App\Http\Controllers\ContratoController::class, 'mudarStatus'])->name('contrato.mudar.status');
-    Route::post('/contrato/{contrato}/historico/editar/{historico}/',[App\Http\Controllers\ContratoController::class, 'atualizarHistorico'])->name('contrato.editar.historico');
+    Route::post('/contrato/{contrato}/historico/editar/{historico}/',[App\Http\Controllers\HistoricoController::class, 'atualziar'])->name('contrato.editar.historico');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/novo',[App\Http\Controllers\RegistroController::class, 'novo'])->name('contrato.registro.novo');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/editar/{registro}',[App\Http\Controllers\RegistroController::class, 'editar'])->name('contrato.registro.editar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/cadastrar',[App\Http\Controllers\RegistroController::class, 'cadastrar'])->name('contrato.registro.cadastrar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/{registro}',[App\Http\Controllers\RegistroController::class, 'atualizar'])->name('contrato.registro.atualizar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/{registro}/adicionar/imagens',[App\Http\Controllers\RegistroController::class, 'adicionarImagens'])->name('contrato.registro.adicionar.imagens');
-
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/imagem/{imagem}',[App\Http\Controllers\RegistroController::class, 'atualizarImagem'])->name('contrato.registro.atualizar.imagem');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/excluir/{registro}', [App\Http\Controllers\RegistroController::class, 'excluir'])->name('contrato.registro.excluir');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/{registro}/imagem/{imagem}', [App\Http\Controllers\RegistroController::class, 'excluirImagem'])->name('contrato.registro.imagem.excluir');
 
 });
 

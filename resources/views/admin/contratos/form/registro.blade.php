@@ -65,13 +65,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label  class="form-label">Descrição<span class="sr-only"> </span></label>
-                            <textarea name="descricao" class="form-control">{{isset($registro)?$registro->descricao:''}}</textarea>
+                            <textarea name="descricao" class="form-control">{{isset($descricao)?$descricao:old('descricao',isset($registro)?$registro->descricao:'')}}</textarea>
+                            @error('descricao')
+                            <div class="invalid-feedback">{{@$message}}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     @if(isset($registro))
                         <button class="btn btn-warning" type="submit">Editar</button>
+
+                        <a onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" href="{{route('contrato.registro.excluir',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$registro])}}"  style="float: right">Excluir</a>
                     @else
                         <button class="btn btn-warning" type="submit">Cadastrar</button>
                     @endif
@@ -100,9 +105,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label  class="form-label">Imagens<span class="sr-only"> </span></label>
-                        <input MULTIPLE accept="image/*;capture=camera" name="imagens[]" type="file" class="form-control" value="{{old('imagens[]')}}">
+                        <input MULTIPLE accept="image/*;capture=camera" name="imagens[]" type="file" class="form-control" value="{{old('imagens')}}">
                         @error('imagens')
-                        <div class="invalid-feedback">{{@$message}}</div>
+                        <div class="invalid-feedback">{{$message}}</div>
                         @enderror
                     </div>
                 </div>
@@ -122,19 +127,23 @@
                         <th>Imagem</th>
                         <th>Descrição</th>
                         <th>Data</th>
+                        <th>Editar</th>
 
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($registro->imagens as $imagem)
-                        <tr>
-
-                            <td><img style="height: 70px" src="{{url('/layout/imagens/registros/'.$imagem->nome)}}"> </td>
-                            <td>{{$imagem->descricao}}</td>
-                            <td>{{\Carbon\Carbon::parse($imagem->created_at)->format('d/m/Y')}}</td>
-
-                        </tr>
-
+                        <form action="{{route('contrato.registro.atualizar.imagem',['contrato'=>$contrato,'historico'=>$historico_selecionado,'imagem'=>$imagem])}}" method="post">
+                            <tr>
+                                {{csrf_field()}}
+                                <td><img style="height: 70px" src="{{url('/layout/imagens/registros/'.$imagem->nome)}}"> </td>
+                                <td><textarea class="form-control" name="descricao">{{$imagem->descricao}}</textarea></td>
+                                <td>{{\Carbon\Carbon::parse($imagem->created_at)->format('d/m/Y')}}</td>
+                                <td><button class="btn btn-sm btn-warning">Editar</button>
+                                    <a class="btn btn-sm btn-danger" href="{{route('contrato.registro.imagem.excluir',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$registro,'imagem'=>$imagem])}}">Excluir</a>
+                                </td>
+                            </tr>
+                        </form>
                     @endforeach
 
 

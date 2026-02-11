@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
@@ -20,8 +21,6 @@ class RegistroImagem extends Model
 
     public function gravar(Registro $registro,$image, $descricao ,)
     {
-
-
             if (!file_exists(public_path('/layout/imagens/registros/'))){
                 mkdir(public_path('/layout/imagens/registros/'), 0777, true);
             }
@@ -35,7 +34,21 @@ class RegistroImagem extends Model
             $this->registro()->associate($registro);
             $this->descricao=$descricao;
             $this->save();
+    }
 
 
+    public function atualizar($descricao)
+    {
+        $this->descricao  = $descricao;
+        $this->save();
+    }
+
+    public function excluir()
+    {
+
+        if(file_exists(public_path('/layout/imagens/registros/').$this->nome)){
+            unlink(public_path('/layout/imagens/registros/').$this->nome);
+        }
+        $this->delete();
     }
 }

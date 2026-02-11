@@ -48,7 +48,8 @@ class RegistroController extends Controller
 
             $r              =   \request();
             $regras         =   [
-                'data'      => 'required|date_format:d/m/Y'
+                'data'      => 'required|date_format:d/m/Y',
+                'descricao' =>  'required'
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
@@ -109,18 +110,32 @@ class RegistroController extends Controller
         }
     }
 
+    public function excluir(Contrato $contrato,Historico $historico, Registro $registro)
+    {
+        try{
+
+            $registro->excluir();
+
+            return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'registros'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Registro excluido com sucesso!.']);
+
+        }catch (\Exception $exception){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$exception->getMessage()]);
+        }
+    }
+
     public function adicionarImagens(Contrato $contrato,Historico $historico, Registro $registro)
     {
         try{
             $r              =   \request();
-//            $regras     =   [
-//                'imagens' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-//            ];
+            $regras     =   [
+                'imagens'     => 'required|array|max:15', // The field itself is a required array, max 10 files
+                'imagens.*'   => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ];
 //
-//            $validacao   =   Validator::make($r->all(),$regras);
-//            if($validacao->fails()){
-//                return redirect()->back()->withInput()->withErrors($validacao);
-//            }
+            $validacao   =   Validator::make($r->all(),$regras);
+            if($validacao->fails()){
+                return redirect()->back()->withInput()->withErrors($validacao);
+            }
             foreach($r->file('imagens') as $i=> $image){
 
                 $imagem = new RegistroImagem();
@@ -133,4 +148,33 @@ class RegistroController extends Controller
             return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
+
+    public function atualizarImagem(Contrato $contrato, Historico $historico, RegistroImagem $imagem)
+    {
+        try{
+
+            $imagem->atualizar(request('descricao'));
+
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Imagem atualizada com sucesso!.']);
+
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    public function excluirImagem(Contrato $contrato, Historico $historico,Registro $registro, RegistroImagem $imagem)
+    {
+        try{
+
+            $imagem->excluir();
+
+            return redirect()->route('contrato.registro.editar',['contrato'=>$contrato,'historico'=>$historico,'registro'=>$registro])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Imagem excluida com sucesso!.']);
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+
 }

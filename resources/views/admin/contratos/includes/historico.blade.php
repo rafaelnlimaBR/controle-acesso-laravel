@@ -67,23 +67,20 @@
                                 </div>
                                 @if($registro->imagens()->exists())
                                     <div class="timeline-footer">
-                                        @foreach($registro->imagens as $imagens)
+                                        @foreach($registro->imagens as $imagem)
 
                                             <a
-                                                href="{{url('/layout/imagens/registros/'.$imagens->nome)}}"
+                                                href="{{url('/layout/imagens/registros/'.$imagem->nome)}}"
                                                 data-fancybox="{{$registro->tipo->nome}}"
-                                                data-caption="Optional caption,&lt;br /&gt;that can contain &lt;em&gt;HTML&lt;/em&gt; code"
+                                                data-caption="{{$imagem->descricao}}"
                                             >
                                                 <img
-                                                    src="{{url('/layout/imagens/registros/'.$imagens->nome)}}"
+                                                    src="{{url('/layout/imagens/registros/'.$imagem->nome)}}"
                                                     width="200"
                                                     height="150"
-                                                    alt="Sample image #1"
+                                                    alt="{{$imagem->descricao}}"
                                                 />
                                             </a>
-
-
-
                                         @endforeach
                                     </div>
                                 @endif
