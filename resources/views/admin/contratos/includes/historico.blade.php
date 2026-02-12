@@ -32,7 +32,7 @@
                 </div>
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
-
+                    @if($h->descricao != "")
                     <div>
                         <i class="timeline-icon bi bi-card-list text-bg-primary"> </i>
                         <div class="timeline-item">
@@ -50,7 +50,7 @@
                             </div>--}}
                         </div>
                     </div>
-
+                   @endif
                     @if($h->registros()->exists())
                         @foreach($h->registros as $registro)
                         <div>

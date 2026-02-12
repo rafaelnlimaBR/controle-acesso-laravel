@@ -113,7 +113,8 @@ class ContratoController extends Controller
                 'contrato'           =>  $contrato,
                 'historico_selecionado'   =>  $historico,
                 'tecnicos'          =>  User::PesquisarPorGrupo($this->conf->grupo_tecnico_id)->get(),
-                'proximos_status'   => $contrato->status->last()->proximos
+                'proximos_status'   => $contrato->status->last()->proximos,
+                'grupo_cliente_id'    => $this->conf->grupo_cliente_id,
             ];
 
             return view('admin.contratos.formulario',$dados);

@@ -517,6 +517,43 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
+
+        $("#cadastrarClienteModal").submit(function () {
+
+
+
+            var dados   = $(this).serialize();
+
+            var rota    =   "{{route('usuario.cadastrar')}}";
+
+            $.ajax({
+                type: "POST",
+                url: rota,
+                data: dados,
+                success: function( data )
+                {
+
+                    if('error' in data){
+                        console.log(data)
+                        $('#form-atualizavel-cliente').html(data.form_cliente)
+
+                    }else{
+                        console.log(data.form_cliente)
+                        var html    =   '<option value='+data.id+'>'+data.name+'</option>'
+                        $("#pesquisa-cliente").html(html);
+                        $('#formularioClienteModal').modal('hide');
+
+                    }
+                },
+                error:function (data,e) {
+
+                    alert(data);
+                }
+            });
+
+            return false;
+        });
+
         $('.mult-select').multiSelect({
             selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'>",
             selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",

@@ -1,8 +1,10 @@
-<form enctype="multipart/form-data" class="needs-validation" novalidate="" method="post" action="{{isset($usuario)?route('usuario.atualizar',['usuario'=>$usuario]):route('usuario.cadastrar')}}">
-    {{csrf_field()}}
 
+    {{csrf_field()}}
+    @if(isset($modal))
+        <input name="modal" value="1" hidden="">
+    @endif
     <!--begin::Body-->
-    <div class="card-body">
+
         <!--begin::Row-->
         <div class="row g-3">
             <!--begin::Col-->
@@ -32,17 +34,46 @@
                 @enderror
 
             </div>
-            <div class="col-md-4">
-                <label  class="form-label">Nick<span class="sr-only"> </span></label>
-                <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($usuario)?$usuario->name:'')}}" >
-                @error('nome')
-                <div class="invalid-feedback">{{@$message}}</div>
-                @enderror
 
-            </div>
             <!--end::Col-->
             <!--begin::Col-->
+            <div class="col-md-4">
 
+                <label  class="form-label">Grupos <span class="required-indicator sr-only"> </span></label>
+                @if(request()->has('grupo_id'))
+                    <select   class="form-control"  name="grupos[]" >
+                        @else
+                            <select   class="form-control"  name="grupos[]" multiple size="1">
+                                @endif
+
+                                @foreach($grupos as $grupo)
+                                    @if(isset($grupo_cliente_id))
+                                        @if($grupo_cliente_id == $grupo->id)
+                                            <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
+                                        @endif
+                                    @else
+                                        @if(request()->has('grupo_id'))
+                                            @if(request()->get('grupo_id') == $grupo->id)
+                                                <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
+                                            @endif
+                                        @else
+                                            @if(isset($usuario))
+                                                @if($usuario->grupos->contains('id',$grupo->id))
+                                                    <option value="{{$grupo->id}}"  selected>{{$grupo->nome}}</option>
+                                                @else
+                                                    <option value="{{$grupo->id}}" >{{$grupo->nome}}</option>
+                                                @endif
+                                            @else
+                                                <option value="{{$grupo->id}}">{{$grupo->nome}}</option>
+                                            @endif
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('grupos')
+                            <div class="invalid-feedback">{{$message}}</div>
+                    @enderror
+            </div>
             <!--end::Col-->
             <!--begin::Col-->
             <div class="col-md-4">
@@ -54,7 +85,7 @@
                 @enderror
             </div>
             @if(!isset($usuario))
-                <div class="col-md-4">
+                <div class="col-md-3">
 
                     <label  class="form-label">Senha<span class="required-indicator sr-only"> </span></label>
                     <input type="password" class="form-control"  name="senha" >
@@ -64,37 +95,7 @@
                 </div>
             @endif
 
-            <div class="col-md-4">
 
-                <label  class="form-label">Grupos <span class="required-indicator sr-only"> </span></label>
-                @if(request()->has('grupo_id'))
-                    <select   class="form-control"  name="grupos[]" >
-                @else
-                    <select   class="form-control"  name="grupos[]" multiple size="1">
-                @endif
-
-                    @foreach($grupos as $grupo)
-                        @if(request()->has('grupo_id'))
-                            @if(request()->get('grupo_id') == $grupo->id)
-                                <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
-                            @endif
-                        @else
-                            @if(isset($usuario))
-                                @if($usuario->grupos->contains('id',$grupo->id))
-                                    <option value="{{$grupo->id}}"  selected>{{$grupo->nome}}</option>
-                                @else
-                                    <option value="{{$grupo->id}}" >{{$grupo->nome}}</option>
-                                @endif
-                            @else
-                                <option value="{{$grupo->id}}">{{$grupo->nome}}</option>
-                            @endif
-                        @endif
-                    @endforeach
-                </select>
-                @error('grupos')
-                <div class="invalid-feedback">{{$message}}</div>
-                @enderror
-            </div>
 
             @if(!isset($usuario))
 
@@ -122,25 +123,9 @@
 
         </div>
         <!--end::Row-->
-    </div>
+
     <!--end::Body-->
     <!--begin::Footer-->
-    <div class="card-footer">
-        @if(isset($usuario))
-            @if($usuario->editavel)
-                <button class="btn btn-warning" type="submit">Editar</button>
-            @endif
 
-            @can('usuario-deletar')
-                @if($usuario->deletavel == 1)
-                    <a href="{{route('usuario.excluir',['usuario'=>$usuario])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
-                @endif
-            @endcan
-        @else
-            <button class="btn btn-success" type="submit">Cadastrar</button>
-        @endif
-
-        <a href="{{$route_back}}" class="btn btn-dark" type="submit">Voltar </a>
-    </div>
     <!--end::Footer-->
-</form>
+

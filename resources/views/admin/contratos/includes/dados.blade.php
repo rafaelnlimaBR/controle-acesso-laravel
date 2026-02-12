@@ -20,7 +20,7 @@
                         <!--begin::Col-->
                         <div class="col-md-6">
                             {{ csrf_field() }}
-                            <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span></label>
+                            <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span>  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"> Novo </button></label>
                             <select name="cliente" class="form-control " id="pesquisa-cliente">
                                 @if(isset($contrato))
                                     <option value="{{$contrato->cliente->id}}">{{$contrato->cliente->nome_completo}}</option>

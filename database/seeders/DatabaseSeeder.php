@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         \Laravel\Prompts\info('Inserindo usuarios');
         User::factory()->create([
             'name' => 'Rafael',
-            'nome_completo' => 'Rafael Lima',
+
             'email' => 'rafael@tecvelautomotiva.com.br',
             'password' => bcrypt('3024'),
             'ativo'     =>  true,
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'Usuario Tecnico',
-            'nome_completo' => 'Usuario Tecnico',
+
             'email' => 'tecnico@tecnico.com.br',
             'password' => bcrypt('3024'),
             'ativo'     =>  true,
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'CT',
-            'nome_completo' => 'Cliente Teste',
+
             'email' => 'cliente@cliente.com.br',
             'password' => bcrypt('3024'),
             'ativo'     =>  true,
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'Administrador',
-            'nome_completo' => 'Administrador',
+
             'email' => 'admin@admin.com.br',
             'password' => bcrypt('30242789Rafa@'),
             'ativo'     =>  true,

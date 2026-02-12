@@ -139,8 +139,9 @@
                                 <td><img style="height: 70px" src="{{url('/layout/imagens/registros/'.$imagem->nome)}}"> </td>
                                 <td><textarea class="form-control" name="descricao">{{$imagem->descricao}}</textarea></td>
                                 <td>{{\Carbon\Carbon::parse($imagem->created_at)->format('d/m/Y')}}</td>
-                                <td><button class="btn btn-sm btn-warning">Editar</button>
-                                    <a class="btn btn-sm btn-danger" href="{{route('contrato.registro.imagem.excluir',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$registro,'imagem'=>$imagem])}}">Excluir</a>
+                                <td><button class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                    <a class="btn btn-sm btn-danger" href="{{route('contrato.registro.imagem.excluir',['contrato'=>$contrato,'historico'=>$historico_selecionado,'registro'=>$registro,'imagem'=>$imagem])}}"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </form>

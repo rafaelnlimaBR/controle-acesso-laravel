@@ -59,7 +59,7 @@ class UsuarioController extends Controller
         return view('admin.usuarios.formulario',$this->dados);
     }
 
-    public function cadastrar()
+    public function cadastrar(Request $r)
     {
 
         try{
@@ -75,16 +75,28 @@ class UsuarioController extends Controller
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
+                if($r->has('modal')){
+                    $hmtl       =   view('admin.usuarios.includes.form')->withErrors($validacao)->with($r->all())->render();
+                    return response()->json(['form_cliente'=>$hmtl,'error'=>'validação']);
+                }
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
+            return response()->json($r->all());
             $usuario        =   new User();
             $usuario->gravar(request());
             $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
+
+            if ($r->has('modal')){
+                return response()->json($usuario);
+            }
 
             return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
+            if ($r->has('modal')){
+                return response()->json(['errors'=>$e->getMessage()]);
+            }
             return redirect()->route('usuario.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
@@ -235,8 +247,8 @@ class UsuarioController extends Controller
             foreach ($clientes as $key => $value) {
 
                 $retorno[$key]['id'] = $value->id;
-                $retorno[$key]['text'] = $value->nome_completo;
-                $retorno[$key]['nome'] = $value->nome_completo;
+                $retorno[$key]['text'] = $value->name;
+                $retorno[$key]['nome'] = $value->name;
 
                 $retorno[$key]['telefone'] = ($value->contatos()->count() == 0?'Sem Numero':$value->contatos()->pluck('numero')->join(', '));
 
