@@ -39,6 +39,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/veiculo/excluir/{veiculo}', [App\Http\Controllers\VeiculoController::class, 'excluir'])->name('veiculo.excluir');
     Route::post('/veiculo/pesquisar/cliente',[App\Http\Controllers\VeiculoController::class, 'pesquisarVeiculoAjax'])->name('veiculo.pesquisar.json');
 
+//MODELO
+    Route::post('/modelo/pesquisar',[App\Http\Controllers\ModeloController::class, 'pesquisarModeloAjax'])->name('modelo.pesquisar.json');
+
 //CONTRATOS
     Route::get('/contratos', [App\Http\Controllers\ContratoController::class, 'index'])->name('contrato.index');
     Route::get('/contrato/novo', [App\Http\Controllers\ContratoController::class, 'novo'])->name('contrato.novo');

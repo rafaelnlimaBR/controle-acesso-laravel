@@ -26,54 +26,43 @@
                 </select>
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-10">
                 <label  class="form-label">Nome Completo<span class="required-indicator sr-only"> </span></label>
-                <input type="text" class="form-control" name="nome_completo" value="{{isset($nome_completo)?$nome_completo:old('nome_completo',isset($usuario)?$usuario->nome_completo:'')}}" >
+                <input type="text" class="form-control" name="nome_completo" value="{{isset($name)?$name:old('name',isset($usuario)?$usuario->name:'')}}" >
                 @error('nome_completo')
                 <div class="invalid-feedback">{{$message}}</div>
                 @enderror
 
             </div>
-
+        </div>
+        <div class="row">
             <!--end::Col-->
             <!--begin::Col-->
+            @if(isset($grupo_selecionado))
+                <input value="{{$grupo_selecionado}}" name="grupos[]" hidden="">
+            @else
             <div class="col-md-4">
 
                 <label  class="form-label">Grupos <span class="required-indicator sr-only"> </span></label>
-                @if(request()->has('grupo_id'))
-                    <select   class="form-control"  name="grupos[]" >
-                        @else
-                            <select   class="form-control"  name="grupos[]" multiple size="1">
-                                @endif
 
-                                @foreach($grupos as $grupo)
-                                    @if(isset($grupo_cliente_id))
-                                        @if($grupo_cliente_id == $grupo->id)
-                                            <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
-                                        @endif
-                                    @else
-                                        @if(request()->has('grupo_id'))
-                                            @if(request()->get('grupo_id') == $grupo->id)
-                                                <option selected value="{{$grupo->id}}">{{$grupo->nome}}</option>
-                                            @endif
-                                        @else
-                                            @if(isset($usuario))
-                                                @if($usuario->grupos->contains('id',$grupo->id))
-                                                    <option value="{{$grupo->id}}"  selected>{{$grupo->nome}}</option>
-                                                @else
-                                                    <option value="{{$grupo->id}}" >{{$grupo->nome}}</option>
-                                                @endif
-                                            @else
-                                                <option value="{{$grupo->id}}">{{$grupo->nome}}</option>
-                                            @endif
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </select>
-                            @error('grupos')
-                            <div class="invalid-feedback">{{$message}}</div>
+                    <select   class="form-control"  name="grupos[]" multiple size="1">
+                        @foreach($grupos as $grupo)
+                            @if(isset($usuario))
+                                @if($usuario->grupos->contains('id',$grupo->id))
+                                    <option value="{{$grupo->id}}"  selected>{{$grupo->nome}}</option>
+                                @else
+                                    <option value="{{$grupo->id}}" >{{$grupo->nome}}</option>
+                                @endif
+                            @else
+                                <option value="{{$grupo->id}}">{{$grupo->nome}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('grupos')
+                        <div class="invalid-feedback">{{$message}}</div>
                     @enderror
             </div>
+            @endif
             <!--end::Col-->
             <!--begin::Col-->
             <div class="col-md-4">
@@ -88,7 +77,7 @@
                 <div class="col-md-3">
 
                     <label  class="form-label">Senha<span class="required-indicator sr-only"> </span></label>
-                    <input type="password" class="form-control"  name="senha" >
+                    <input type="password" class="form-control"  name="senha" value="{{isset($modal)?123456:''}}">
                     @error('senha')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror

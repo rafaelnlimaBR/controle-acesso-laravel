@@ -11,56 +11,29 @@ class ModeloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function pesquisarModeloAjax(Request $r)
     {
-        //
-    }
+        try{
+            $modelos = Modelo::PesquisarPorNome($r->get('q'))->limit(20)->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Modelo $modelo)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Modelo $modelo)
-    {
-        //
-    }
+            $retorno    =   [];
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Modelo $modelo)
-    {
-        //
-    }
+            foreach ($modelos as $key => $value) {
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Modelo $modelo)
-    {
-        //
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['nome'] = $value->nome;
+                $retorno[$key]['text'] = $value->nome.' - '.$value->montadora->nome;
+
+
+                $retorno[$key]['montadora'] = $value->montadora->nome;
+
+            }
+            return response()->json($retorno);
+        }catch (\Exception $e){
+            return response()->json($e->getMessage());
+        }
     }
 }

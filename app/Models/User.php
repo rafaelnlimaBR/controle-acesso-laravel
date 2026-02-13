@@ -114,8 +114,8 @@ class User extends Authenticatable
 
     public function gravar(Request $request)
     {
-        $this->name             = strtoupper($request->get('nome'));
-        $this->nome_completo    =   strtoupper($request->get('nome_completo'));
+        $this->name             = strtoupper($request->get('nome_completo'));
+
         $this->email             =   strtolower($request->get('email'));
         if ($request->has('senha')){
             $this->password          =   Hash::make($request->get('senha'));

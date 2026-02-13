@@ -39,4 +39,6 @@ class Historico extends Model
 
         $this->save();
     }
+
+
 }

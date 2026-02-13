@@ -34,6 +34,7 @@
     <link href="{{ URL::asset('layout/plugins/colorpicker/colorpicker.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('layout/plugins/summernote/summernote-bs4.css') }}" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link href="{{ URL::asset('layout/plugins/jquery-multi-select/multi-select.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
     <link
@@ -431,6 +432,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script
@@ -601,6 +603,8 @@
 
         $("#pesquisa-veiculo").select2({
             width: '100%',
+            theme: 'bootstrap-5',
+
             ajax: {
                 type: 'POST',
                 url: "{{route('veiculo.pesquisar.json')}}",
@@ -647,8 +651,57 @@
             },
 
         });
+
+        $("#pesquisa-montadora").select2({
+            width: '100%',
+
+            ajax: {
+                type: 'POST',
+                url: "{{route('modelo.pesquisar.json')}}",
+                dataType: 'json',
+
+                beforeSend: function (xhr) {
+                    var token = "{{csrf_token()}}";
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                quietMillis: 400,
+                delay:400,
+                data: function (term, page) {
+
+                    return {
+                        q: term.term, //search term
+                        // page size
+                    };
+                },
+                processResults: function (data) {
+
+                    return {
+                        results: data
+                    };
+                },
+            },
+            templateResult: function (data) {
+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+" - "+data.montadora+'</h5>' +
+
+
+                    '</div>'
+                );
+                return html;
+            },
+            templateSelection:function (data) {
+                var html    =   $('<div class="select2-user-result"><b>Modelo: </b>'+data.text+'</div><br>');
+                return html;
+            },
+
+        });
+
         $("#pesquisa-cliente").select2({
             width: '100%',
+            theme: 'bootstrap-5',
             // placeholder: "Selecione um cliente",
             ajax: {
                 type: 'POST',

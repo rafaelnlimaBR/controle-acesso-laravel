@@ -17,4 +17,9 @@ class Modelo extends Model
     {
         return $this->hasMany(Veiculo::class);
     }
+
+    public function scopePesquisarPorNome($scope, $nome)
+    {
+        return $scope->where('nome', 'like', '%' . $nome . '%');
+    }
 }

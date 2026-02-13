@@ -69,24 +69,29 @@ class UsuarioController extends Controller
                 'email'         =>  'required|email|unique:App\Models\User,email',
                 'nome_completo' =>  'required|min:3|max:100',
                 'grupos'        =>  'required|array|min:1',
-                'senha'         =>  'required|min:3|max:8',
+                'senha'         =>  'min:3|max:8',
                 'contato'       =>  'required',
                 /*'imagem'        =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',*/
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 if($r->has('modal')){
-                    $hmtl       =   view('admin.usuarios.includes.form')->withErrors($validacao)->with($r->all())->render();
+                    $hmtl       =   view('admin.usuarios.includes.form')
+                        ->withErrors($validacao)
+                        ->with($r->all())
+                        ->with('grupo_selecionado',Configuracao::getConfig()->grupo_cliente_id)
+                        ->render();
                     return response()->json(['form_cliente'=>$hmtl,'error'=>'validação']);
                 }
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
-            return response()->json($r->all());
+
             $usuario        =   new User();
             $usuario->gravar(request());
             $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
 
             if ($r->has('modal')){
+
                 return response()->json($usuario);
             }
 

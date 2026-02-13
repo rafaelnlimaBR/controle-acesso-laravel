@@ -58,4 +58,5 @@
     </div>
 
     @include('admin.usuarios.formulario-modal')
+    @include('admin.veiculos.formulario-modal')
 @endsection

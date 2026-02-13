@@ -56,7 +56,7 @@ class ContratoController extends Controller
             'titulo'            =>  'Novo Contrato',
             'titulo_card'       =>  'Dados do Contrato',
             'tecnicos'          =>  User::PesquisarPorGrupo($this->conf->grupo_tecnico_id)->get(),
-            'grupo_cliente_id'  => $this->conf->grupo_cliente_id,
+            'grupo_selecionado'    => $this->conf->grupo_cliente_id,
         ];
 
         return view('admin.contratos.formulario',$dados);
@@ -79,7 +79,12 @@ class ContratoController extends Controller
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
-                return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors($validacao)
+                    ->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+
             }
             $contrato       =   new Contrato();
             $status         =   Status::find($this->conf->orcamento_id);
@@ -114,7 +119,7 @@ class ContratoController extends Controller
                 'historico_selecionado'   =>  $historico,
                 'tecnicos'          =>  User::PesquisarPorGrupo($this->conf->grupo_tecnico_id)->get(),
                 'proximos_status'   => $contrato->status->last()->proximos,
-                'grupo_cliente_id'    => $this->conf->grupo_cliente_id,
+                'grupo_selecionado'    => $this->conf->grupo_cliente_id,
             ];
 
             return view('admin.contratos.formulario',$dados);
@@ -162,7 +167,11 @@ class ContratoController extends Controller
         }
         try{
 
-
+            foreach ($contrato->historicos as $historico) {
+                foreach ($historico->registros as $registro) {
+                    $registro->excluir();
+                }
+            }
             $contrato->delete();
             return redirect()->route('contrato.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Registro excluido com sucesso!']);
 

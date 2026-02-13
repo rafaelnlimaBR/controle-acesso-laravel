@@ -20,10 +20,11 @@
                         <!--begin::Col-->
                         <div class="col-md-6">
                             {{ csrf_field() }}
-                            <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span>  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"> Novo </button></label>
+                            <label  class="form-label">Cliente<span class="sr-only"> </span><span id="editar-cliente"></span>
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#formularioClienteModal"> Novo </button></label>
                             <select name="cliente" class="form-control " id="pesquisa-cliente">
                                 @if(isset($contrato))
-                                    <option value="{{$contrato->cliente->id}}">{{$contrato->cliente->nome_completo}}</option>
+                                    <option value="{{$contrato->cliente->id}}">{{$contrato->cliente->name}}</option>
                                 @endif
                             </select>
                             @error('cliente')
@@ -32,7 +33,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label  class="form-label">Veiculo<span class="sr-only"> </span><span id="editar-veiculo"></span></label>
+                            <label  class="form-label">Veiculo<span class="sr-only"> </span><span id="editar-veiculo"></span>
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#formularioVeiculoModal"> Novo </button></label>
                             <select  name="veiculo" class="form-control " id="pesquisa-veiculo">
                                 @if(isset($contrato))
                                     @if($contrato->veiculo()->exists())
