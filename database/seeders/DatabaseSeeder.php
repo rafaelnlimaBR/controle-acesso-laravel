@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            MontadorasSeeder::class,
+            ModelosSeeder::class,
+
+        ]);
+
         // User::factory(10)->create();
         \Laravel\Prompts\info('Inserindo usuarios');
         User::factory()->create([
@@ -177,32 +183,13 @@ class DatabaseSeeder extends Seeder
             'nao_autorizado_id'  =>  6,
         ]);
 
-        \Laravel\Prompts\info('Inserindo montadoras');
-        DB::table('montadoras')->insert([
-            ['nome'=>'Ford'],
-            ['nome'=>'VW'],
-            ['nome'=>'GM'],
-            ['nome'=>'Fiat'],
-            ['nome'=>'Renault'],
-            ['nome'=>'Peugeot'],
-            ['nome'=>'BYD'],
-        ]);
 
-        \Laravel\Prompts\info('Inserindo modelos de veiculos');
-        DB::table('modelos')->insert([
-            ['nome'=>'Ka','montadora_id'=>1],
-            ['nome'=>'Fiesta','montadora_id'=>1],
-            ['nome'=>'Gol Bola','montadora_id'=>2],
-            ['nome'=>'Voyage G5','montadora_id'=>2],
-            ['nome'=>'Celta','montadora_id'=>3],
-            ['nome'=>'Classic','montadora_id'=>3],
-        ]);
         \Laravel\Prompts\info('Inserindo veiculos');
         DB::table('veiculos')->insert([
             ['placa'=>'HUI3024','ano'=>'2012','cor'=>'Preto','modelo_id'=>1],
-            ['placa'=>'PNC0A80','ano'=>'2012','cor'=>'Preto','modelo_id'=>3],
-            ['placa'=>'OCA2A12','ano'=>'2012','cor'=>'Preto','modelo_id'=>5],
-            ['placa'=>'OIB1212','ano'=>'2012','cor'=>'Preto','modelo_id'=>6],
+            ['placa'=>'PNC0A80','ano'=>'2012','cor'=>'Preto','modelo_id'=>2],
+            ['placa'=>'OCA2A12','ano'=>'2012','cor'=>'Preto','modelo_id'=>3],
+            ['placa'=>'OIB1212','ano'=>'2012','cor'=>'Preto','modelo_id'=>4],
         ]);
 
         \Laravel\Prompts\info('Inserindo Status');

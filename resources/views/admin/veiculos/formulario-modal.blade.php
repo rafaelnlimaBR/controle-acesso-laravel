@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Novo Veículo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="form-atualizavel-cliente">
+            <div class="modal-body" id="form-atualizavel-veiculo">
                 @include('admin.veiculos.includes.form',['modal'=>true])
             </div>
             <div class="modal-footer">

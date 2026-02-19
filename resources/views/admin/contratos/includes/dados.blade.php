@@ -71,12 +71,12 @@
                                 @foreach($tecnicos as $tecnico)
                                     @if(isset($contrato))
                                         @if($contrato->tecnico->id == $tecnico->id)
-                                            <option selected value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                            <option selected value="{{$tecnico->id}}">{{$tecnico->name}}</option>
                                         @else
-                                            <option value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                            <option value="{{$tecnico->id}}">{{$tecnico->name}}</option>
                                         @endif
                                     @else
-                                        <option value="{{$tecnico->id}}">{{$tecnico->nome_completo}}</option>
+                                        <option value="{{$tecnico->id}}">{{$tecnico->name}}</option>
                                     @endif
 
                                 @endforeach

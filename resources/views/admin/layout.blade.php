@@ -445,10 +445,7 @@
     crossorigin="anonymous"
 ></script>
 <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
-    crossorigin="anonymous"
-></script>
+
 
 <script src="{{ URL::asset('layout/plugins/select2/select2.full.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
@@ -520,6 +517,42 @@
             ]
         });
 
+
+        $("#cadastrarVeiculoModal").submit(function () {
+
+
+
+            var dados   = $(this).serialize();
+
+            var rota    =   "{{route('veiculo.cadastrar')}}";
+
+            $.ajax({
+                type: "POST",
+                url: rota,
+                data: dados,
+                success: function( data )
+                {
+
+                    if('error' in data){
+                        console.log(data)
+                        $('#form-atualizavel-veiculo').html(data.form_veiculo)
+
+                    }else{
+                        console.log(data.form_veiculo)
+                        var html    =   '<option value='+data.id+'>'+data.placa+'</option>'
+                        $("#pesquisa-veiculo").html(html);
+                        $('#formularioVeiculoModal').modal('hide');
+
+                    }
+                },
+                error:function (data,e) {
+
+                    alert(data);
+                }
+            });
+
+            return false;
+        });
         $("#cadastrarClienteModal").submit(function () {
 
 
@@ -555,6 +588,59 @@
 
             return false;
         });
+
+
+            $("#pesquisa-veiculo").select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+
+                ajax: {
+                    type: 'POST',
+                    url: "{{route('veiculo.pesquisar.json')}}",
+                    dataType: 'json',
+
+                    beforeSend: function (xhr) {
+                        var token = "{{csrf_token()}}";
+
+                        if (token) {
+                            return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                        }
+                    },
+                    quietMillis: 400,
+                    delay:400,
+                    data: function (term, page) {
+
+                        return {
+                            q: term.term, //search term
+                            // page size
+                        };
+                    },
+                    processResults: function (data) {
+
+                        return {
+                            results: data
+                        };
+                    },
+                },
+                templateResult: function (data) {
+
+                    var html    =   $('<div class="select2-user-result"><h5>'+data.modelo+" - "+data.placa+'</h5>' +
+                        '<h6>Montadora: <b>'+data.montadora+'</b></h6>'+
+
+                        '</div>'
+                    );
+                    return html;
+                },
+                templateSelection:function (data) {
+                    var rota    =   "{{route('veiculo.editar',['veiculo'=>':id'])}}";
+                    rota = rota.replace(':id',data.id);
+                    $('#editar-veiculo').html(' <a class="btn btn-sm btn-warning"  href="'+rota+'" target="_new">Editar</a>');
+                    var html    =   $('<div class="select2-user-result"><b>Veículo: </b>'+data.text+'</div><br>');
+                    return html;
+                },
+
+            });
+
 
         $('.mult-select').multiSelect({
             selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'>",
@@ -601,13 +687,14 @@
         })
 
 
-        $("#pesquisa-veiculo").select2({
+
+        $("#pesquisa-modelo").select2({
             width: '100%',
             theme: 'bootstrap-5',
 
             ajax: {
                 type: 'POST',
-                url: "{{route('veiculo.pesquisar.json')}}",
+                url: "{{route('modelo.pesquisar.json')}}",
                 dataType: 'json',
 
                 beforeSend: function (xhr) {
@@ -635,25 +722,24 @@
             },
             templateResult: function (data) {
 
-                var html    =   $('<div class="select2-user-result"><h5>'+data.modelo+" - "+data.placa+'</h5>' +
-                    '<h6>Montadora: <b>'+data.montadora+'</b></h6>'+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+" - "+data.montadora+'</h5>' +
+
 
                     '</div>'
                 );
                 return html;
             },
             templateSelection:function (data) {
-                var rota    =   "{{route('veiculo.editar',['veiculo'=>':id'])}}";
-                rota = rota.replace(':id',data.id);
-                $('#editar-veiculo').html(' <a class="btn btn-sm btn-warning"  href="'+rota+'" target="_new">Editar</a>');
-                var html    =   $('<div class="select2-user-result"><b>Veículo: </b>'+data.text+'</div><br>');
+                var html    =   $('<div class="select2-user-result"><b>Modelo: </b>'+data.text+'</div><br>');
                 return html;
             },
 
         });
 
-        $("#pesquisa-montadora").select2({
+        $("#pesquisa-modelo-modal").select2({
             width: '100%',
+            theme: 'bootstrap-5',
+            dropdownParent: $('#formularioVeiculoModal'),
 
             ajax: {
                 type: 'POST',

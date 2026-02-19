@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('modelos', function (Blueprint $t) {
             $t->id('id');
-            $t->string('nome')->unique();
+            $t->string('nome');
             $t->foreignId('montadora_id')->references('id')->on('montadoras')->onDelete('cascade');
         });
     }

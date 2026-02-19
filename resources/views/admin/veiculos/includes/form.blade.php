@@ -29,11 +29,21 @@
 
             <div class="col-md-3">
                 <label  class="form-label">Cor<span class="sr-only"> </span></label>
-                    <select class="form-control" name="modelo" id="pesquisa-montadora">
-                       {{-- @foreach($modelos as $modelo)
-                            <option value="{{$modelo->id}}">{{$modelo->nome}}</option>
-                        @endforeach--}}
+                @if(isset($modal))
+                    <input name="modal" value="true" hidden="">
+                    <select class="form-control" name="modelo" id="pesquisa-modelo-modal">
+                        {{-- @foreach($modelos as $modelo)
+                             <option value="{{$modelo->id}}">{{$modelo->nome}}</option>
+                         @endforeach--}}
                     </select>
+                @else
+                    <select class="form-control" name="modelo" id="pesquisa-modelo">
+                        {{-- @foreach($modelos as $modelo)
+                             <option value="{{$modelo->id}}">{{$modelo->nome}}</option>
+                         @endforeach--}}
+                    </select>
+                @endif
+
                 @error('modelo')
                 <div class="invalid-feedback">{{@$message}}</div>
                 @enderror

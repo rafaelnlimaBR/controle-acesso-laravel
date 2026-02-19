@@ -90,13 +90,16 @@ class ContratoController extends Controller
             $status         =   Status::find($this->conf->orcamento_id);
 
             $contrato->gravar(request());
-            $contrato->status()->attach($status,['descricao'=>'Orçamento criado','autor_id'=>auth()->user()->id,'data'=>Carbon::parse($r->get('data_inicio'))->format('Y-m-d')]);
+
+            $contrato->status()->attach($status,['descricao'=>'Orçamento criado','autor_id'=>auth()->user()->id,'data'=>Carbon::createFromFormat('d/m/Y',$r->get('data_inicio'))->format('Y-m-d')]);
+
             $historico_atual    =   $contrato->historicos->last();
+
             return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico_atual])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Contratro cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
-            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+            return redirect()->route('contrato.novo')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
 

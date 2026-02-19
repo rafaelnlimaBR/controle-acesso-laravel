@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuracao;
 use App\Models\Modelo;
 use App\Models\Veiculo;
 use App\Http\Controllers\Controller;
@@ -68,17 +69,28 @@ class VeiculoController extends Controller
         try{
 
             $r              =   \request();
+            $modal          =   $r->has('modal');
             $regras         =   [
                 'placa'=>'required|min:3|max:100|unique:App\Models\Veiculo,placa',
                 'modelo'=>'required',
                 'ano'=>'required',];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
+                if($modal){
+                    $hmtl       =   view('admin.veiculos.includes.form')
+                        ->withErrors($validacao)
+                        ->with($r->all())
+                        ->render();
+                    return response()->json(['form_veiculo'=>$hmtl,'error'=>'validação']);
+                }
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
             $veiculo        =   new Veiculo();
             $veiculo->gravar(request());
 
+            if($modal){
+                return response()->json($veiculo);
+            }
             return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
 
@@ -153,6 +165,7 @@ class VeiculoController extends Controller
     public function pesquisarVeiculoAjax(Request $r)
     {
         try{
+
             $veiculos = Veiculo::pesquisarPorPlaca($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
 
 
