@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link href="{{ URL::asset('layout/plugins/jquery-multi-select/multi-select.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
@@ -68,6 +69,13 @@
 
     <link rel="stylesheet" href="{{ URL::asset('layout/plugins/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('layout/css/adminlte.css') }}" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+        integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
     <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->
@@ -436,6 +444,12 @@
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+    integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
+<script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
     crossorigin="anonymous"
 ></script>
@@ -532,9 +546,10 @@
                 data: dados,
                 success: function( data )
                 {
-
+                    console.log(data)
                     if('error' in data){
-                        console.log(data)
+                        // console.log(data.form_veiculo)
+
                         $('#form-atualizavel-veiculo').html(data.form_veiculo)
 
                     }else{
@@ -685,105 +700,8 @@
             $('.mult-select').multiSelect('deselect_all');
             return false;
         })
+        $('#pesquisa-modelo').selectize();
 
-
-
-        $("#pesquisa-modelo").select2({
-            width: '100%',
-            theme: 'bootstrap-5',
-
-            ajax: {
-                type: 'POST',
-                url: "{{route('modelo.pesquisar.json')}}",
-                dataType: 'json',
-
-                beforeSend: function (xhr) {
-                    var token = "{{csrf_token()}}";
-
-                    if (token) {
-                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-                    }
-                },
-                quietMillis: 400,
-                delay:400,
-                data: function (term, page) {
-
-                    return {
-                        q: term.term, //search term
-                        // page size
-                    };
-                },
-                processResults: function (data) {
-
-                    return {
-                        results: data
-                    };
-                },
-            },
-            templateResult: function (data) {
-
-                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+" - "+data.montadora+'</h5>' +
-
-
-                    '</div>'
-                );
-                return html;
-            },
-            templateSelection:function (data) {
-                var html    =   $('<div class="select2-user-result"><b>Modelo: </b>'+data.text+'</div><br>');
-                return html;
-            },
-
-        });
-
-        $("#pesquisa-modelo-modal").select2({
-            width: '100%',
-            theme: 'bootstrap-5',
-            dropdownParent: $('#formularioVeiculoModal'),
-
-            ajax: {
-                type: 'POST',
-                url: "{{route('modelo.pesquisar.json')}}",
-                dataType: 'json',
-
-                beforeSend: function (xhr) {
-                    var token = "{{csrf_token()}}";
-
-                    if (token) {
-                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-                    }
-                },
-                quietMillis: 400,
-                delay:400,
-                data: function (term, page) {
-
-                    return {
-                        q: term.term, //search term
-                        // page size
-                    };
-                },
-                processResults: function (data) {
-
-                    return {
-                        results: data
-                    };
-                },
-            },
-            templateResult: function (data) {
-
-                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+" - "+data.montadora+'</h5>' +
-
-
-                    '</div>'
-                );
-                return html;
-            },
-            templateSelection:function (data) {
-                var html    =   $('<div class="select2-user-result"><b>Modelo: </b>'+data.text+'</div><br>');
-                return html;
-            },
-
-        });
 
         $("#pesquisa-cliente").select2({
             width: '100%',

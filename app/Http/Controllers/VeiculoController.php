@@ -75,14 +75,17 @@ class VeiculoController extends Controller
                 'modelo'=>'required',
                 'ano'=>'required',];
             $validacao      =   Validator::make($r->all(),$regras);
+
             if($validacao->fails()){
                 if($modal){
                     $hmtl       =   view('admin.veiculos.includes.form')
                         ->withErrors($validacao)
                         ->with($r->all())
                         ->render();
+
                     return response()->json(['form_veiculo'=>$hmtl,'error'=>'validação']);
                 }
+                return response()->json($r->all());
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
             $veiculo        =   new Veiculo();

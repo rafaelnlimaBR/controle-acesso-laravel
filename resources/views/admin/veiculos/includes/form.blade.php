@@ -1,22 +1,24 @@
-
+@if(isset($modal))
+    <input name="modal" >
+@endif
     {{csrf_field()}}
     <!--begin::Body-->
 
         <!--begin::Row-->
         <div class="row g-3">
             <!--begin::Col-->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label  class="form-label">Placa<span class="sr-only"> </span></label>
                 <input type="text" class="form-control" name="placa" value="{{isset($placa)?$placa:old('placa',isset($veiculo)?$veiculo->placa:'')}}" >
                 @error('placa')
-                <div class="invalid-feedback">{{@$message}}</div>
+                <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
             <div class="col-md-2">
                 <label  class="form-label">Ano<span class="sr-only"> </span></label>
                 <input type="text" class="form-control" name="ano" value="{{isset($ano)?$ano:old('ano',isset($veiculo)?$veiculo->ano:'')}}" >
                 @error('ano')
-                <div class="invalid-feedback">{{@$message}}</div>
+                <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
             <div class="col-md-3">
@@ -27,22 +29,13 @@
                 @enderror
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label  class="form-label">Cor<span class="sr-only"> </span></label>
-                @if(isset($modal))
-                    <input name="modal" value="true" hidden="">
-                    <select class="form-control" name="modelo" id="pesquisa-modelo-modal">
-                        {{-- @foreach($modelos as $modelo)
-                             <option value="{{$modelo->id}}">{{$modelo->nome}}</option>
-                         @endforeach--}}
-                    </select>
-                @else
-                    <select class="form-control" name="modelo" id="pesquisa-modelo">
-                        {{-- @foreach($modelos as $modelo)
-                             <option value="{{$modelo->id}}">{{$modelo->nome}}</option>
-                         @endforeach--}}
-                    </select>
-                @endif
+                <select class="form-control" name="modelo" id="pesquisa-modelo">
+                     @foreach($modelos as $modelo)
+                         <option value="{{$modelo->id}}">{{$modelo->nome.' - '.$modelo->montadora->nome}}</option>
+                     @endforeach
+                </select>
 
                 @error('modelo')
                 <div class="invalid-feedback">{{@$message}}</div>
