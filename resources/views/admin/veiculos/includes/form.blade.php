@@ -1,5 +1,5 @@
 @if(isset($modal))
-    <input name="modal" >
+    <input name="modal" value="1" hidden="">
 @endif
     {{csrf_field()}}
     <!--begin::Body-->
@@ -50,4 +50,9 @@
     <!--begin::Footer-->
 
     <!--end::Footer-->
+<script type="text/javascript">
 
+        $('#pesquisa-modelo').selectize();
+
+
+</script>

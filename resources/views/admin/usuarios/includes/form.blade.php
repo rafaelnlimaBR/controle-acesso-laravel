@@ -1,7 +1,7 @@
 
     {{csrf_field()}}
     @if(isset($modal))
-        <input name="modal" value="1" hidden="">
+        <input name="modal" value="1" hidden="" >
     @endif
     <!--begin::Body-->
 

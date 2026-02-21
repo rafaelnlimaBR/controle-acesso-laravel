@@ -1,10 +1,10 @@
 <!-- Modal -->
-<div class="modal fade" id="formularioVeiculoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formularioVeiculoModal" tabindex="-1" aria-labelledby="modalVeiculo" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post"  name="cadastrarVeiculoModal" id="cadastrarVeiculoModal">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Novo Veículo</h1>
+                <h1 class="modal-title fs-5" id="modalVeiculo">Cadastro de Novo Veículo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="form-atualizavel-veiculo">

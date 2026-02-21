@@ -243,7 +243,16 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'user-01.png','registro_id'=>1],
         ]);
 
+        \Laravel\Prompts\info('Inserindo Serviços');
+        DB::table('servicos')->insert([
+            ['nome'=>'Reparo do painel','valor'=>'100'],
+            ['nome'=>'Reparo do modulo','valor'=>'100']
+        ]);
 
+        DB::table('historico_servico')->insert([
+            ['servico_id'=>1,'historico_id'=>1,'valor_liquido'=>'100','valor_bruto'=>'100','desconto'=>0],
+            ['servico_id'=>2,'historico_id'=>1,'valor_liquido'=>'550','valor_bruto'=>'100','desconto'=>0],
+        ]);
 
     }
 }

@@ -93,6 +93,6 @@ View::composer(['admin.contratos.form.registro'],function($view){
 
 Route::get('/', function () {
     $contrato   =   Contrato::find(1);
-    $contrato->status()->attach(3,['descricao'=>'Orçamento criado','autor_id'=>1,'data'=>Carbon::parse('02/02/2026')->format('Y-m-d')]);
+    return $contrato->historicos->map->servicos->flatten();
 
 });

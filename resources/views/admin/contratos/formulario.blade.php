@@ -23,6 +23,12 @@
                                    id="custom-tabs-three-messages-tab" data-toggle="pill" href="#registros" role="tab"
                                    aria-controls="custom-tabs-three-messages" aria-selected="false">Registros</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='servicos'?'active':'':''}}"
+                                   id="custom-tabs-three-messages-tab" data-toggle="pill" href="#servicos" role="tab"
+                                   aria-controls="custom-tabs-three-messages" aria-selected="false">Serviços</a>
+                            </li>
+
                         @endif
 
                     </ul>
@@ -46,6 +52,11 @@
                                 class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='registros'?'active':'':''}}"
                                 id="registros" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                                 @include('admin.contratos.includes.registros')
+                            </div>
+                            <div
+                                class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='servicos'?'active':'':''}}"
+                                id="servicos" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                                @include('admin.contratos.includes.servicos')
                             </div>
                         @endif
                     </div>

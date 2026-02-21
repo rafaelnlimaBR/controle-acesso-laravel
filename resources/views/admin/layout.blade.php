@@ -508,7 +508,7 @@
             $('#id-modal-status').val(status);
             $('#modal-mudar-status').modal("show")
         });
-
+        $('#pesquisa-modelo').selectize();
         $('.datepicker').datepicker(
             {   dateFormat: "dd/mm/yy",
                 dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
@@ -546,9 +546,9 @@
                 data: dados,
                 success: function( data )
                 {
-                    console.log(data)
+
                     if('error' in data){
-                        // console.log(data.form_veiculo)
+
 
                         $('#form-atualizavel-veiculo').html(data.form_veiculo)
 
@@ -584,7 +584,7 @@
                 {
 
                     if('error' in data){
-                        console.log(data)
+
                         $('#form-atualizavel-cliente').html(data.form_cliente)
 
                     }else{
@@ -700,7 +700,7 @@
             $('.mult-select').multiSelect('deselect_all');
             return false;
         })
-        $('#pesquisa-modelo').selectize();
+
 
 
         $("#pesquisa-cliente").select2({
