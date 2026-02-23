@@ -2,6 +2,7 @@
 
 use App\Models\Aplicativo;
 use App\Models\Contrato;
+use App\Models\Servico;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/editar/{contrato}/historico/{historico}/registro/atualizar/imagem/{imagem}',[App\Http\Controllers\RegistroController::class, 'atualizarImagem'])->name('contrato.registro.atualizar.imagem');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/excluir/{registro}', [App\Http\Controllers\RegistroController::class, 'excluir'])->name('contrato.registro.excluir');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/{registro}/imagem/{imagem}', [App\Http\Controllers\RegistroController::class, 'excluirImagem'])->name('contrato.registro.imagem.excluir');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/servico/adicionar',[App\Http\Controllers\ContratoController::class, 'adicionarServico'])->name('contrato.servico.adicionar');
+
+//SERVIÇOS
+    Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
 
 });
 
@@ -92,7 +97,20 @@ View::composer(['admin.contratos.form.registro'],function($view){
 });
 
 Route::get('/', function () {
-    $contrato   =   Contrato::find(1);
-    return $contrato->historicos->map->servicos->flatten();
+    $servicos    =   Servico::pesquisarPorNome('pai')->get();
+
+
+    $retorno    =   [];
+
+    foreach ($servicos as $key => $value) {
+
+        $retorno[$key]['id'] = $value->id;
+        $retorno[$key]['text'] = $value->nome;
+        $retorno[$key]['nome'] = $value->nome;
+
+
+
+    }
+    return response()->json($retorno);
 
 });

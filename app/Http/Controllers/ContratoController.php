@@ -198,5 +198,18 @@ class ContratoController extends Controller
         }
     }
 
+    public function adicionarServico(Request $r, Contrato $contrato,Historico $historico)
+    {
+        try {
+
+            $historico->servicos()->attach($r->get('servico'),['valor_liquido'=>$r->get('valor'),'valor_bruto'=>$r->get('valor'),'desconto'=>0,'cobrar'=>$r->get('cobrar')]);
+
+            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$contrato)->render();
+            return response()->json(['tabela_servicos'=>$html]);
+
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
 
 }

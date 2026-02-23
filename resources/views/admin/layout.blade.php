@@ -568,6 +568,41 @@
 
             return false;
         });
+
+        $("#adicionar-servico").submit(function () {
+
+
+
+            var dados   = $(this).serialize();
+
+            var rota    =   $(this).attr("action");
+            console.log(rota);
+
+            $.ajax({
+                type: "POST",
+                url: rota,
+                data: dados,
+                success: function( data )
+                {
+
+                    if('error' in data){
+
+                        alert(data.error)
+
+
+                    }else{
+                        console.log(data)
+                        $("#tabela-servicos-atualizavel").html(data.tabela_servicos);
+                    }
+                },
+                error:function (data,e) {
+
+                    alert(data);
+                }
+            });
+
+            return false;
+        });
         $("#cadastrarClienteModal").submit(function () {
 
 
@@ -655,6 +690,55 @@
                 },
 
             });
+
+        $("#pesquisa-servico").select2({
+            width: '100%',
+            theme: 'bootstrap-5',
+
+            ajax: {
+                type: 'POST',
+                url: "{{route('servico.pesquisar.json')}}",
+                dataType: 'json',
+
+                beforeSend: function (xhr) {
+                    var token = "{{csrf_token()}}";
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                quietMillis: 400,
+                delay:400,
+                data: function (term, page) {
+
+                    return {
+                        q: term.term, //search term
+                        // page size
+                    };
+                },
+                processResults: function (data) {
+
+                    return {
+                        results: data
+                    };
+                },
+            },
+            templateResult: function (data) {
+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+'</h5>' +
+
+
+                    '</div>'
+                );
+                return html;
+            },
+            templateSelection:function (data) {
+                $('#valor_servico').val(data.valor)
+                var html    =   $('<div class="select2-user-result">'+data.text+'</div><br>');
+                return html;
+            },
+
+        });
 
 
         $('.mult-select').multiSelect({
