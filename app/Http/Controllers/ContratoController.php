@@ -212,4 +212,29 @@ class ContratoController extends Controller
         }
     }
 
+    public function atualizarServico(Request $r,Contrato $contrato,Historico $historico)
+    {
+        try{
+            $r              =   \request();
+            $pivot          =   [
+                'valor_liquido'=>$r->get('valor_liquido'),
+                'valor_bruto'=>$r->get('valor_bruto'),
+                'desconto'=>$r->get('desconto'),
+                'cobrar'=>1,
+                'devolucao'=>0
+            ];
+
+
+
+            $historico->servicos()->updateExistingPivot(
+                2,
+                ['valor_bruto'=>15,'desconto'=>12,'cobrar'=>1,'valor_liquido'=>12,'devolucao'=>0]);
+
+            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$contrato)->with('historico_selecionado',$historico)->render();
+            return response()->json(['tabela_servicos'=>$html]);
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
 }

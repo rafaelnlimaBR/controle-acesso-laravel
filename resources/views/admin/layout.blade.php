@@ -603,6 +603,42 @@
 
             return false;
         });
+
+        $(".atualizar-servico").submit(function () {
+
+
+
+            var dados   = $(this).serialize();
+
+            var rota    =   $(this).attr("action");
+
+
+            $.ajax({
+                type: "POST",
+                url: rota,
+                data: dados,
+                success: function( data )
+                {
+
+                    if('error' in data){
+
+                        alert(data.error)
+
+
+                    }else{
+                        console.log(data)
+                        $("#tabela-servicos-atualizavel").html(data.tabela_servicos);
+                    }
+                },
+                error:function (data,e) {
+
+                    alert(data);
+                }
+            });
+
+            return false;
+        });
+
         $("#cadastrarClienteModal").submit(function () {
 
 
