@@ -20,6 +20,7 @@ return new class extends Migration
             $t->decimal('desconto', 8, 2)->default(0);
             $t->boolean('cobrar')->default(false);
             $t->boolean('devolucao')->default(false);
+            $t->unique(['servico_id', 'historico_id']);
             $t->timestamps();
         });
     }

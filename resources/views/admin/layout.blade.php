@@ -9,6 +9,7 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!--end::Accessibility Meta Tags-->
     <!--begin::Primary Meta Tags-->
     <meta name="title" content="Layout | AdminLTE 4" />
@@ -81,6 +82,13 @@
 <!--end::Head-->
 <!--begin::Body-->
 <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+<script src="{{ URL::asset('layout/js/jquery-3.2.1.min.js') }}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+    integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
 <!--begin::App Wrapper-->
 <div class="app-wrapper">
     <!--begin::Header-->
@@ -430,7 +438,7 @@
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
 
-<script src="{{ URL::asset('layout/js/jquery-3.2.1.min.js') }}"></script>
+
 <script src="{{ URL::asset('layout/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('layout/js/jquery-migrate.js') }}"></script>
 <script src="{{ URL::asset('layout/plugins/colorpicker/jquery-asColor.js') }}"></script>
@@ -443,12 +451,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
-    integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-></script>
+
 <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
     crossorigin="anonymous"
@@ -569,44 +572,99 @@
             return false;
         });
 
-        $("#adicionar-servico").submit(function () {
+        $(document).on("click", ".botao-atualizar-servico", function(e) {
+            var id              =   $(this).attr("servico-id");
+            var historico_id     =   $('#historico-id-'+id.toString()).val()
+            var valor_bruto     =   $('#valor-bruto-'+id.toString()).val()
+            var valor_liquido   =   $('#valor-liquido-'+id.toString()).val()
+            var desconto        =   $('#desconto-'+id.toString()).val()
+            var cobrar          =   $('#cobrar-'+id.toString()).val()
+            var rota    =   "{{route('contrato.servico.atualizar')}}";
 
 
-
-            var dados   = $(this).serialize();
-
-            var rota    =   $(this).attr("action");
-            console.log(rota);
 
             $.ajax({
+                header:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 type: "POST",
                 url: rota,
-                data: dados,
+                data:{
+                "valor_bruto":valor_bruto,
+                "valor_liquido":valor_liquido,
+                "desconto":desconto,
+                "cobrar":cobrar,
+                "servico_id":id,
+                "historico_id":historico_id
+                }
+                ,
                 success: function( data )
                 {
-
+                    console.log(data)
                     if('error' in data){
 
-                        alert(data.error)
+                        alert(data)
 
 
                     }else{
-                        console.log(data)
+
                         $("#tabela-servicos-atualizavel").html(data.tabela_servicos);
                     }
                 },
                 error:function (data,e) {
-
+                    console.log(data)
                     alert(data);
                 }
             });
-
             return false;
+
         });
 
-        $(".atualizar-servico").submit(function () {
+        $(document).on("click", ".botao-exluir-servico", function(e) {
+            var id              =   $(this).attr("servico-id");
+            var historico_id     =    $(this).attr("historico-id");
+            var rota    =   "{{route('contrato.servico.excluir')}}";
 
 
+
+            $.ajax({
+                header:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: rota,
+                data:{
+                    "servico_id":id,
+                    "historico_id":historico_id
+                }
+                ,
+                success: function( data )
+                {
+                    console.log(data)
+                    if('error' in data){
+
+                        alert(data)
+
+
+                    }else{
+
+                        $("#tabela-servicos-atualizavel").html(data.tabela_servicos);
+                    }
+                },
+                error:function (data,e) {
+                    console.log(data)
+                    alert(data);
+                }
+            });
+            return false;
+
+        });
+
+        // $("form[name='atualizar-servico']").on('submit','#tabela-servicos-atualizavel',function (){
+
+
+        $(document).on("submit", "#adicionar-servico", function(e) {
+            e.preventDefault();
 
             var dados   = $(this).serialize();
 

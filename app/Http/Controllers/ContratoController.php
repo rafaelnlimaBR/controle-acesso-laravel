@@ -212,25 +212,43 @@ class ContratoController extends Controller
         }
     }
 
-    public function atualizarServico(Request $r,Contrato $contrato,Historico $historico)
+    public function atualizarServico(Request $r)
     {
         try{
             $r              =   \request();
+            $historico      =   Historico::find($r->get('historico_id'));
             $pivot          =   [
                 'valor_liquido'=>$r->get('valor_liquido'),
                 'valor_bruto'=>$r->get('valor_bruto'),
                 'desconto'=>$r->get('desconto'),
-                'cobrar'=>1,
-                'devolucao'=>0
+                'cobrar'=>$r->get('cobrar'),
+                'devolucao'=>0,
+
             ];
 
-
+//            return $r->all();
 
             $historico->servicos()->updateExistingPivot(
-                2,
-                ['valor_bruto'=>15,'desconto'=>12,'cobrar'=>1,'valor_liquido'=>12,'devolucao'=>0]);
+                $r->get('servico_id'),
+                ['valor_bruto'=>$r->get('valor_bruto'),'desconto'=>$r->get('desconto'),'cobrar'=>$r->get('cobrar'),'valor_liquido'=>$r->get('valor_liquido'),'devolucao'=>0]);
 
-            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$contrato)->with('historico_selecionado',$historico)->render();
+            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$historico->contrato)->with('historico_selecionado',$historico)->render();
+            return response()->json(['tabela_servicos'=>$html]);
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function excluirServico(Request $r)
+    {
+        try{
+            $r              =   \request();
+            $historico      =   Historico::find($r->get('historico_id'));
+
+            $historico->servicos()->detach($r->get('servico_id'));
+//
+
+            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$historico->contrato)->with('historico_selecionado',$historico)->render();
             return response()->json(['tabela_servicos'=>$html]);
         }catch (\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);

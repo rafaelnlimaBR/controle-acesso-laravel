@@ -1,4 +1,4 @@
-<form id="adicionar-servico" action="{{route('contrato.servico.adicionar',['contrato'=>$contrato,'historico'=>$historico_selecionado])}}" method="post">
+<form name="adicionar-servico" id="adicionar-servico" action="{{route('contrato.servico.adicionar',['contrato'=>$contrato,'historico'=>$historico_selecionado])}}" method="post">
     <div class="row">
         <div class="col-md-3">
             {{ csrf_field() }}

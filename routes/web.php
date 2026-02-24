@@ -62,7 +62,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/excluir/{registro}', [App\Http\Controllers\RegistroController::class, 'excluir'])->name('contrato.registro.excluir');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/{registro}/imagem/{imagem}', [App\Http\Controllers\RegistroController::class, 'excluirImagem'])->name('contrato.registro.imagem.excluir');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/servico/adicionar',[App\Http\Controllers\ContratoController::class, 'adicionarServico'])->name('contrato.servico.adicionar');
-    Route::post('/contrato/editar/{contrato}/historico/{historico}/servico/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarServico'])->name('contrato.servico.atualizar');
+    Route::post('/contrato/servico/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarServico'])->name('contrato.servico.atualizar');
+    Route::post('/contrato/servico/excluir',[App\Http\Controllers\ContratoController::class, 'excluirServico'])->name('contrato.servico.excluir');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
@@ -102,6 +103,6 @@ Route::get('/', function () {
 
 
     $historico  =   \App\Models\Historico::find(1);
-    $historico->servicos()->updateExistingPivot(2,
-        ['valor_bruto'=>15,'desconto'=>2,'cobrar'=>1,'valor_liquido'=>2,'devolucao'=>0]);
+    $historico->servicos()->updateExistingPivot(3,
+        ['valor_bruto'=>1,'desconto'=>1,'cobrar'=>1,'valor_liquido'=>2,'devolucao'=>0]);
 });
