@@ -1,4 +1,4 @@
-<h4>{{$contrato->valorLiquidoTotalServico()}}</h4>
+
 
 <table class="table table-bordered" role="table">
     <thead>
@@ -57,3 +57,5 @@
 
     </tbody>
 </table>
+<br>
+<h4>R$ {{$contrato->valorLiquidoTotalServico()}}</h4>

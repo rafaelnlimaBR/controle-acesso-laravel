@@ -74,7 +74,7 @@ class Contrato extends Model
 
     public function valorLiquidoTotalServico()
     {
-        return $this->historicos->map->servicos->flatten()->sum('pivot.valor-liquido');
+        return $this->historicos->map->servicos->flatten()->sum('pivot.valor_liquido');
     }
 
     public function gravar(Request $r)
