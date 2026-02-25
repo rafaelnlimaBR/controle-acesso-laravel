@@ -1,3 +1,5 @@
+<h4>{{$contrato->valorLiquidoTotalServico()}}</h4>
+
 <table class="table table-bordered" role="table">
     <thead>
     <tr>
@@ -29,9 +31,9 @@
                     <input hidden=""  id="historico-id-{{$s->id}}" value="{{$h->id}}">
                 </td>
                 <td>{{$s->nome}}</td>
-                <td><input REQUIRED  class="form-control form-control-sm " id="valor-bruto-{{$s->id}}" name="valor-bruto-{{$s->id}}" value="{{$s->pivot->valor_bruto}}"></td>
-                <td><input REQUIRED class="form-control form-control-sm " id="desconto-{{$s->id}}" name="desconto-{{$s->id}}" value="{{$s->pivot->desconto}}"></td>
-                <td><input REQUIRED class="form-control form-control-sm" id="valor-liquido-{{$s->id}}" name="valor-liquido-{{$s->id}}" value="{{$s->pivot->valor_liquido}}"></td>
+                <td><input REQUIRED ativo="valor-bruto" servico_id="{{$s->id}}" class="form-control form-control-sm calcular-valors-servico" id="valor-bruto-{{$s->id}}" name="valor-bruto-{{$s->id}}" value="{{$s->pivot->valor_bruto}}"></td>
+                <td><input REQUIRED ativo="desconto" servico_id="{{$s->id}}" class="form-control form-control-sm calcular-valors-servico" id="desconto-{{$s->id}}" name="desconto-{{$s->id}}" value="{{$s->pivot->desconto}}"></td>
+                <td><input REQUIRED ativo="valor-liquido" servico_id="{{$s->id}}" class="form-control form-control-sm calcular-valors-servico" id="valor-liquido-{{$s->id}}" name="valor-liquido-{{$s->id}}" value="{{$s->pivot->valor_liquido}}"></td>
                 <td>{{$h->status->nome}}</td>
                 <td>
                     <select class="form-control form-control-sm" id="cobrar-{{$s->id}}" name="cobrar-{{$s->id}}">
@@ -46,7 +48,7 @@
                     </select>
                 </td>
                 <td><button servico-id="{{$s->id}}" class="btn btn-sm btn-warning botao-atualizar-servico" type="button" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button onclick="return alert('Deseja excluir esse serviço? ')" servico-id="{{$s->id}}" historico-id="{{$h->id}}" class="btn btn-sm btn-danger botao-exluir-servico" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                <button onclick="return confirm('Deseja excluir esse serviço? ')" servico-id="{{$s->id}}" historico-id="{{$h->id}}" class="btn btn-sm btn-danger botao-exluir-servico" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 
             </tr>
 

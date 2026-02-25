@@ -662,6 +662,34 @@
 
         // $("form[name='atualizar-servico']").on('submit','#tabela-servicos-atualizavel',function (){
 
+        $(document).on('keyup','.calcular-valors-servico',function (e){
+            var id                  =   $(this).attr('servico_id');
+            var valor_bruto         =   $('#valor-bruto-'+id).val();
+            var desconto            =   $('#desconto-'+id).val();
+            var valor_liquido       =   $('#valor-liquido-'+id).val();
+
+
+            if($(this).attr("ativo") == 'valor-bruto'){
+                $("#valor-liquido-"+id).val(parseFloat((valor_bruto*(100-desconto))/100).toFixed(2));
+            }else if($(this).attr("ativo") == 'desconto'){
+
+                $("#valor-liquido-"+id).val(parseFloat((valor_bruto*(100-desconto))/100).toFixed(2));
+            }else if($(this).attr("ativo") == 'valor-liquido'){
+
+
+                var desconto    =   parseFloat(100-((valor_liquido*100)/valor_bruto)).toFixed(2);
+
+                if(desconto < 0){
+
+                    $("#desconto-"+id).css("background-color", 'red').css('color','white');
+                }else{
+                    $("#desconto-"+id).css("background-color", 'white').css('color','#495057');
+                }
+                $("#desconto-"+id).val(desconto);
+            }
+
+            console.log(valor_bruto+" "+valor_liquido+" "+desconto);
+        });
 
         $(document).on("submit", "#adicionar-servico", function(e) {
             e.preventDefault();
