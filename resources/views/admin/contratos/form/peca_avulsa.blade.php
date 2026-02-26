@@ -1,22 +1,36 @@
-<form name="adicionar-servico" id="adicionar-servico" action="{{route('contrato.servico.adicionar',['contrato'=>$contrato,'historico'=>$historico_selecionado])}}" method="post">
+<form name="adicionar-peca-avulsa" id="adicionar-peca-avulsa" action="{{route('contrato.pecaavulsa.adicionar',['contrato'=>$contrato,'historico'=>$historico_selecionado])}}" method="post">
     <div class="row">
         <div class="col-md-3">
             {{ csrf_field() }}
-            <label  class="form-label">Serviço</label>
+            <label  class="form-label">Nome da Peça</label>
 
-            <select required name="servico" class="form-control " id="pesquisa-servico">
-
-            </select>
-            @error('servico')
+            <input class="form-control" name="nome" value="{{isset($nome)?$nome:''}}">
+            @error('nome')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
         <div class="col-md-2">
 
+            <label  class="form-label">Marca</label>
+
+            <input  name="marca" class="form-control"  id="marca" value="{{isset($marca)?$marca:''}}">
+
+        </div>
+        <div class="col-md-2">
+
             <label  class="form-label">Valor</label>
 
-            <input required name="valor" class="form-control" value="0" id="valor_servico">
+            <input  name="valor" class="form-control" value="{{isset($valor)?$valor:''}}">
             @error('valor')
+            <div class="invalid-feedback">{{$message}}</div>
+            @enderror
+        </div>
+        <div class="col-md-2">
+
+            <label  class="form-label">Desconto</label>
+
+            <input  name="desconto" class="form-control"  value="{{isset($desconto)?$desconto:''}}">
+            @error('desconto')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
@@ -34,9 +48,7 @@
                     <option  value="{{$historico_selecionado->status->cobrar}}">Sim</option>
                 @endif
             </select>
-            @error('valor')
-            <div class="invalid-feedback">{{$message}}</div>
-            @enderror
+
         </div>
 
         <div class="col-md-1">

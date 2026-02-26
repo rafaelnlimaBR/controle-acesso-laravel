@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Configuracao;
 use App\Models\Contrato;
 use App\Models\Historico;
+use App\Models\PecaAvulsa;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
@@ -206,6 +207,49 @@ class ContratoController extends Controller
 
             $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$contrato)->render();
             return response()->json(['tabela_servicos'=>$html]);
+
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function adicionarPecaAvulsa(Request $r,Contrato $contrato, Historico $historico)
+    {
+        try {
+            $regras         =   [
+                'nome'=>'required',
+                'valor'=>'required|numeric|decimal:0,2',
+                'desconto'=>'required',
+            ];
+
+            $validacao      =   Validator::make($r->all(),$regras);
+            if($validacao->fails()){
+                $html       =   view('admin.contratos.form.peca_avulsa')
+                    ->withErrors($validacao)
+                    ->with('marca',$r->get('marca'))
+                    ->with('desconto',$r->get('desconto'))
+                    ->with('valor',$r->get('valor'))
+                    ->with('nome',$r->get('nome'))
+                    ->with('contrato',$contrato)
+                    ->with('historico_selecionado',$historico)
+                    ->render();
+                return response()->json(['peca_html'=>$html,'error'=>'erro de validação']);
+
+            }
+
+            $peca           =   new PecaAvulsa();
+            $peca->nome       =   $r->get('nome');
+            $peca->valor        =   $r->get('valor');
+            $peca->desconto    =   $r->get('desconto');
+            $peca->cobrar      =   $r->get('cobrar');
+            $peca->marca       =   $r->get('marca');
+            $peca->historico_id=   $historico->id;
+            $peca->save();
+
+            $html       =   view('admin.contratos.includes.pecas-avulsas-tabela')
+                ->with('contrato',$contrato)
+                ->render();
+            return response()->json(['tabela_pecas_avulsas'=>$html]);
 
         }catch (\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);

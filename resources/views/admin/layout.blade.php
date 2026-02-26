@@ -725,6 +725,40 @@
             return false;
         });
 
+        $(document).on("submit", "#adicionar-peca-avulsa", function(e) {
+            e.preventDefault();
+
+            var dados   = $(this).serialize();
+
+            var rota    =   $(this).attr("action");
+
+
+            $.ajax({
+                type: "POST",
+                url: rota,
+                data: dados,
+                success: function( data )
+                {
+
+                    if('error' in data){
+
+                        console.log(data.error)
+                        $('#form-peca-avulsa').html(data.peca_html)
+
+                    }else{
+                        console.log(data)
+                        $("#tabela-pecas-avulsas-atualizavel").html(data.tabela_pecas_avulsas);
+                    }
+                },
+                error:function (data,e) {
+
+                    alert(data);
+                }
+            });
+
+            return false;
+        });
+
         $("#cadastrarClienteModal").submit(function () {
 
 

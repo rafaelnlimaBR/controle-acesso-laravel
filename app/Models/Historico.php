@@ -36,6 +36,11 @@ class Historico extends Model
         return$this->belongsToMany(Servico::class,'historico_servico','historico_id','servico_id')->withPivot('valor_bruto','valor_liquido','desconto','devolucao','cobrar','id')->withTimestamps();
     }
 
+    public function pecasAvulsas()
+    {
+        return $this->hasMany(PecaAvulsa::class,'historico_id');
+    }
+
     public function gravar(Request $r)
     {
 

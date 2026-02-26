@@ -28,6 +28,11 @@
                                    id="custom-tabs-three-messages-tab" data-toggle="pill" href="#servicos" role="tab"
                                    aria-controls="custom-tabs-three-messages" aria-selected="false">Serviços</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='pecasavulsas'?'active':'':''}}"
+                                   id="custom-tabs-three-messages-tab" data-toggle="pill" href="#pecasavulsas" role="tab"
+                                   aria-controls="custom-tabs-three-messages" aria-selected="false">Peças Avulsas</a>
+                            </li>
 
                         @endif
 
@@ -57,6 +62,11 @@
                                 class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='servicos'?'active':'':''}}"
                                 id="servicos" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                                 @include('admin.contratos.includes.servicos')
+                            </div>
+                            <div
+                                class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='pecasavulsas'?'active':'':''}}"
+                                id="pecasavulsas" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                                @include('admin.contratos.includes.pecas-avulsas')
                             </div>
                         @endif
                     </div>
