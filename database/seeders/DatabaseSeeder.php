@@ -255,8 +255,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('pecas_avulsas')->insert([
-            ['nome'=>'Painel de instrumentos gol','valor_liquido'=>'900','valor_bruto'=>'900','desconto'=>0,'cobrar'=>0,'devolver'=>0, 'historico_id'=>1,'marca'=>'VDO'  ],
-            ['nome'=>'Modeulo de injeção','valor_liquido'=>'850','valor_bruto'=>'1500','desconto'=>20,'cobrar'=>0,'devolver'=>0, 'historico_id'=>1,'marca'=>'VDO'  ],
+            ['nome'=>'Painel de instrumentos gol','valor_liquido'=>'900','valor_bruto'=>'900','desconto'=>0,'cobrar'=>0,'devolver'=>0, 'historico_id'=>1,'marca'=>'VDO' ,'qnt'=>1 ],
+            ['nome'=>'Modeulo de injeção','valor_liquido'=>'850','valor_bruto'=>'1500','desconto'=>20,'cobrar'=>0,'devolver'=>0, 'historico_id'=>1,'marca'=>'VDO'  ,'qnt'=>1 ],
         ]);
 
     }

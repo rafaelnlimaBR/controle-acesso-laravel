@@ -220,6 +220,7 @@ class ContratoController extends Controller
                 'nome'=>'required',
                 'valor'=>'required|numeric|decimal:0,2',
                 'desconto'=>'required',
+                'qnt'=>'required|gte:1',
             ];
 
             $validacao      =   Validator::make($r->all(),$regras);
@@ -230,6 +231,7 @@ class ContratoController extends Controller
                     ->with('desconto',$r->get('desconto'))
                     ->with('valor',$r->get('valor'))
                     ->with('nome',$r->get('nome'))
+                    ->with('qnt',$r->get('qnt'))
                     ->with('contrato',$contrato)
                     ->with('historico_selecionado',$historico)
                     ->render();
@@ -237,17 +239,45 @@ class ContratoController extends Controller
 
             }
 
-            $peca           =   new PecaAvulsa();
-            $peca->nome       =   $r->get('nome');
-            $peca->valor        =   $r->get('valor');
-            $peca->desconto    =   $r->get('desconto');
-            $peca->cobrar      =   $r->get('cobrar');
-            $peca->marca       =   $r->get('marca');
-            $peca->historico_id=   $historico->id;
+            $peca                       =   new PecaAvulsa();
+            $peca->nome                 =   $r->get('nome');
+            $peca->valor_bruto          =   $r->get('valor');
+            $peca->desconto             =   $r->get('desconto');
+            $peca->valor_liquido        =   $peca->valor_bruto-($peca->valor_bruto * ($peca->desconto / 100));
+            $peca->cobrar               =   $r->get('cobrar');
+            $peca->marca                =   $r->get('marca');
+            $peca->qnt                  =   $r->get('qnt');
+            $peca->historico_id         =   $historico->id;
             $peca->save();
 
             $html       =   view('admin.contratos.includes.pecas-avulsas-tabela')
                 ->with('contrato',$contrato)
+                ->render();
+            return response()->json(['tabela_pecas_avulsas'=>$html]);
+
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function atualizarPecaAvulsa(Request $r)
+    {
+        try {
+
+            $historico                  =   Historico::find($r->get('historico_id'));
+            $peca                       =   PecaAvulsa::find($r->get('peca_id'));
+            $peca->nome                 =   $r->get('nome');
+            $peca->valor_bruto          =   $r->get('valor_bruto');
+            $peca->desconto             =   $r->get('desconto');
+            $peca->valor_liquido        =   $r->get('valor_liquido');
+            $peca->cobrar               =   $r->get('cobrar');
+            $peca->marca                =   $r->get('marca');
+            $peca->qnt                  =   $r->get('qnt');
+            $peca->save();
+
+            $html       =   view('admin.contratos.includes.pecas-avulsas-tabela')
+                ->with('contrato',$historico->contrato)
+                ->with('peca_avulsa_alterada_id',$r->get('peca_id'))
                 ->render();
             return response()->json(['tabela_pecas_avulsas'=>$html]);
 
@@ -282,6 +312,23 @@ class ContratoController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
+    public function excluirPecaAvulsa(Request $r)
+    {
+        try{
+            $r              =   \request();
+            $historico      =   Historico::find($r->get('historico_id'));
+
+            $peca           =   PecaAvulsa::find($r->get('peca_avulsa_id'));
+            $peca->delete();
+//
+
+            $html       =   view('admin.contratos.includes.pecas-avulsas-tabela')->with('contrato',$historico->contrato)->with('historico_selecionado',$historico)->render();
+            return response()->json(['tabela_pecas_avulsas'=>$html]);
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
 
     public function excluirServico(Request $r)
     {

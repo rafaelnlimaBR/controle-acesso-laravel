@@ -16,12 +16,21 @@
             <input  name="marca" class="form-control"  id="marca" value="{{isset($marca)?$marca:''}}">
 
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
 
             <label  class="form-label">Valor</label>
 
-            <input  name="valor" class="form-control" value="{{isset($valor)?$valor:''}}">
+            <input  name="valor" class="form-control" value="{{isset($valor)?$valor:'0'}}">
             @error('valor')
+            <div class="invalid-feedback">{{$message}}</div>
+            @enderror
+        </div>
+        <div class="col-md-1">
+
+            <label  class="form-label">Qnt</label>
+
+            <input  name="qnt" class="form-control" value="{{isset($qnt)?$qnt:'1'}}">
+            @error('qnt')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
         </div>
@@ -29,7 +38,7 @@
 
             <label  class="form-label">Desconto</label>
 
-            <input  name="desconto" class="form-control"  value="{{isset($desconto)?$desconto:''}}">
+            <input  name="desconto" class="form-control"  value="{{isset($desconto)?$desconto:'0'}}">
             @error('desconto')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror

@@ -620,6 +620,101 @@
 
         });
 
+        $(document).on("click", ".botao-atualizar-pecaavulsa", function(e) {
+            var id              =   $(this).attr("peca-id");
+            var historico_id     =   $('#historico-id-'+id.toString()).val()
+            var marca           =   $('#peca-marca-'+id.toString()).val()
+            var nome            =   $('#peca-nome-'+id.toString()).val()
+            var valor_bruto     =   $('#peca-valor-bruto-'+id.toString()).val()
+            var valor_liquido   =   $('#peca-valor-liquido-'+id.toString()).val()
+            var desconto        =   $('#peca-desconto-'+id.toString()).val()
+            var cobrar          =   $('#peca-cobrar-'+id.toString()).val()
+            var qnt             =   $('#peca-qnt-'+id.toString()).val()
+            var rota    =   "{{route('contrato.pecaavulsa.atualizar')}}";
+
+
+
+            $.ajax({
+                header:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: rota,
+                data:{
+                    "valor_bruto":valor_bruto,
+                    "valor_liquido":valor_liquido,
+                    "desconto":desconto,
+                    "cobrar":cobrar,
+                    "peca_id":id,
+                    "historico_id":historico_id,
+                    "marca":marca,
+                    "qnt":qnt,
+                    "nome":nome
+                }
+                ,
+                success: function( data )
+                {
+                    console.log(data)
+                    if('error' in data){
+
+                        alert(data)
+
+
+                    }else{
+
+                        $("#tabela-pecas-avulsas-atualizavel").html(data.tabela_pecas_avulsas);
+
+                    }
+                },
+                error:function (data,e) {
+                    console.log(data)
+                    alert(data);
+                }
+            });
+            return false;
+
+        });
+
+        $(document).on("click", ".botao-exluir-pecaavulsa", function(e) {
+            var id              =   $(this).attr("peca-id");
+            var historico_id     =    $(this).attr("historico-id");
+            var rota    =   "{{route('contrato.pecaavulsa.excluir')}}";
+
+
+
+            $.ajax({
+                header:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: rota,
+                data:{
+                    "peca_avulsa_id":id,
+                    "historico_id":historico_id
+                }
+                ,
+                success: function( data )
+                {
+                    console.log(data)
+                    if('error' in data){
+
+                        alert(data)
+
+
+                    }else{
+
+                        $("#tabela-pecas-avulsas-atualizavel").html(data.tabela_pecas_avulsas);
+                    }
+                },
+                error:function (data,e) {
+                    console.log(data)
+                    alert(data);
+                }
+            });
+            return false;
+
+        });
+
         $(document).on("click", ".botao-exluir-servico", function(e) {
             var id              =   $(this).attr("servico-id");
             var historico_id     =    $(this).attr("historico-id");

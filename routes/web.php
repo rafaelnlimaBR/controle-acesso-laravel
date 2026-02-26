@@ -63,8 +63,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/editar/{contrato}/historico/{historico}/registro/{registro}/imagem/{imagem}', [App\Http\Controllers\RegistroController::class, 'excluirImagem'])->name('contrato.registro.imagem.excluir');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/servico/adicionar',[App\Http\Controllers\ContratoController::class, 'adicionarServico'])->name('contrato.servico.adicionar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/peca/adicionar',[App\Http\Controllers\ContratoController::class, 'adicionarPecaAvulsa'])->name('contrato.pecaavulsa.adicionar');
+    Route::post('/contrato/peca/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarPecaAvulsa'])->name('contrato.pecaavulsa.atualizar');
+    Route::post('/contrato/pecaavulsa/excluir',[App\Http\Controllers\ContratoController::class, 'excluirPecaAvulsa'])->name('contrato.pecaavulsa.excluir');
     Route::post('/contrato/servico/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarServico'])->name('contrato.servico.atualizar');
     Route::post('/contrato/servico/excluir',[App\Http\Controllers\ContratoController::class, 'excluirServico'])->name('contrato.servico.excluir');
+
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');

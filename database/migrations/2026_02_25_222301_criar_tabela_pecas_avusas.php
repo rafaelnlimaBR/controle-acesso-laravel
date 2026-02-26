@@ -18,6 +18,7 @@ return new class extends Migration
             $t->decimal('valor_bruto',8,2)->default(0);
             $t->decimal('valor_liquido',8,2)->default(0);
             $t->boolean('cobrar')->default(false);
+            $t->integer('qnt')->default(0);
             $t->boolean('devolver')->default(false);
             $t->decimal('desconto',8,2)->default(0);
             $t->foreignId('historico_id')->references('id')->on('historicos')->onDelete('cascade')->onUpdate('cascade');
