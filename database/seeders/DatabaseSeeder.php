@@ -259,5 +259,32 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'Modeulo de injeção','valor_liquido'=>'850','valor_bruto'=>'1500','desconto'=>20,'cobrar'=>0,'devolver'=>0, 'historico_id'=>1,'marca'=>'VDO'  ,'qnt'=>1 ],
         ]);
 
+        DB::table('dados_bancarios')->insert([
+            ['nome_banco'=>'inter','nome_titular'=>'Tecvel','numero_conta'=>'6592152-6','chave_pix'=>'28727291000133']
+        ]);
+
+        DB::table('tipos_entradas')->insert([
+            ['nome'=>'Pix'],
+            ['nome'=>'Maquina Ton'],
+            ['nome'=>'Cartão de Débito']
+        ]);
+
+        /*$t->string('nome');
+        $t->decimal('taxa')->default(0);
+        $t->boolean('pix')->default(0)->nullable();
+        $t->foreignId('dado_bancario_id')->nullable()->references('id')->on('dados_bancarios')->onDelete('set null')->onUpdate('cascade');
+        $t->foreignId('tipo_id')->references('id')->on('tipos_entradas')->onDelete('cascade')->onUpdate('cascade');*/
+        DB::table('taxas_entradas')->insert([
+            ['nome'=>'CNPJ','pix'=>1,'dado_bancario_id'=>1,'taxa'=>0,'tipo_id'=>1],
+
+
+        ]);
+        DB::table('entradas')->insert([
+            ['descricao'=>'Pagamento da OS 001','valor'=>150,'data'=>Carbon::now(),'autor_id'=>1,'taxa_id'=>1],
+        ]);
+        DB::table('historico_entrada')->insert([
+            ['entrada_id'=>1,'historico_id'=>1],
+        ]);
+
     }
 }

@@ -3,6 +3,7 @@
 use App\Models\Aplicativo;
 use App\Models\Contrato;
 use App\Models\Servico;
+use App\Models\TaxaEntrada;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -106,7 +107,37 @@ Route::get('/', function () {
 
 
 
-    $historico  =   \App\Models\Historico::find(1);
-    $historico->servicos()->updateExistingPivot(3,
-        ['valor_bruto'=>1,'desconto'=>1,'cobrar'=>1,'valor_liquido'=>2,'devolucao'=>0]);
+    $taxa       =   TaxaEntrada::find(1);
+
+
+
+//    return $taxa;
+
+    $payload = "000201";
+    $payload .= "010211";
+    $payload .= "26" . strlen("0014br.gov.bcb.pix"."01".strlen($taxa->dado_bancario->chave_pix).$taxa->dado_bancario->chave_pix) . "0014br.gov.bcb.pix" . "01" . strlen($taxa->dado_bancario->chave_pix) . $taxa->dado_bancario->chave_pix;
+    $payload .= "52040000";
+    $payload .= "5303986";
+    $payload .= "54" . sprintf("%02d", strlen("150.00")) . "150.00"; // Valor editável
+    $payload .= "5802BR";
+    $payload .= "59" . str_pad(strlen($taxa->dado_bancario->nome_titular), 2, 0, STR_PAD_LEFT) . $taxa->dado_bancario->nome_titular; // Nome editável
+    $payload .= "6009" . "Fortaleza"; // Cidade editável
+    $payload .= "62070503***"; // ID/Descrição
+
+    $payload .= "6304";
+    $crc16  =   $taxa->calcularCRC16($payload);
+    $payload.= $crc16;
+
+
+
+    $qrcode     =   \SimpleSoftwareIO\QrCode\Facades\QrCode::size(500)->generate($payload);
+
+
+    /*"00020101021126360014br.gov.bcb.pix011428727291000133520400005303986540510.005802BR5913TECVEL TECVEL6009FORTALEZA62070503***63042BA0"
+    "00020101021126360014br.gov.bcb.pix011428727291000133520400005303986540510.005802BR5906Tecvel6009Fortaleza62070503***63045E86"*/
+    echo $qrcode;
+    echo "\<br>";
+
+    echo $payload;
+
 });
