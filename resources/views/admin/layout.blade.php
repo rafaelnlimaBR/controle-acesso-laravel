@@ -450,7 +450,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="{{ URL::asset('layout/plugins/mask/jquery.mask.js') }}"></script>
 
 <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -504,6 +504,47 @@
                     type: "classic",
                 },
             },
+        });
+        $('.app-wrapper').on('keyup','.dinheiro',function () {
+            $(this).mask("00000000.00" , { reverse:true});
+        });
+        $('.app-wrapper').on('keyup','.numero',function () {
+            $(this).mask("00000000.00" , { reverse:true});
+        });
+        $('.app-wrapper').on('keyup','.caixa-alta',function () {
+            this.value = this.value.toLocaleUpperCase();
+        });
+        $('.apenas-numeros').mask('0000000000', {reverse: true});
+        $('.cep').mask('00000-000');
+
+
+        $('.caixa-baixa').keyup(function() {
+            this.value = this.value.toLocaleLowerCase();
+        });
+        $('.placa').mask('AAA0U00', {
+            translation: {
+                'A': {
+                    pattern: /[A-Za-z]/
+                },
+                'U': {
+                    pattern: /[A-Za-z0-9]/
+                },
+            },
+            onKeyPress: function (value, e, field, options) {
+                // Convert to uppercase
+                e.currentTarget.value = value.toUpperCase();
+
+                // Get only valid characters
+                let val = value.replace(/[^\w]/g, '');
+
+                // Detect plate format
+                let isNumeric = !isNaN(parseFloat(val[4])) && isFinite(val[4]);
+                let mask = 'AAA0U00';
+                if(val.length > 4 && isNumeric) {
+                    mask = 'AAA0000';
+                }
+                $(field).mask(mask, options);
+            }
         });
         $('.botao-mudar-status').click(function(){
             var status      =   $(this).attr('status-id');
@@ -755,7 +796,44 @@
 
         });
 
-        // $("form[name='atualizar-servico']").on('submit','#tabela-servicos-atualizavel',function (){
+        $('#tabela-pecas-avulsas-atualizavel').on('keyup','.calcular-valors-peca',function () {
+            console.log('deu');
+            var peca_id         =   $(this).attr('peca_id');
+            var valor_bruto     =   $('#peca-valor-bruto-'+peca_id).val();
+            var qnt             =   $('#peca-qnt-'+peca_id).val();
+            var valor_bruto_total   =   valor_bruto*qnt;
+            var desconto        =   $('#peca-desconto-'+peca_id).val();
+            var valor_liquido   =   $('#peca-valor-liquido-'+peca_id).val();
+            var valor_liquido_total =   $('#valor-liquido-total-'+peca_id).val();
+
+
+            if($(this).attr("ativo") == 'valor-bruto') {
+                // $('#valor-total-peca-'+peca_id).val(parseFloat(valor_bruto_total).toFixed(2));
+                $('#valor-liquido-total-'+peca_id).val(parseFloat(valor_bruto_total*((100-desconto)/100)).toFixed(2));
+                $('#peca-valor-liquido-'+peca_id).val(parseFloat(valor_bruto*((100-desconto)/100)).toFixed(2));
+            }else if($(this).attr("ativo") == 'qnt-peca'){
+                $('#valor-total-peca-'+peca_id).val(parseFloat(valor_bruto_total).toFixed(2));
+                $('#valor-liquido-total-'+peca_id).val(parseFloat(valor_bruto_total*((100-desconto)/100)).toFixed(2));
+                $('#peca-valor-liquido-'+peca_id).val(parseFloat(valor_bruto*((100-desconto)/100)).toFixed(2));
+            }else if($(this).attr("ativo") == 'desconto-peca'){
+                $('#valor-liquido-total-'+peca_id).val(parseFloat(valor_bruto_total*((100-desconto)/100)).toFixed(2));
+                $('#peca-valor-liquido-'+peca_id).val(parseFloat(valor_bruto*((100-desconto)/100)).toFixed(2));
+            }else if($(this).attr("ativo") == 'valor-liquido-peca'){
+
+                var desconto    =   parseFloat(100-((valor_liquido*100)/valor_bruto)).toFixed(2);
+
+                if(desconto < 0){
+
+                    $("#peca-desconto-"+peca_id).css("background-color", 'red').css('color','white');
+                }else{
+                    $("#peca-desconto-"+peca_id).css("background-color", 'white').css('color','#495057');
+                }
+                $('#valor-liquido-total-'+peca_id).val(valor_liquido*qnt);
+                $("#peca-desconto-"+peca_id).val(desconto);
+            }
+        });
+
+
 
         $(document).on('keyup','.calcular-valors-servico',function (e){
             var id                  =   $(this).attr('servico_id');

@@ -4,7 +4,7 @@
             {{ csrf_field() }}
             <label  class="form-label">Nome da Peça</label>
 
-            <input class="form-control" name="nome" value="{{isset($nome)?$nome:''}}">
+            <input class="form-control " name="nome" value="{{isset($nome)?$nome:''}}">
             @error('nome')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -20,7 +20,7 @@
 
             <label  class="form-label">Valor</label>
 
-            <input  name="valor" class="form-control" value="{{isset($valor)?$valor:'0'}}">
+            <input  name="valor" class="form-control dinheiro" value="{{isset($valor)?$valor:'0'}}">
             @error('valor')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -29,7 +29,7 @@
 
             <label  class="form-label">Qnt</label>
 
-            <input  name="qnt" class="form-control" value="{{isset($qnt)?$qnt:'1'}}">
+            <input  name="qnt" class="form-control apenas-numeros" value="{{isset($qnt)?$qnt:'1'}}">
             @error('qnt')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
@@ -38,7 +38,7 @@
 
             <label  class="form-label">Desconto</label>
 
-            <input  name="desconto" class="form-control"  value="{{isset($desconto)?$desconto:'0'}}">
+            <input  name="desconto" class="form-control apenas-numeros"  value="{{isset($desconto)?$desconto:'0'}}">
             @error('desconto')
             <div class="invalid-feedback">{{$message}}</div>
             @enderror

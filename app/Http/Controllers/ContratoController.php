@@ -306,7 +306,9 @@ class ContratoController extends Controller
                 $r->get('servico_id'),
                 ['valor_bruto'=>$r->get('valor_bruto'),'desconto'=>$r->get('desconto'),'cobrar'=>$r->get('cobrar'),'valor_liquido'=>$r->get('valor_liquido'),'devolucao'=>0]);
 
-            $html       =   view('admin.contratos.includes.servico-tabela')->with('contrato',$historico->contrato)->with('historico_selecionado',$historico)->render();
+            $html       =   view('admin.contratos.includes.servico-tabela')
+                ->with('servico_alterada_id',$r->get('servico_id'))
+                ->with('contrato',$historico->contrato)->with('historico_selecionado',$historico)->render();
             return response()->json(['tabela_servicos'=>$html]);
         }catch (\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
