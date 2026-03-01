@@ -33,6 +33,11 @@
                                    id="custom-tabs-three-messages-tab" data-toggle="pill" href="#pecasavulsas" role="tab"
                                    aria-controls="custom-tabs-three-messages" aria-selected="false">Peças Avulsas</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='pagamentos'?'active':'':''}}"
+                                   id="custom-tabs-three-messages-tab" data-toggle="pill" href="#pagamentos" role="tab"
+                                   aria-controls="custom-tabs-three-messages" aria-selected="false">Pagamentos</a>
+                            </li>
 
                         @endif
 
@@ -67,6 +72,11 @@
                                 class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='pecasavulsas'?'active':'':''}}"
                                 id="pecasavulsas" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                                 @include('admin.contratos.includes.pecas-avulsas')
+                            </div>
+                            <div
+                                class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='pagamentos'?'active':'':''}}"
+                                id="pagamentos" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                                @include('admin.contratos.includes.pagamentos')
                             </div>
                         @endif
                     </div>

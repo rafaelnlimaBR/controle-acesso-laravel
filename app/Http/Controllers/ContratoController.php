@@ -8,6 +8,7 @@ use App\Models\Contrato;
 use App\Models\Historico;
 use App\Models\PecaAvulsa;
 use App\Models\Status;
+use App\Models\TipoEntrada;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -345,6 +346,27 @@ class ContratoController extends Controller
             return response()->json(['tabela_servicos'=>$html]);
         }catch (\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function novoPagamento(Contrato $contrato, Historico $historico,TipoEntrada $tipo)
+    {
+
+        try{
+            $dados  = [
+                'titulo_pagina'    =>  'Tecvel - Adicionar Pagamento ',
+                'titulo'            =>  'Novo Pagamento ',
+                'titulo_card'       =>  'Dados do Pagamento',
+                'contrato'           =>  $contrato,
+                'historico_selecionado'   =>  $historico,
+                'tipo'              =>  $tipo,
+
+            ];
+
+            return view('admin.contratos.form.entradas',$dados);
+
+        }catch (\Exception $e){
+            return $e->getMessage();
         }
     }
 

@@ -15,7 +15,6 @@ return new class extends Migration
             $t->id('id');
             $t->string('nome');
             $t->decimal('taxa')->default(0);
-            $t->boolean('pix')->default(0)->nullable();
             $t->foreignId('dado_bancario_id')->nullable()->references('id')->on('dados_bancarios')->onDelete('set null')->onUpdate('cascade');
             $t->foreignId('tipo_id')->references('id')->on('tipos_entradas')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -11,6 +11,10 @@ class Historico extends Model
     protected $table = 'historicos';
 
 
+    public function entradas()
+    {
+        return $this->belongsToMany(Entrada::class, 'historico_entrada', 'historico_id', 'entrada_id');
+    }
     public function contrato()
     {
         return $this->belongsTo(Contrato::class);

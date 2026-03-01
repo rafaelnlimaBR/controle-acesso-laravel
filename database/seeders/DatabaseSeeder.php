@@ -264,23 +264,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('tipos_entradas')->insert([
-            ['nome'=>'Pix'],
-            ['nome'=>'Maquina Ton'],
-            ['nome'=>'Cartão de Débito']
+            ['nome'=>'Pix','pix'=>1],
+            ['nome'=>'Maquina Ton','pix'=>0],
+            ['nome'=>'Cartão de Débito','pix'=>0]
         ]);
 
-        /*$t->string('nome');
-        $t->decimal('taxa')->default(0);
-        $t->boolean('pix')->default(0)->nullable();
-        $t->foreignId('dado_bancario_id')->nullable()->references('id')->on('dados_bancarios')->onDelete('set null')->onUpdate('cascade');
-        $t->foreignId('tipo_id')->references('id')->on('tipos_entradas')->onDelete('cascade')->onUpdate('cascade');*/
+
         DB::table('taxas_entradas')->insert([
-            ['nome'=>'CNPJ','pix'=>1,'dado_bancario_id'=>1,'taxa'=>0,'tipo_id'=>1],
+            ['nome'=>'CNPJ','dado_bancario_id'=>1,'taxa'=>0,'tipo_id'=>1],
 
 
         ]);
         DB::table('entradas')->insert([
-            ['descricao'=>'Pagamento da OS 001','valor'=>150,'data'=>Carbon::now(),'autor_id'=>1,'taxa_id'=>1],
+            ['descricao'=>'Pagamento da OS 001','valor_liquido'=>150,'valor_bruto'=>150,'repassar_taxa'=>false,'data'=>Carbon::now(),'autor_id'=>1,'taxa_id'=>1],
         ]);
         DB::table('historico_entrada')->insert([
             ['entrada_id'=>1,'historico_id'=>1],

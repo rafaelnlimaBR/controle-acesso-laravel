@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tipos_entradas', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome');
+            $t->boolean('pix')->default(false);
 
 
         });

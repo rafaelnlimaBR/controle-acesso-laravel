@@ -68,11 +68,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/pecaavulsa/excluir',[App\Http\Controllers\ContratoController::class, 'excluirPecaAvulsa'])->name('contrato.pecaavulsa.excluir');
     Route::post('/contrato/servico/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarServico'])->name('contrato.servico.atualizar');
     Route::post('/contrato/servico/excluir',[App\Http\Controllers\ContratoController::class, 'excluirServico'])->name('contrato.servico.excluir');
-
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/pagamento/novo/{tipo}', [App\Http\Controllers\ContratoController::class, 'novoPagamento'])->name('contrato.pagamento.novo');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
 
+//TAXAS
+    Route::post('/forma/entrada/renderizar/pagina', [App\Http\Controllers\TaxaEntradaController::class, 'renderizarPagina'])->name('taxa.rendereizar.pagina');
 });
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
@@ -103,11 +105,20 @@ View::composer(['admin.contratos.form.registro'],function($view){
     $view->with(['tipos_registros'=>$tipos]);
 });
 
+View::composer(['admin.contratos.includes.pagamentos'],function($view){
+    $tipos_entradas    =   \App\Models\TipoEntrada::all();
+
+    $view->with(['tipos_entradas'=>$tipos_entradas]);
+});
+
 Route::get('/', function () {
+
+    $entrada    =   \App\Models\Entrada::find(3);
 
 
 
     $taxa       =   TaxaEntrada::find(1);
+    return
 
 
 
@@ -115,17 +126,17 @@ Route::get('/', function () {
 
     $payload = "000201";
     $payload .= "010211";
-    $payload .= "26" . strlen("0014br.gov.bcb.pix"."01".strlen($taxa->dado_bancario->chave_pix).$taxa->dado_bancario->chave_pix) . "0014br.gov.bcb.pix" . "01" . strlen($taxa->dado_bancario->chave_pix) . $taxa->dado_bancario->chave_pix;
+    $payload .= "26" . strlen("0014br.gov.bcb.pix"."01".strlen($entrada->taxa->dadobancario->chave_pix).$entrada->taxa->dadobancario->chave_pix) . "0014br.gov.bcb.pix" . "01" . strlen($entrada->taxa->dadobancario->chave_pix) . $entrada->taxa->dadobancario->chave_pix;
     $payload .= "52040000";
     $payload .= "5303986";
-    $payload .= "54" . sprintf("%02d", strlen("150.00")) . "150.00"; // Valor editável
+    $payload .= "54" . sprintf("%02d", strlen($entrada->valor)) . $entrada->valor; // Valor editável
     $payload .= "5802BR";
-    $payload .= "59" . str_pad(strlen($taxa->dado_bancario->nome_titular), 2, 0, STR_PAD_LEFT) . $taxa->dado_bancario->nome_titular; // Nome editável
+    $payload .= "59" . str_pad(strlen($entrada->taxa->dadobancario->nome_titular), 2, 0, STR_PAD_LEFT) . $entrada->taxa->dadobancario->nome_titular; // Nome editável
     $payload .= "6009" . "Fortaleza"; // Cidade editável
     $payload .= "62070503***"; // ID/Descrição
 
     $payload .= "6304";
-    $crc16  =   $taxa->calcularCRC16($payload);
+    $crc16  =   $entrada->taxa->calcularCRC16($payload);
     $payload.= $crc16;
 
 
