@@ -1,1 +1,1 @@
-{{$qrcode}}
+{{isset($qrcode)?$qrcode:''}}

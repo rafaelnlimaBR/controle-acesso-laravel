@@ -360,6 +360,9 @@ class ContratoController extends Controller
                 'contrato'           =>  $contrato,
                 'historico_selecionado'   =>  $historico,
                 'tipo'              =>  $tipo,
+                'descricao'         =>  "Pagamento do contrato ".$contrato->id,
+                'valor_original'    =>  150,
+                'route_back'        =>  route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos']),
 
             ];
 

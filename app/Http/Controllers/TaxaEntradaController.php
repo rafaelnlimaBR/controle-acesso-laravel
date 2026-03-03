@@ -29,5 +29,15 @@ class TaxaEntradaController extends Controller
 
     }
 
+    public function pegarValorTaxa(Request $r)
+    {
+        try{
+            $taxa   =   TaxaEntrada::find($r->get('taxa_id'));
+
+            return $taxa->taxa;
+        }catch (\Exception $e){
+            return response()->json(["error"=>$e->getMessage()]);
+        }
+    }
 
 }

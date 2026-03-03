@@ -74,7 +74,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
 
 //TAXAS
-    Route::post('/forma/entrada/renderizar/pagina', [App\Http\Controllers\TaxaEntradaController::class, 'renderizarPagina'])->name('taxa.rendereizar.pagina');
+    Route::post('/taxa/entrada/renderizar/pagina', [App\Http\Controllers\TaxaEntradaController::class, 'renderizarPagina'])->name('taxa.rendereizar.pagina');
+    Route::post('taxa/pegar/valor/taxa', [App\Http\Controllers\TaxaEntradaController::class, 'pegarValorTaxa'])->name('taxa.pegar.valor.taxa');
+
+//ENTRADAS
+    Route::post('/entrada/gravar', [App\Http\Controllers\EntradaController::class, 'gravar'])->name('entrada.gravar');
+
 });
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');

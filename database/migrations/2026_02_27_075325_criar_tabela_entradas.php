@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('entradas', function (Blueprint $t) {
             $t->id('id');
             $t->string('descricao');
-            $t->decimal('valor_liquido',8,2);
-            $t->decimal('valor_bruto',8,2);
+            $t->decimal('valor_cliente',8,2);
+            $t->decimal('valor_loja',8,2);
+            $t->decimal('valor_original',8,2);
             $t->boolean('repassar_taxa')->default(true);
             $t->dateTime('data');
             $t->foreignId('autor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

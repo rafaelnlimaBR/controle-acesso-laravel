@@ -276,7 +276,7 @@ class DatabaseSeeder extends Seeder
 
         ]);
         DB::table('entradas')->insert([
-            ['descricao'=>'Pagamento da OS 001','valor_liquido'=>150,'valor_bruto'=>150,'repassar_taxa'=>false,'data'=>Carbon::now(),'autor_id'=>1,'taxa_id'=>1],
+            ['descricao'=>'Pagamento da OS 001','valor_original'=>150,'valor_cliente'=>150,'valor_loja'=>150,'repassar_taxa'=>false,'data'=>Carbon::now(),'autor_id'=>1,'taxa_id'=>1],
         ]);
         DB::table('historico_entrada')->insert([
             ['entrada_id'=>1,'historico_id'=>1],
