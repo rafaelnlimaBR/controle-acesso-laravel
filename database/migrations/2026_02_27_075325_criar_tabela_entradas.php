@@ -18,6 +18,7 @@ return new class extends Migration
             $t->decimal('valor_loja',8,2);
             $t->decimal('valor_original',8,2);
             $t->boolean('repassar_taxa')->default(true);
+            $t->decimal('valor_taxa',8,2)->default(0);
             $t->dateTime('data');
             $t->foreignId('autor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $t->foreignId('taxa_id')->references('id')->on('taxas_entradas')->onDelete('cascade')->onUpdate('cascade');

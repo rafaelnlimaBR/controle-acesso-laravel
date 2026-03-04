@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('taxas_entradas', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome');
+            $t->integer('vezes')->default(0);
             $t->decimal('taxa')->default(0);
             $t->foreignId('dado_bancario_id')->nullable()->references('id')->on('dados_bancarios')->onDelete('set null')->onUpdate('cascade');
             $t->foreignId('tipo_id')->references('id')->on('tipos_entradas')->onDelete('cascade')->onUpdate('cascade');

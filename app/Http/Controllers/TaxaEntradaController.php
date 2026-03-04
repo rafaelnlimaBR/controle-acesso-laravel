@@ -34,7 +34,7 @@ class TaxaEntradaController extends Controller
         try{
             $taxa   =   TaxaEntrada::find($r->get('taxa_id'));
 
-            return $taxa->taxa;
+            return $taxa;
         }catch (\Exception $e){
             return response()->json(["error"=>$e->getMessage()]);
         }

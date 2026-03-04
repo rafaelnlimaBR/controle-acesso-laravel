@@ -10,6 +10,7 @@
 
                 <form class="needs-validation" novalidate="" method="post" action="{{route('entrada.gravar')}}">
                     {{csrf_field()}}
+                    <input type="checkbox" hidden="" {{$tipo->pix == true?'checked':''}} class="form-check-input"  id="pix" data-gtm-form-interact-field-id="0">
                     <div class="card-body">
                         <div class="row">
 
@@ -32,7 +33,7 @@
                             <!--begin::Col-->
                             <div class="col-md-12">
                                 <div class="form-check">
-                                    <input type="checkbox" checked class="form-check-input"  name="rapassar_taxa" data-gtm-form-interact-field-id="0">
+                                    <input type="checkbox" checked class="form-check-input"  name="rapassar_taxa" id="rapassar_taxa" data-gtm-form-interact-field-id="0">
                                     <label class="form-check-label" for="exampleCheck1">Repassar Taxa</label>
                                 </div>
                             </div>
@@ -49,7 +50,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label  class="form-label">Formas<span class="sr-only"> </span></label>
                                 <select name="taxa_id" class="form-control" id="select-forma-entrada">
                                     @foreach($tipo->taxas as $taxa)
@@ -60,22 +61,25 @@
                                 <div class="invalid-feedback">{{$message}}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-2">
-                                <label  class="form-label">Taxa<span class="sr-only"> </span></label>
+                            <div class="col-md-2 valores_cliente div_taxa">
+                                <label  class="form-label valores_cliente">Taxa<span class="sr-only"> </span></label>
                                 <input readonly type="text" class="form-control" id="valor_taxa" name="taxa" value="" >
                             </div>
-                            <div class="col-md-2">
-                                <label  class="form-label">Valor Cliente<span class="sr-only"> </span></label>
+                            <div class="col-md-2 valores_cliente">
+                                <label  class="form-label ">Valor Cliente<span class="sr-only"> </span></label>
                                 <input readonly type="text" class="form-control" id="valor_cliente" name="valor_original" value="{{isset($valor_original)?$valor_original:old('valor_original',isset($entrada)?$entrada->valor_original:$valor_original)}}" >
                                 @error('valor_original')
                                 <div class="invalid-feedback">{{$message}}</div>
                                 @enderror
                             </div>
+                            <div class="col-md-2 valores_cliente">
+                                <label  class="form-label">Vezes<span class="sr-only"> </span></label>
+                                <input readonly type="text" class="form-control " id="vezes" name="vezes" value="" >
+                            </div>
 
-                            <div class="col-md-3">
-                                <label  class="form-label">Parcela<span class="sr-only"> </span></label>
-                                <input readonly type="text" class="form-control" id="parcela" name="parcela" value="" >
-
+                            <div class="col-md-2 valores_cliente">
+                                <label  class="form-label">Valor da Parcela<span class="sr-only"> </span></label>
+                                <input readonly type="text" class="form-control " id="parcela" name="parcela" value="" >
                             </div>
 
                         </div>
@@ -122,7 +126,7 @@
                     renderizarPagina(id,valor)
                 });
 
-                $('#valor_bruto').blur(function(){
+                $('#valor_original').blur(function(){
                     id      =   $('#select-forma-entrada').val();
                     valor   =   $(this).val();
                     renderizarPagina(id,valor)
@@ -172,16 +176,54 @@
                     }
                 });
                 pegarValorTaxa();
-
-
-                $('#select-forma-entrada').change(function (e){
-                    pegarValorTaxa()
+                calcularValores();
+                $('#rapassar_taxa').on('change',function (e){
+                    calcularValores();
                 })
 
+                $('#valor_original').blur(function(){
+
+                    valor   =   $('#valor_original').val();
+                    taxa    =   $('#valor_taxa').val();
+
+                });
+                $('#select-forma-entrada').change(function (e){
+                    pegarValorTaxa();
+
+                })
                 function calcularValores(){
                     var valor_original      =   $('#valor_original').val();
-                    var valor_cliente       =   $('#valor_original').val();
-                    var valor_taxa          =   $('#valor_taxa').val();
+
+                    var repassar_taxa       =   $('#rapassar_taxa').is(':checked');
+                    var pix       =   $('#pix').is(':checked');
+
+                    if(pix){
+                        $('.valores_cliente').hide();
+
+                    }else{
+                        if(repassar_taxa === true){
+
+                            var valor_cliente       =   $('#valor_cliente').val();
+                            var valor_taxa          =   $('#valor_taxa').val();
+                            var vezes               =   $('#vezes').val();
+                            $('.valores_cliente').show();
+
+
+                            var valor_total_cliente  =   (valor_original*100)/(100-valor_taxa);
+                            var valor_por_parcela    =    valor_total_cliente/vezes;
+                            $('#valor_cliente').val(valor_total_cliente.toFixed(2));
+                            if(vezes === '0'){
+                                $('#parcela').val(valor_total_cliente.toFixed(2));
+                            }else{
+                                $('#parcela').val(valor_por_parcela.toFixed(2));
+                            }
+
+                        }else{
+                            $('.valores_cliente').hide();
+
+                        }
+                    }
+
 
                 }
 
@@ -198,7 +240,9 @@
                         },
                         success: function( data )
                         {
-                            $('#valor_taxa').val(data);
+                            $('#valor_taxa').val(data.taxa);
+                            $('#vezes').val(data.vezes);
+                            calcularValores();
 
                             return data;
                         },
