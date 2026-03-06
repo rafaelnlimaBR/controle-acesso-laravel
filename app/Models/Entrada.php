@@ -21,16 +21,30 @@ class Entrada extends Model
         return $this->belongsTo(User::class, 'autor_id');
     }
 
-    public function gravar(String $descricao, $valor_cliente, $valor_loja, $valor_original, $repassar_taxa, $data, User $autor, TaxaEntrada $taxa)
+    public function gravar(String $descricao,
+                           $valor_cliente,
+                           $valor_original,
+                           $repassar_taxa,
+                           $data,
+                           User $autor,
+                           TaxaEntrada $taxa)
     {
         $this->descricao            = $descricao;
         $this->valor_cliente        = $valor_cliente;
-        $this->valor_loja           = $valor_loja;
         $this->valor_original       = $valor_original;
         $this->repassar_taxa        = $repassar_taxa;
         $this->data                 = Carbon::createFromFormat('d/m/Y', $data);
         $this->autor()->associate($autor);
         $this->taxa()->associate($taxa);
+        $this->valor_taxa           = $this->taxa->taxa;
+
+        if($repassar_taxa == false){
+            $this->valor_loja     =  $valor_original- ($valor_original*($taxa->taxa/100));
+            $this->valor_cliente        = $valor_original;
+        }else{
+            $this->valor_loja     =  $valor_original;
+
+        }
 
         $this->save();
     }

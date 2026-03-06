@@ -15,6 +15,7 @@ return new class extends Migration
             $t->id('id');
             $t->string('nome');
             $t->boolean('pix')->default(false);
+            $t->boolean('ativo')->default(true);
 
 
         });

@@ -8,7 +8,7 @@
                 <!--end::Header-->
                 <!--begin::Body-->
 
-                <form class="needs-validation" novalidate="" method="post" action="{{route('entrada.gravar')}}">
+                <form class="needs-validation" novalidate="" method="post" action="{{$route_form}}">
                     {{csrf_field()}}
                     <input type="checkbox" hidden="" {{$tipo->pix == true?'checked':''}} class="form-check-input"  id="pix" data-gtm-form-interact-field-id="0">
                     <div class="card-body">
@@ -29,6 +29,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @if($tipo->pix == 0)
                         <div class="row g-3">
                             <!--begin::Col-->
                             <div class="col-md-12">
@@ -41,6 +42,7 @@
 
 
                         </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-2">
                                 <label  class="form-label">Valor<span class="sr-only"> </span></label>
@@ -67,8 +69,9 @@
                             </div>
                             <div class="col-md-2 valores_cliente">
                                 <label  class="form-label ">Valor Cliente<span class="sr-only"> </span></label>
-                                <input readonly type="text" class="form-control" id="valor_cliente" name="valor_original" value="{{isset($valor_original)?$valor_original:old('valor_original',isset($entrada)?$entrada->valor_original:$valor_original)}}" >
-                                @error('valor_original')
+                                <input readonly type="text" class="form-control" id="valor_cliente" name="valor_cliente" value="{{isset($valor_cliente)?$valor_cliente:old('valor_cliente',isset($entrada)?$entrada->valor_cliente:$valor_original)}}" >
+
+                                @error('valor_cliente')
                                 <div class="invalid-feedback">{{$message}}</div>
                                 @enderror
                             </div>
@@ -167,6 +170,8 @@
 
             })
         </script>
+    @else
+
     @endif
         <script type="text/javascript">
             $(document).ready(function (e){
@@ -180,11 +185,9 @@
                 $('#rapassar_taxa').on('change',function (e){
                     calcularValores();
                 })
-
                 $('#valor_original').blur(function(){
 
-                    valor   =   $('#valor_original').val();
-                    taxa    =   $('#valor_taxa').val();
+                   calcularValores();
 
                 });
                 $('#select-forma-entrada').change(function (e){
@@ -210,7 +213,9 @@
 
 
                             var valor_total_cliente  =   (valor_original*100)/(100-valor_taxa);
+
                             var valor_por_parcela    =    valor_total_cliente/vezes;
+
                             $('#valor_cliente').val(valor_total_cliente.toFixed(2));
                             if(vezes === '0'){
                                 $('#parcela').val(valor_total_cliente.toFixed(2));

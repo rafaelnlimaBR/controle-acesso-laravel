@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/servico/atualizar',[App\Http\Controllers\ContratoController::class, 'atualizarServico'])->name('contrato.servico.atualizar');
     Route::post('/contrato/servico/excluir',[App\Http\Controllers\ContratoController::class, 'excluirServico'])->name('contrato.servico.excluir');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/pagamento/novo/{tipo}', [App\Http\Controllers\ContratoController::class, 'novoPagamento'])->name('contrato.pagamento.novo');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/entrada/gravar', [App\Http\Controllers\ContratoController::class, 'gravarPagamento'])->name('contrato.pagamento.gravar');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/entrada/excluir/{pagamento}', [App\Http\Controllers\ContratoController::class, 'excluirPagamento'])->name('contrato.pagamento.excluir');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
@@ -111,7 +113,7 @@ View::composer(['admin.contratos.form.registro'],function($view){
 });
 
 View::composer(['admin.contratos.includes.pagamentos'],function($view){
-    $tipos_entradas    =   \App\Models\TipoEntrada::all();
+    $tipos_entradas    =   \App\Models\TipoEntrada::ativo();
 
     $view->with(['tipos_entradas'=>$tipos_entradas]);
 });

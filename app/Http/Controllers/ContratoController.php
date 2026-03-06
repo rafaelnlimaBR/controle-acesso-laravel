@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Configuracao;
 use App\Models\Contrato;
+use App\Models\Entrada;
 use App\Models\Historico;
 use App\Models\PecaAvulsa;
 use App\Models\Status;
+use App\Models\TaxaEntrada;
 use App\Models\TipoEntrada;
 use App\Models\User;
 use Carbon\Carbon;
@@ -370,6 +372,68 @@ class ContratoController extends Controller
 
         }catch (\Exception $e){
             return $e->getMessage();
+        }
+    }
+
+    public function gravarPagamento(Request $r,Contrato $contrato,Historico $historico)
+    {
+        try{
+            $r              =   \request();
+
+            $regras         =   [
+                'valor_original'=>'required|numeric',
+                'data'=>'required|date_format:d/m/Y',
+                'descricao'=>'required',
+            ];
+
+            $validacao      =   Validator::make($r->all(),$regras);
+            if($validacao->fails()){
+                return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+            }
+
+            $entrada = new Entrada();
+
+            $taxa               =   TaxaEntrada::find($r->get('taxa_id'));
+            $valor_original     =   $r->get('valor_original');
+            $valor_cliente      =   $r->get('valor_cliente');
+            $valor_loja         =   $valor_original;
+            $repassar_taxa      =   $r->has('rapassar_taxa');
+
+
+
+            $entrada            =   new Entrada();
+            $entrada->gravar(
+                $r->get('descricao'),
+                $valor_cliente,
+                $valor_original,
+                $repassar_taxa,
+                $r->get('data'),
+                auth()->user(),
+                $taxa
+            );
+
+            $historico->entradas()->attach($entrada);
+
+
+
+
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Cadastrado com sucesso!']);
+
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    public function excluirPagamento(Contrato $contrato,Historico $historico,Entrada $pagamento)
+    {
+        try{
+
+            $pagamento->delete();
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Excluido com sucesso!']);
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
 

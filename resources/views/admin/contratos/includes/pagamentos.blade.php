@@ -11,9 +11,14 @@
             <thead>
             <tr>
                 <th style="width: 5%" scope="col">#</th>
-                <th style="width: 10%" scope="col">Valor</th>
-                <th style="width: 10%" scope="col">Data</th>
+                <th style="width: 7%" scope="col">Valor</th>
+
+                <th style="width: 7%" scope="col">Taxado</th>
+                <th style="width: 7%" scope="col">Valor Cliente</th>
+                <th style="width: 7%" scope="col">Vezes</th>
                 <th style="width: 10%" scope="col">Tipo</th>
+                <th style="width: 10%" scope="col">Data</th>
+
                 <th style="width: 10%" scope="col">Autor</th>
 
                 <th style="width: 5%" scope="col">Ações</th>
@@ -29,12 +34,27 @@
                     <tr class="align-middle " >
 
                         <td >{{$s->id}}</td>
-                        <td >{{$s->valor}}</td>
-                        <td >{{\Carbon\Carbon::parse($s->data)->format('d/m/Y H:i')}}</td>
+                        <td >{{$s->valor_original}}</td>
+                        <td >{{$s->repassar_taxa==1?'Sim':'Não'}}</td>
+                        <td >{{$s->valor_cliente}}</td>
+                        <td >
+                            @if($s->taxa->vezes == 0)
+                                Avista
+                            @elseif($s->taxa->vezes == 1)
+                                1 Vez
+                            @else
+                                {{$s->taxa->vezes. " Vezes"}}
+                            @endif
+                        </td>
                         <td>{{$s->taxa->tipo->nome." - ".$s->taxa->nome}}</td>
+                        <td >{{\Carbon\Carbon::parse($s->data)->format('d/m/Y H:i')}}</td>
+
                         <td>{{$s->autor->name}}</td>
-                        <td style="{{isset($peca_avulsa_alterada_id)?$peca_avulsa_alterada_id==$s->id?'background-color: #c5ffcd':'':''}}"><button peca-id="{{$s->id}}" class="btn btn-sm btn-warning botao-atualizar-pecaavulsa" type="button" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                            <button onclick="return confirm('Deseja excluir essa peca? ')" peca-id="{{$s->id}}" historico-id="{{$h->id}}" class="btn btn-sm btn-danger botao-exluir-pecaavulsa" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                        <td style="{{isset($peca_avulsa_alterada_id)?$peca_avulsa_alterada_id==$s->id?'background-color: #c5ffcd':'':''}}">
+                            <button peca-id="{{$s->id}}" class="btn btn-sm btn-warning botao-atualizar-pecaavulsa" type="button" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <a href="{{route('contrato.pagamento.excluir',['contrato'=>$contrato,'historico'=>$historico_selecionado,'pagamento'=>$s])}}" onclick="return confirm('Deseja excluir essa peca? ')" class="btn btn-sm btn-danger " type="submit"><i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
 
                     </tr>
 
