@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('historico_servico', function (Blueprint $t) {
             $t->id('id');
-            $t->foreignId('servico_id')->references('id')->on('servicos');
-            $t->foreignId('historico_id')->references('id')->on('historicos');
+            $t->foreignId('servico_id')->references('id')->on('servicos')->onDelete('cascade')->onUpdate('cascade');
+            $t->foreignId('historico_id')->references('id')->on('historicos')->onDelete('cascade')->onUpdate('cascade');
             $t->decimal('valor_liquido', 8, 2);
             $t->decimal('valor_bruto', 8, 2);
             $t->decimal('desconto', 8, 2)->default(0);

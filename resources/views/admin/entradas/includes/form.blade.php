@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label  class="form-label">Data<span class="sr-only"> </span></label>
-                                <input type="text" class="form-control datepicker" autocomplete="off" name="data" value="{{isset($data)?$data:old('data',isset($entrada)?$entrada->data:\Carbon\Carbon::now()->format('d/m/Y'))}}" >
+                                <input type="text" class="form-control datepicker" autocomplete="off" name="data" value="{{isset($data)?$data:old('data',isset($entrada)?\Carbon\Carbon::parse($entrada->data)->format('d/m/Y'):\Carbon\Carbon::now()->format('d/m/Y'))}}" >
                                 @error('data')
                                 <div class="invalid-feedback">{{$message}}</div>
                                 @enderror
@@ -34,7 +34,7 @@
                             <!--begin::Col-->
                             <div class="col-md-12">
                                 <div class="form-check">
-                                    <input type="checkbox" checked class="form-check-input"  name="rapassar_taxa" id="rapassar_taxa" data-gtm-form-interact-field-id="0">
+                                    <input type="checkbox" {{isset($entrada)?$entrada->repassar_taxa==1?'checked':'':'checked'}} class="form-check-input"  name="rapassar_taxa" id="rapassar_taxa" data-gtm-form-interact-field-id="0">
                                     <label class="form-check-label" for="exampleCheck1">Repassar Taxa</label>
                                 </div>
                             </div>
@@ -88,11 +88,9 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        @if(isset($veiculo))
+                        @if(isset($entrada))
                             <button class="btn btn-warning" type="submit">Editar</button>
-                            @can('veiculo-deletar')
-                                <a href="{{route('veiculo.excluir',['veiculo'=>$veiculo])}}" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger" style="float: right" type="submit">Deletar</a>
-                            @endcan
+
                         @else
                             <button class="btn btn-success" type="submit">Cadastrar</button>
                         @endif

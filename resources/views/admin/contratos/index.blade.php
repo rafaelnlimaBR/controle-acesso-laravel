@@ -12,15 +12,15 @@
                     <div class="row g-3">
                         <div class="col-md-2">
                             <label  class="form-label">Nome Cliente / Número Telefone<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="cliente"  value="{{request()->has('cliente')?request()->get('cliente'):""}}">
+                            <input autocomplete="off" type="text" class="form-control" name="cliente"  value="{{request()->has('cliente')?request()->get('cliente'):""}}">
                         </div>
                         <div class="col-md-2">
                             <label  class="form-label">Placa do Veículo<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="placa"  value="{{request()->has('placa')?request()->get('placa'):""}}">
+                            <input autocomplete="off" type="text" class="form-control" name="placa"  value="{{request()->has('placa')?request()->get('placa'):""}}">
                         </div>
                         <div class="col-md-2">
                             <label  class="form-label">Data Criação<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control datepicker" name="data"  value="{{request()->has('data')?request()->get('data'):""}}">
+                            <input autocomplete="off" type="text" class="form-control datepicker" name="data"  value="{{request()->has('data')?request()->get('data'):""}}">
                         </div>
 
                         <div class="col-md-1 ">

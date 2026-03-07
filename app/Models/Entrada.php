@@ -48,4 +48,9 @@ class Entrada extends Model
 
         $this->save();
     }
+
+    public function excluir()
+    {
+        $this->delete();
+    }
 }

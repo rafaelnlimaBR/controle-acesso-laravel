@@ -98,9 +98,16 @@ class Contrato extends Model
         return $this;
     }
 
-    public function deletar()
+    public function excluir()
     {
-
+        foreach ($this->historicos as $historico) {
+            foreach ($historico->registros as $registro) {
+                $registro->excluir();
+            }
+            foreach ($historico->entradas as $entrada) {
+                $entrada->excluir();
+            }
+        }
         $this->delete();
     }
 }

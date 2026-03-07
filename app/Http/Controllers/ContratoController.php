@@ -174,12 +174,9 @@ class ContratoController extends Controller
         }
         try{
 
-            foreach ($contrato->historicos as $historico) {
-                foreach ($historico->registros as $registro) {
-                    $registro->excluir();
-                }
-            }
-            $contrato->delete();
+
+
+            $contrato->excluir();
             return redirect()->route('contrato.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Registro excluido com sucesso!']);
 
         }catch (\Exception $e){
@@ -422,6 +419,81 @@ class ContratoController extends Controller
 
         }catch (\Exception $e){
             return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    public function atualizarPagamento(Request $r,Contrato $contrato,Historico $historico,Entrada $pagamento)
+    {
+        try{
+            $r              =   \request();
+
+            $regras         =   [
+                'valor_original'=>'required|numeric',
+                'data'=>'required|date_format:d/m/Y',
+                'descricao'=>'required',
+            ];
+
+            $validacao      =   Validator::make($r->all(),$regras);
+            if($validacao->fails()){
+                return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+            }
+
+            $entrada = $pagamento;
+
+            $taxa               =   TaxaEntrada::find($r->get('taxa_id'));
+            $valor_original     =   $r->get('valor_original');
+            $valor_cliente      =   $r->get('valor_cliente');
+            $valor_loja         =   $valor_original;
+            $repassar_taxa      =   $r->has('rapassar_taxa');
+
+
+
+
+            $entrada->gravar(
+                $r->get('descricao'),
+                $valor_cliente,
+                $valor_original,
+                $repassar_taxa,
+                $r->get('data'),
+                auth()->user(),
+                $taxa
+            );
+
+
+
+
+
+
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Cadastrado com sucesso!']);
+
+
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function editarPagamento(Contrato $contrato,Historico $historico,Entrada $pagamento)
+    {
+        try{
+            $dados  = [
+                'titulo_pagina'    =>  'Tecvel - Editar Pagamento ',
+                'titulo'            =>  'Editar Pagamento ',
+                'titulo_card'       =>  'Dados do Pagamento',
+                'contrato'           =>  $contrato,
+                'historico_selecionado'   =>  $historico,
+                'tipo'              =>  $pagamento->taxa->tipo,
+                'descricao'         =>  "Pagamento do contrato ".$contrato->id,
+                'route_back'        =>  route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos']),
+                'entrada'           => $pagamento
+            ];
+
+            return view('admin.contratos.form.entradas',$dados);
+
+        }catch (\Exception $e){
+            return $e->getMessage();
         }
     }
 
