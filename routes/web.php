@@ -122,42 +122,9 @@ View::composer(['admin.contratos.includes.pagamentos'],function($view){
 
 Route::get('/', function () {
 
-    $entrada    =   \App\Models\Entrada::find(3);
-
-
-
-    $taxa       =   TaxaEntrada::find(1);
-    return
-
-
-
-//    return $taxa;
-
-    $payload = "000201";
-    $payload .= "010211";
-    $payload .= "26" . strlen("0014br.gov.bcb.pix"."01".strlen($entrada->taxa->dadobancario->chave_pix).$entrada->taxa->dadobancario->chave_pix) . "0014br.gov.bcb.pix" . "01" . strlen($entrada->taxa->dadobancario->chave_pix) . $entrada->taxa->dadobancario->chave_pix;
-    $payload .= "52040000";
-    $payload .= "5303986";
-    $payload .= "54" . sprintf("%02d", strlen($entrada->valor)) . $entrada->valor; // Valor editável
-    $payload .= "5802BR";
-    $payload .= "59" . str_pad(strlen($entrada->taxa->dadobancario->nome_titular), 2, 0, STR_PAD_LEFT) . $entrada->taxa->dadobancario->nome_titular; // Nome editável
-    $payload .= "6009" . "Fortaleza"; // Cidade editável
-    $payload .= "62070503***"; // ID/Descrição
-
-    $payload .= "6304";
-    $crc16  =   $entrada->taxa->calcularCRC16($payload);
-    $payload.= $crc16;
-
-
-
-    $qrcode     =   \SimpleSoftwareIO\QrCode\Facades\QrCode::size(500)->generate($payload);
-
-
-    /*"00020101021126360014br.gov.bcb.pix011428727291000133520400005303986540510.005802BR5913TECVEL TECVEL6009FORTALEZA62070503***63042BA0"
-    "00020101021126360014br.gov.bcb.pix011428727291000133520400005303986540510.005802BR5906Tecvel6009Fortaleza62070503***63045E86"*/
-    echo $qrcode;
-    echo "\<br>";
-
-    echo $payload;
+    $contrato =     Contrato::find(3);
+    foreach ($contrato->historicos->map->servicos->flatten() as $servico) {
+      echo $servico->pivot->cobrar;
+    }
 
 });

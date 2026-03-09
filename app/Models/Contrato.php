@@ -77,6 +77,55 @@ class Contrato extends Model
         return $this->historicos->map->servicos->flatten()->sum('pivot.valor_liquido');
     }
 
+    public function valorLiquidoTotalAutorizadoServico()
+    {
+        $valor  =   0;
+        foreach ($this->historicos->map->servicos->flatten() as $servico) {
+            if($servico->pivot->cobrar == 1){
+                $valor  += $servico->pivot->valor_liquido;
+            }
+        }
+
+        return $valor;
+    }
+    public function valorBrutoTotalServico()
+    {
+        return $this->historicos->map->servicos->flatten()->sum('pivot.valor_bruto');
+    }
+
+    public function valorLiquidoTotalPecaAvulsa()
+    {
+        $valorLiquidoTotal      =   0;
+
+        foreach ($this->historicos->map->pecasavulsas->flatten() as $pecaavulsa) {
+            $valorLiquidoTotal += $pecaavulsa->valor_liquido*$pecaavulsa->qnt;
+        }
+        return $valorLiquidoTotal;
+    }
+
+    public function valorLiquidoTotalAutorizadoPecaAvulsa()
+    {
+
+        $valorLiquidoTotal      =   0;
+
+        foreach ($this->historicos->map->pecasavulsas->flatten() as $pecaavulsa) {
+            if($pecaavulsa->cobrar == 1){
+                $valorLiquidoTotal  += $pecaavulsa->valor_liquido*$pecaavulsa->qnt;
+            }
+
+        }
+        return $valorLiquidoTotal;
+    }
+    public function valorBrutoTotalPecaAvulsa()
+    {
+        $valorLiquidoTotal      =   0;
+
+        foreach ($this->historicos->map->pecasavulsas->flatten() as $pecaavulsa) {
+            $valorLiquidoTotal += $pecaavulsa->valor_bruto*$pecaavulsa->qnt;
+        }
+        return $valorLiquidoTotal;
+    }
+
     public function gravar(Request $r)
     {
         $this->cliente()->associate($r->get('cliente'));

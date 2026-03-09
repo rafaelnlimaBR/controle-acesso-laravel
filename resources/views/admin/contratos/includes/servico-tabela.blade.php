@@ -58,4 +58,4 @@
     </tbody>
 </table>
 <br>
-<h4>R$ {{$contrato->valorLiquidoTotalServico()}}</h4>
+<h4>R$ {{$contrato->valorLiquidoTotalAutorizadoPecaAvulsa()}}</h4>
