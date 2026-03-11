@@ -77,7 +77,7 @@
 
                             <td>
                                 @can('contrato-visualizar')
-                                <a title="detalhar" href=""><i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                <a  title="detalhar" href="{{route('contrato.visualizar.pdf',['contrato'=>$c])}}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
                                 </a>
                                 @endcan
                                 @can('contrato-editar')

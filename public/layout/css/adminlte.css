@@ -2136,6 +2136,13 @@ progress {
 .form-control[type=file] {
   overflow: hidden;
 }
+
+.invoice {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .125);
+    position: relative;
+}
+
 .form-control[type=file]:not(:disabled):not([readonly]) {
   cursor: pointer;
 }

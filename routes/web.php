@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/editar/{contrato}/historico/{historico}/entrada/gravar', [App\Http\Controllers\ContratoController::class, 'gravarPagamento'])->name('contrato.pagamento.gravar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/entrada/atualizar/{pagamento}', [App\Http\Controllers\ContratoController::class, 'atualizarPagamento'])->name('contrato.pagamento.atualizar');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/entrada/excluir/{pagamento}', [App\Http\Controllers\ContratoController::class, 'excluirPagamento'])->name('contrato.pagamento.excluir');
+    Route::get('/contrato/{contrato}/visualizar', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');

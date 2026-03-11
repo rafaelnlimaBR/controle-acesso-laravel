@@ -126,6 +126,11 @@ class Contrato extends Model
         return $valorLiquidoTotal;
     }
 
+    public function valorTotaoPago()
+    {
+        return $this->historicos->map->entradas->flatten()->sum('valor_original');
+    }
+
     public function gravar(Request $r)
     {
         $this->cliente()->associate($r->get('cliente'));

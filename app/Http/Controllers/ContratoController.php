@@ -360,7 +360,7 @@ class ContratoController extends Controller
                 'historico_selecionado'   =>  $historico,
                 'tipo'              =>  $tipo,
                 'descricao'         =>  "Pagamento do contrato ".$contrato->id,
-                'valor_original'    =>  150,
+                'valor_original'    =>  ($contrato->valorLiquidoTotalAutorizadoPecaAvulsa()+$contrato->valorLiquidoTotalAutorizadoServico())-$contrato->valorTotaoPago(),
                 'route_back'        =>  route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos']),
 
             ];
@@ -502,11 +502,26 @@ class ContratoController extends Controller
         try{
 
             $pagamento->delete();
-            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Excluido com sucesso!']);
+            return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Excluido com sucesso!']);
+
 
         }catch (\Exception $e){
-            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+
+            return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos'])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
+    }
+
+    public function visualizarPDF(Contrato $contrato)
+    {
+        $dados  = [
+            'titulo_pagina'    =>  'Tecvel - Visualização de Contrato ',
+            'titulo'            =>  'Visualizar ',
+            'titulo_card'       =>  'Dados do Pagamento',
+            'contrato'           =>  $contrato,
+
+
+        ];
+        return view('admin.contratos.includes.pdf',$dados);
     }
 
 }
