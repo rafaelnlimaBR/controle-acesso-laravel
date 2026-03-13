@@ -6,8 +6,12 @@
             <div class="card">
                 <div class="card-body">
 
-                    <a class="btn btn-primary"  href="{{route('contrato.visualizar.pdf',['contrato'=>$contrato])}}">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF Contrato
+                    <a class="btn btn-primary"  href="{{route('contrato.baixar.contrato.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Ordem em PDF
+                    </a>
+
+                    <a class="btn btn-primary"  href="{{route('contrato.baixar.historico.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Historico em PDF
                     </a>
 
                 </div>

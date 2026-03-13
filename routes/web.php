@@ -73,7 +73,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/contrato/editar/{contrato}/historico/{historico}/entrada/gravar', [App\Http\Controllers\ContratoController::class, 'gravarPagamento'])->name('contrato.pagamento.gravar');
     Route::post('/contrato/editar/{contrato}/historico/{historico}/entrada/atualizar/{pagamento}', [App\Http\Controllers\ContratoController::class, 'atualizarPagamento'])->name('contrato.pagamento.atualizar');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/entrada/excluir/{pagamento}', [App\Http\Controllers\ContratoController::class, 'excluirPagamento'])->name('contrato.pagamento.excluir');
-    Route::get('/contrato/{contrato}/visualizar', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
+    Route::get('/contrato/{contrato}/visualizar/ordem', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
+    Route::get('/contrato/{contrato}/baixar/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'baixarOrdemPDF'])->name('contrato.baixar.contrato.pdf');
+    Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');

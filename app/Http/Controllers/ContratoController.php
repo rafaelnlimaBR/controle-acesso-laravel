@@ -12,9 +12,11 @@ use App\Models\Status;
 use App\Models\TaxaEntrada;
 use App\Models\TipoEntrada;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ContratoController extends Controller
 {
@@ -523,5 +525,33 @@ class ContratoController extends Controller
         ];
         return view('admin.contratos.includes.pdf',$dados);
     }
+
+    public function baixarOrdemPDF(Contrato $contrato)
+    {
+        try{
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.contrato',['contrato'=>$contrato]);
+            $pdf->setPaper('A4');
+
+            return $pdf->download($contrato->id.'-Contrato-'.(string) Str::ulid().'.pdf');
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
+    public function baixarHistoricoPDF(Contrato $contrato)
+    {
+        try{
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.historico',['contrato'=>$contrato]);
+            $pdf->setPaper('A4');
+
+            return $pdf->download($contrato->id.'-Contrato-'.(string) Str::ulid().'.pdf');
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
 
 }
