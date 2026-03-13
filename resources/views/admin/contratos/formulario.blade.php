@@ -1,7 +1,20 @@
 @extends('admin.layout')
 
 @section('conteudo')
+    <div class="row botoes" style="margin-bottom: 15px">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
 
+                    <a class="btn btn-primary"  href="{{route('contrato.visualizar.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF Contrato
+                    </a>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12 col-sm-12">
             <div class="card card-dark card-outline card-tabs">
