@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/{contrato}/visualizar/ordem', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
     Route::get('/contrato/{contrato}/baixar/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'baixarOrdemPDF'])->name('contrato.baixar.contrato.pdf');
     Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
+    Route::get('/contrato/{contrato}/baixar/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'baixarReciboPDF'])->name('contrato.baixar.recibo.pdf');
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');

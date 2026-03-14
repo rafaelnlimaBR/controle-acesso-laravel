@@ -78,131 +78,13 @@
 <body class="body">
 
 <div class="container">
+    @if($contrato->status->last()->id == $conf->orcamento_id)
+        <h2 style="text-align: center; border-bottom: 1px solid black">ORÇAMENTO</h2>
+    @else
+        <h2 style="text-align: center; border-bottom: 1px solid black">ORDEM DE SERVIÇO</h2>
+    @endif
 
-    <table width="100%" style="margin-bottom:20px;" class="topo">
-
-        <tr>
-
-            <!-- LOGO -->
-            <td width="20%" valign="top">
-                <img src="logo.png" style="width:100px;">
-            </td>
-
-
-            <!-- DADOS DA EMPRESA -->
-            <td width="50%" valign="top">
-
-                <b style="font-size:16px;">TECVEL ELETRÔNICA AUTOMOTIVA</b><br>
-                CNPJ: 28.727.291/0001-33<br>
-                Rua Pinto Madeira, 750 - Centro<br>
-                CEP: 60150-000<br>
-                Telefone: (85) 99999-9999
-
-            </td>
-
-
-            <!-- DADOS DA OS -->
-            <td width="30%" valign="top" align="right">
-
-                <table width="100%" class="borda" style="font-size:11px;">
-
-                    <tr>
-                        <td><b>Ordem Nº</b></td>
-                        <td align="right">000123</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Data</b></td>
-                        <td align="right">13/03/2026</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Status</b></td>
-                        <td align="right">Concluído</td>
-                    </tr>
-
-                </table>
-
-            </td>
-
-        </tr>
-
-    </table>
-
-
-    <table width="100%">
-
-        <tr>
-
-            <td width="50%" valign="top">
-
-                <div class="section">Cliente</div>
-
-                <table class="info">
-
-                    <tr>
-                        <td><b>Nome:</b></td>
-                        <td>José Austregesilo</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Telefone:</b></td>
-                        <td>(85) 99999-9999</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>CPF:</b></td>
-                        <td>123.456.789-00</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Endereço:</b></td>
-                        <td>Rua das Flores, 100 - Fortaleza</td>
-                    </tr>
-
-                </table>
-
-            </td>
-
-
-            <td width="50%" valign="top">
-
-                <div class="section">Veículo</div>
-
-                <table class="info">
-
-                    <tr>
-                        <td><b>Placa:</b></td>
-                        <td>ABC1D23</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Marca:</b></td>
-                        <td>Volkswagen</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Modelo:</b></td>
-                        <td>Gol</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>Ano:</b></td>
-                        <td>2018</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>KM:</b></td>
-                        <td>85.000</td>
-                    </tr>
-
-                </table>
-
-            </td>
-
-        </tr>
-
-    </table>
+    @include('admin.contratos.pdf.includes.cabecalho')
 
 
     <div class="section">Serviços Realizados</div>
@@ -300,7 +182,7 @@
     </table>
 
 
-
+    @if($contrato->status->last()->id == $conf->orcamento_id)
     <table class="assinaturas" width="100%">
 
         <tr>
@@ -315,6 +197,9 @@
         </tr>
 
     </table>
+
+        @endif
+
 
 </div>
 

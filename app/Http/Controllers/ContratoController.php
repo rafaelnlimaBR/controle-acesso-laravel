@@ -529,10 +529,14 @@ class ContratoController extends Controller
     public function baixarOrdemPDF(Contrato $contrato)
     {
         try{
-            $pdf        =   Pdf::loadView('admin.contratos.pdf.contrato',['contrato'=>$contrato]);
+            $dados  = [
+            'conf'              =>  $this->conf,
+            'contrato'           =>  $contrato,
+            ];
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.contrato',$dados);
             $pdf->setPaper('A4');
 
-            return $pdf->download($contrato->id.'-Contrato-'.(string) Str::ulid().'.pdf');
+            return $pdf->download($contrato->id.'-contrato-'.(string) Str::ulid().'.pdf');
 
 
         }catch (\Exception $e){
@@ -542,10 +546,32 @@ class ContratoController extends Controller
     public function baixarHistoricoPDF(Contrato $contrato)
     {
         try{
-            $pdf        =   Pdf::loadView('admin.contratos.pdf.historico',['contrato'=>$contrato]);
+            $dados  = [
+                'conf'              =>  $this->conf,
+                'contrato'           =>  $contrato,
+            ];
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.historico',$dados);
             $pdf->setPaper('A4');
 
-            return $pdf->download($contrato->id.'-Contrato-'.(string) Str::ulid().'.pdf');
+            return $pdf->download($contrato->id.'-historico-'.(string) Str::ulid().'.pdf');
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    public function baixarReciboPDF(Contrato $contrato)
+    {
+        try{
+            $dados  = [
+                'conf'              =>  $this->conf,
+                'contrato'           =>  $contrato,
+            ];
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.recibo',$dados);
+            $pdf->setPaper('A4');
+
+            return $pdf->download($contrato->id.'-recibo-'.(string) Str::ulid().'.pdf');
 
 
         }catch (\Exception $e){

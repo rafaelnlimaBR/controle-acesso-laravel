@@ -1,6 +1,8 @@
 @extends('admin.layout')
 
 @section('conteudo')
+    @if(isset($contrato))
+
     <div class="row botoes" style="margin-bottom: 15px">
         <div class="col-md-12">
             <div class="card">
@@ -13,12 +15,19 @@
                     <a class="btn btn-primary"  href="{{route('contrato.baixar.historico.pdf',['contrato'=>$contrato])}}">
                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Historico em PDF
                     </a>
+                    @if($contrato->historicos->map->entradas->flatten()->count() >= 1)
+                        <a class="btn btn-primary"  href="{{route('contrato.baixar.recibo.pdf',['contrato'=>$contrato])}}">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Recibo em PDF
+                        </a>
+                    @endif
 
                 </div>
                 <!-- /.card-body -->
             </div>
         </div>
+
     </div>
+    @endif
     <div class="row">
         <div class="col-12 col-sm-12">
             <div class="card card-dark card-outline card-tabs">

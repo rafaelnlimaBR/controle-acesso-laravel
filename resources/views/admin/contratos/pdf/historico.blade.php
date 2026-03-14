@@ -23,7 +23,10 @@
         td, th{
             padding:6px;
         }
-
+        .info td{
+            border:none;
+            padding:3px;
+        }
         .borda td,
         .borda th{
             border:1px solid #000;
@@ -63,52 +66,8 @@
 
 
 <!-- CABEÇALHO -->
-
-<table style="margin-bottom:20px;">
-
-    <tr>
-
-        <td width="20%">
-            <img src="logo.png" style="width:90px;">
-        </td>
-
-        <td width="50%">
-
-            <b style="font-size:16px;">TECVEL ELETRÔNICA AUTOMOTIVA</b><br>
-            CNPJ: 28.727.291/0001-33<br>
-            Rua Pinto Madeira, 750 - Centro<br>
-            Fortaleza - CE
-
-        </td>
-
-        <td width="30%" align="right">
-
-            <table class="borda" style="font-size:11px;">
-
-                <tr>
-                    <td><b>OS Nº</b></td>
-                    <td align="right">000123</td>
-                </tr>
-
-                <tr>
-                    <td><b>Placa</b></td>
-                    <td align="right">ABC1D23</td>
-                </tr>
-
-                <tr>
-                    <td><b>Cliente</b></td>
-                    <td align="right">José</td>
-                </tr>
-
-            </table>
-
-        </td>
-
-    </tr>
-
-</table>
-
-
+<h2 style="text-align: center; border-bottom: 1px solid black">HISTÓRICO</h2>
+@include('admin.contratos.pdf.includes.cabecalho')
 
 <div class="section">Histórico da Ordem de Serviço</div>
 
