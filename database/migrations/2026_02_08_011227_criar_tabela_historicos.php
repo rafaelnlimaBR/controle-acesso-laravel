@@ -15,7 +15,7 @@ return new class extends Migration
             $t->id('id');
             $t->foreignId('contrato_id')->references('id')->on('contratos')->onDelete('cascade');
             $t->foreignId('status_id')->references('id')->on('status')->onDelete('cascade');
-            $t->foreignId('autor_id')->references('id')->on('users')->onDelete('cascade');
+            $t->foreignId('autor_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $t->text('descricao')->nullable();
             $t->dateTime('data');
             $t->timestamps();

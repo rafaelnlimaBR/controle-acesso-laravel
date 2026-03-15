@@ -16,8 +16,12 @@ class Veiculo extends Model
 
     public function scopePesquisarPorPlaca($query, $placa)
     {
+        if($placa == ""){
+            return $query;
+        }else{
 
-        return $query->where('placa','like','%'.$placa.'%');
+            return $query->where('placa','like','%'.$placa.'%');
+        }
     }
 
     public function scopePesquisarPorModelo($query, $modelo)
@@ -31,12 +35,12 @@ class Veiculo extends Model
         }
     }
 
-    public function gravar(Request $r)
+    public function gravar($placa, $cor, $ano, $modelo_id)
     {
-        $this->placa            =   strtoupper($r->get('placa'));
-        $this->cor              =   strtolower($r->get('cor'));
-        $this->ano              =   strtoupper($r->get('ano'));
-        $this->modelo_id         =   strtoupper($r->get('modelo'));
+        $this->placa            =   strtoupper($placa);
+        $this->cor              =   strtolower($cor);
+        $this->ano              =   strtoupper($ano);
+        $this->modelo_id         =   strtoupper($modelo_id);
         $this->save();
 
 

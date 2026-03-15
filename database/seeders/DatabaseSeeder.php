@@ -176,6 +176,7 @@ class DatabaseSeeder extends Seeder
             'grupo_tecnico_id'  =>  2,
             'grupo_cliente_id'  =>  3,
             'orcamento_id'      =>  1,
+            'orcamento_online_id'      =>  7,
             'andamento_id'     =>  2,
             'concluido_id'      =>  3,
             'retorno_id'        =>  4,
@@ -200,6 +201,7 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'Concluido','cobrar'=>true,'renovar_garantia'=>true,'cor_fundo'=>'465AE8','cor_letra'=>'FCFCFC'],
             ['nome'=>'Retorno','cobrar'=>true,'renovar_garantia'=>false,'cor_fundo'=>'465AE8','cor_letra'=>'FCFCFC'],
             ['nome'=>'Cancelado','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'E88446','cor_letra'=>'FCFCFC'],
+            ['nome'=>'Orçamento Online','cobrar'=>false,'renovar_garantia'=>false,'cor_fundo'=>'E8EB50','cor_letra'=>'3D3D3D'],
         ]);
         DB::table('status_proximos')->insert([
             ['atual_status_id'=>'1','proximo_status_id'=>'2'],
@@ -214,6 +216,10 @@ class DatabaseSeeder extends Seeder
 
             ['atual_status_id'=>'5','proximo_status_id'=>'3'],  //Retorno
             ['atual_status_id'=>'5','proximo_status_id'=>'6'],
+
+            ['atual_status_id'=>'7','proximo_status_id'=>'2'],
+            ['atual_status_id'=>'7','proximo_status_id'=>'3'],  //ORçamento
+            ['atual_status_id'=>'7','proximo_status_id'=>'6'],
         ]);
 
 

@@ -11,56 +11,19 @@ class MontadoraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function modelos(Request $r, $id)
     {
-        //
-    }
+        try{
+            $montadora      =   Montadora::find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            $modelos        =   $montadora->modelos;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Montadora $montadora)
-    {
-        //
-    }
+            return response()->json(['modelos'=>$modelos]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Montadora $montadora)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Montadora $montadora)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Montadora $montadora)
-    {
-        //
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 }

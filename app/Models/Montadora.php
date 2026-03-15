@@ -8,8 +8,8 @@ class Montadora extends Model
 {
     protected $table = 'montadoras';
 
-    public function modelo()
+    public function modelos()
     {
-        return $this->hasmany(Modelo::class);
+        return $this->hasMany(Modelo::class);
     }
 }

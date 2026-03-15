@@ -68,6 +68,9 @@ class User extends Authenticatable
 
     public function scopePesquisarPorNome($query, $nome)
     {
+        if($nome == ""){
+            return $query;
+        }
         return $query->where('name','like','%'.$nome.'%');
     }
     public function scopePesquisarPorTelefone($query, $telefone)
@@ -112,34 +115,20 @@ class User extends Authenticatable
     }
 
 
-    public function gravar(Request $request)
+    public function gravar($nome, $email, $senha, $contato, $grupo_id,$ativo)
     {
-        $this->name             = strtoupper($request->get('nome_completo'));
+        $this->name             = strtoupper($nome);
 
-        $this->email             =   strtolower($request->get('email'));
-        if ($request->has('senha')){
-            $this->password          =   Hash::make($request->get('senha'));
-        }
-        $this->ativo            =   $request->get('ativo')=="1"?1:0;
+        $this->email             =   strtolower($email);
 
-       /* if(is_null($this)){
-            if (!file_exists(public_path('/layout/imagens/users/'))){
-                mkdir(public_path('/layout/imagens/users/'), 0777, true);
-            }
-            $filename="";
-            $image       =   $request->file('imagem');
-            $filename = Str::random(16).'.'.$image->getClientOriginalExtension();
+        $this->password          =   Hash::make($senha);
 
-            $resize  =  ImageManager::gd()->read($image->getRealPath());
-            $resize->save(public_path('/layout/imagens/users/').$filename);
-
-            $this->imagem   =   $filename;
-        }*/
-
+        $this->ativo            =   $ativo;
 
         $this->save();
 
-        $this->grupos()->sync($request->get('grupos'));
+        $this->grupos()->sync($grupo_id);
+        $this->adicionarContato($contato,1,'');
 
     }
 

@@ -78,6 +78,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
     Route::get('/contrato/{contrato}/baixar/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'baixarReciboPDF'])->name('contrato.baixar.recibo.pdf');
 
+//MONTADORAS
+
+
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
 
@@ -89,6 +92,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/entrada/gravar', [App\Http\Controllers\EntradaController::class, 'gravar'])->name('entrada.gravar');
 
 });
+Route::get('/montadora/{id}/modelos', [App\Http\Controllers\MontadoraController::class, 'modelos'])->name('montadora.modelos.ajax');
+
+Route::get('/fazer-orcamento', [\App\Http\Controllers\SiteController::class,'fazerOrcamento'])->name('site.fazer.orcamento');
+Route::post('/cadastrar-orcamento', [\App\Http\Controllers\SiteController::class,'cadastrarOrcamento'])->name('site.cadastrar.orcamento');
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
@@ -104,6 +111,12 @@ View::composer(['admin.grupos.formulario'],function($view){
     $permissoes    =   \App\Models\Permissao::all();
 
     $view->with(['permissoes'=>$permissoes]);
+});
+
+View::composer(['site.fazer-orcamento'],function($view){
+    $montadoras    =   \App\Models\Montadora::all();
+
+    $view->with(['montadoras'=>$montadoras]);
 });
 
 View::composer(['admin.veiculos.includes.form','admin.veiculos.index'],function($view){

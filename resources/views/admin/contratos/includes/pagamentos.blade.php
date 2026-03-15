@@ -10,7 +10,7 @@
         <table class="table table-bordered" role="table">
             <thead>
             <tr>
-                <th style="width: 5%" scope="col">#</th>
+
                 <th style="width: 7%" scope="col">Valor</th>
 
                 <th style="width: 7%" scope="col">Taxado</th>
@@ -33,7 +33,7 @@
                 @foreach($h->entradas as $s)
                     <tr class="align-middle " >
 
-                        <td >{{$s->id}}</td>
+
                         <td >{{$s->valor_original}}</td>
                         <td >{{$s->repassar_taxa==1?'Sim':'Não'}}</td>
                         <td >{{$s->valor_cliente}}</td>

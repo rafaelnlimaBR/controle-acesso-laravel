@@ -8,16 +8,16 @@
             <div class="card">
                 <div class="card-body">
 
-                    <a class="btn btn-primary"  href="{{route('contrato.baixar.contrato.pdf',['contrato'=>$contrato])}}">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Ordem em PDF
+                    <a target="new" class="btn btn-primary"  href="{{route('contrato.baixar.contrato.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Ordem
                     </a>
 
-                    <a class="btn btn-primary"  href="{{route('contrato.baixar.historico.pdf',['contrato'=>$contrato])}}">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Historico em PDF
+                    <a target="new" class="btn btn-primary"  href="{{route('contrato.baixar.historico.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Histórico
                     </a>
                     @if($contrato->historicos->map->entradas->flatten()->count() >= 1)
-                        <a class="btn btn-primary"  href="{{route('contrato.baixar.recibo.pdf',['contrato'=>$contrato])}}">
-                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Baixar Recibo em PDF
+                        <a target="new" class="btn btn-primary"  href="{{route('contrato.baixar.recibo.pdf',['contrato'=>$contrato])}}">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Recibo
                         </a>
                     @endif
 

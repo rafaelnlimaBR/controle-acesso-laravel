@@ -69,8 +69,8 @@
                             <td>{{$c->id}}</td>
                             <td>{{$c->cliente->name}}</td>
                             <td>{{$c->cliente->contatos->pluck('numero')->join(', ')}}</td>
-                            <td>{{$c->veiculo->placa}}</td>
-                            <td>{{$c->veiculo->modelo->nome}}</td>
+                            <td>{{is_null($c->veiculo)?"":$c->veiculo->placa}}</td>
+                            <td>{{is_null($c->veiculo)?"":$c->veiculo->modelo->nome}}</td>
                             <td><span style="background-color: {{'#'.$c->status->last()->cor_fundo}}; color: {{'#'.$c->status->last()->cor_letra}}; padding: 3px 5px 3px 5px;border-radius: 10px;">{{$c->status->last()->nome}}</span></td>
                             <td>{{\Carbon\Carbon::parse($c->data_inicio)->format('d/m/Y')}}</td>
 

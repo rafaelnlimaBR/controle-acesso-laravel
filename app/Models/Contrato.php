@@ -131,24 +131,26 @@ class Contrato extends Model
         return $this->historicos->map->entradas->flatten()->sum('valor_original');
     }
 
-    public function gravar(Request $r)
+    public function gravar(User $cliente,$data_inicio, $descricao_cliente, Veiculo $veiculo=null,$observacao=null,$solucao=null,User $autor=null, User $tecnico=null  )
     {
-        $this->cliente()->associate($r->get('cliente'));
-        if($r->has('veiculo')){
-            $this->veiculo()->associate($r->get('veiculo'));
+        $this->cliente()->associate($cliente);
+        if(isset($veiculo)){
+            $this->veiculo()->associate($veiculo);
         }
-        $this->descricao_cliente        =   $r->get('descricao');
-        $this->observacao               =   $r->get('observacao');
-        $this->solucao                  =   $r->get('solucao');
-        $this->data_inicio              =   Carbon::createFromFormat('d/m/Y',$r->get('data_inicio'));
-        if ($r->get('data_garantia')) {
-            $this->data_garantia            =   Carbon::createFromFormat('d/m/Y',$r->get('data_garantia'));
+        $this->descricao_cliente        =   $descricao_cliente;
+        $this->observacao               =   $observacao;
+        $this->solucao                  =   $observacao;
+        $this->data_inicio              =   Carbon::createFromFormat('d/m/Y',$data_inicio);
+        $this->data_garantia            =  null;
+
+        if(isset($autor)){
+            $this->autor()->associate(auth()->user());
         }
-
-        $this->autor()->associate(auth()->user());
-        $this->tecnico()->associate($r->get('tecnico'));
-
+        if(isset($tecnico)){
+            $this->tecnico()->associate($tecnico);
+        }
         $this->save();
+
         return $this;
     }
 

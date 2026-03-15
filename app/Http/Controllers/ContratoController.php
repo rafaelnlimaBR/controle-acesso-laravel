@@ -12,6 +12,7 @@ use App\Models\Status;
 use App\Models\TaxaEntrada;
 use App\Models\TipoEntrada;
 use App\Models\User;
+use App\Models\Veiculo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class ContratoController extends Controller
             'titulo'            =>  'Contratos',
             'titulo_tabela'     =>  'Lista de Contratos',
             'contratos'          => Contrato::
-                PesquisarPorVeiculo(request('placa'))
+                PesquisarPorVeiculo(\request()->has('placa')?\request()->input('placa'):"",)
                 ->PesquisarPorCliente(request('cliente'))
                 ->PesquisarPorData(request('data'))
                 ->paginate(15)
@@ -95,7 +96,17 @@ class ContratoController extends Controller
             $contrato       =   new Contrato();
             $status         =   Status::find($this->conf->orcamento_id);
 
-            $contrato->gravar(request());
+//            User $cliente,$data_inicio, $descricao_cliente, Veiculo $veiculo=null,$observacao=null,User $autor=null, User $tecnico=null  )
+            $contrato->gravar(
+                User::find($r->input('cliente')),
+                $r->input('data_inicio'),
+                $r->input('descricao'),
+                $r->has('veiculo')?Veiculo::find($r->input('veiculo')):null,
+                $r->input('observacao'),
+                $r->input('solucao'),
+                auth()->user(),
+                User::find($r->input('tecnico'))
+            );
 
             $contrato->status()->attach($status,['descricao'=>'Orçamento criado','autor_id'=>auth()->user()->id,'data'=>Carbon::createFromFormat('d/m/Y',$r->get('data_inicio'))->format('Y-m-d')]);
 
@@ -530,13 +541,14 @@ class ContratoController extends Controller
     {
         try{
             $dados  = [
+                'titulo'        =>  'Ordem - '.$contrato->id,
             'conf'              =>  $this->conf,
             'contrato'           =>  $contrato,
             ];
             $pdf        =   Pdf::loadView('admin.contratos.pdf.contrato',$dados);
             $pdf->setPaper('A4');
 
-            return $pdf->download($contrato->id.'-contrato-'.(string) Str::ulid().'.pdf');
+            return $pdf->stream($contrato->id.'-contrato-'.(string) Str::ulid().'.pdf');
 
 
         }catch (\Exception $e){
@@ -547,13 +559,14 @@ class ContratoController extends Controller
     {
         try{
             $dados  = [
+                'titulo'        =>  'Histórico - '.$contrato->id,
                 'conf'              =>  $this->conf,
                 'contrato'           =>  $contrato,
             ];
             $pdf        =   Pdf::loadView('admin.contratos.pdf.historico',$dados);
             $pdf->setPaper('A4');
 
-            return $pdf->download($contrato->id.'-historico-'.(string) Str::ulid().'.pdf');
+            return $pdf->stream($contrato->id.'-historico-'.(string) Str::ulid().'.pdf');
 
 
         }catch (\Exception $e){
@@ -565,13 +578,14 @@ class ContratoController extends Controller
     {
         try{
             $dados  = [
+                'titulo'        =>  'Recibo - '.$contrato->id,
                 'conf'              =>  $this->conf,
                 'contrato'           =>  $contrato,
             ];
             $pdf        =   Pdf::loadView('admin.contratos.pdf.recibo',$dados);
             $pdf->setPaper('A4');
 
-            return $pdf->download($contrato->id.'-recibo-'.(string) Str::ulid().'.pdf');
+            return $pdf->stream($contrato->id.'-recibo-'.(string) Str::ulid().'.pdf');
 
 
         }catch (\Exception $e){
