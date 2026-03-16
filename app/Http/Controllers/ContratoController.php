@@ -170,7 +170,16 @@ class ContratoController extends Controller
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
-            $contrato->gravar(request());
+            $contrato->gravar(
+                User::find($r->input('cliente')),
+                $r->input('data_inicio'),
+                $r->input('descricao'),
+                $r->has('veiculo')?Veiculo::find($r->input('veiculo')):null,
+                $r->input('observacao'),
+                $r->input('solucao'),
+                auth()->user(),
+                User::find($r->input('tecnico'))
+            );
 
             return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'dados'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Contrato cadastrado com sucesso!."]);
 

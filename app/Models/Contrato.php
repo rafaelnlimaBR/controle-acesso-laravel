@@ -43,6 +43,12 @@ class Contrato extends Model
 
     public function scopePesquisarPorVeiculo($query, $placa)
     {
+        if($placa == null){
+            return $query;
+        }
+        if($placa == ""){
+            return $query;
+        }
         return $query->whereHas('veiculo', function($query) use ($placa){
             $query->where('placa', 'like','%'.$placa.'%');
         });
@@ -134,7 +140,7 @@ class Contrato extends Model
     public function gravar(User $cliente,$data_inicio, $descricao_cliente, Veiculo $veiculo=null,$observacao=null,$solucao=null,User $autor=null, User $tecnico=null  )
     {
         $this->cliente()->associate($cliente);
-        if(isset($veiculo)){
+        if($veiculo != null){
             $this->veiculo()->associate($veiculo);
         }
         $this->descricao_cliente        =   $descricao_cliente;
@@ -143,10 +149,10 @@ class Contrato extends Model
         $this->data_inicio              =   Carbon::createFromFormat('d/m/Y',$data_inicio);
         $this->data_garantia            =  null;
 
-        if(isset($autor)){
+        if($autor != null){
             $this->autor()->associate(auth()->user());
         }
-        if(isset($tecnico)){
+        if($tecnico != null){
             $this->tecnico()->associate($tecnico);
         }
         $this->save();

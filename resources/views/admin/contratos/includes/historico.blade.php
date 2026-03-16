@@ -5,7 +5,7 @@
             <!-- timeline time label -->
             <div class="time-label">
                 <span class="text-bg-dark" >Aberto - {{\Carbon\Carbon::parse($contrato->data_inicio)->format('d/m/Y')}}</span>
-                <span style="font-size:small ">{{$contrato->autor->nome_completo}}</span>
+                <span style="font-size:small ">{{isset($contrato->autor)?$contrato->autor->nome_completo:'Criado Online'}}</span>
             </div>
             <div>
                 <i class="timeline-icon  bi-chat-dots text-bg-primary"> </i>
@@ -28,7 +28,7 @@
 
                 <div class="time-label">
                     <span class="" style="color: {{'#'.$h->status->cor_letra}}; background-color:{{'#'.$h->status->cor_fundo}} "><a style="color: {{'#'.$h->status->cor_letra}}; text-decoration: none" href="{{route('contrato.editar',['contrato'=>$contrato,'historico'=>$h,'pagina'=>'historicos'])}}">{{$h->status->nome ." - ".\Carbon\Carbon::parse($h->data)->format('d/m/Y')}}</a></span>
-                    <span style="font-size:small ">{{$h->autor->nome_completo}}</span>
+                    <span style="font-size:small ">{{isset($h->autor)?$h->autor->nome_completo:'Criado Online'}}</span>
                 </div>
                 <!-- /.timeline-label -->
                 <!-- timeline item -->

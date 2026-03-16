@@ -115,7 +115,7 @@ class User extends Authenticatable
     }
 
 
-    public function gravar($nome, $email, $senha, $contato, $grupo_id,$ativo)
+    public function gravar($nome, $email, $senha, $grupo_id,$ativo,$contato=null,$whatapp=null, $descricao=null)
     {
         $this->name             = strtoupper($nome);
 
@@ -128,7 +128,10 @@ class User extends Authenticatable
         $this->save();
 
         $this->grupos()->sync($grupo_id);
-        $this->adicionarContato($contato,1,'');
+        if($contato != null){
+            $this->adicionarContato($contato,$whatapp,$descricao);
+        }
+
 
     }
 

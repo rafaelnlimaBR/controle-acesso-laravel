@@ -87,8 +87,19 @@ class UsuarioController extends Controller
             }
 
             $usuario        =   new User();
-            $usuario->gravar(request());
-            $usuario->adicionarContato($r->get('contato'),$r->has('whatsapp')?true:false,$r->get('observacao'));
+//            public function gravar($nome, $email, $senha, $contato, $grupo_id,$ativo,$whatapp=null, $descricao=null)
+            $usuario->gravar(
+                $r->input('nome_completo'),
+                $r->input('email'),
+                $r->input('senha'),
+                $r->input('grupos'),
+                $r->input('ativo'),
+                $r->input('contato'),
+                $r->has('whatsapp')?1:0,
+                ''
+
+            );
+
 
             if ($r->has('modal')){
 
@@ -144,7 +155,13 @@ class UsuarioController extends Controller
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
-            $usuario->gravar(request());
+            $usuario->gravar(
+                $r->input('nome_completo'),
+                $r->input('email'),
+                $r->input('senha'),
+                $r->input('grupos'),
+                $r->input('ativo'),
+            );
 
             return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 

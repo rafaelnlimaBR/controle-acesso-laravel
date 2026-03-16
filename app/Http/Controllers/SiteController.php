@@ -26,6 +26,7 @@ class SiteController extends Controller
             'titulo'        =>  'Tecvel - Fazer Orçamento',
             'conf'              =>  $this->conf,
         ];
+
         return view('site.fazer-orcamento',$dados);
     }
 
@@ -64,9 +65,10 @@ class SiteController extends Controller
                     $r->input('nome'),
                     $r->input('email'),
                     $r->input('senha'),
-                    $r->input('contato'),
                     $this->conf->grupo_cliente_id,
-                    '1'
+                    '1',
+                    $r->input('contato'),
+                    1,
                 );
             }
             $veiculo    =   null;
