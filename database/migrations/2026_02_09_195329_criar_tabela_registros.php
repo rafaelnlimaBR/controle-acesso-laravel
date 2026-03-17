@@ -17,7 +17,7 @@ return new class extends Migration
             $t->foreignId('tipo_id')->references('id')->on('registros_tipos')->onDelete('cascade');
             $t->foreignId('historico_id')->references('id')->on('historicos')->onDelete('cascade');
             $t->dateTime('data');
-            $t->foreignId('autor_id')->references('id')->on('users')->onDelete('cascade');
+            $t->foreignId('autor_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $t->timestamps();
         });
     }

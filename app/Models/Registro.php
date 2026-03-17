@@ -30,13 +30,15 @@ class Registro extends Model
         return $this->belongsTo(Historico::class,'historico_id');
     }
 
-    public function gravar(Request $r)
+    public function gravar($data, $descricao, $tipo, $historico, $autor=null)
     {
-        $this->data         =   Carbon::createFromFormat('d/m/Y',$r->get('data'));
-        $this->descricao    =   $r->get('descricao');
-        $this->tipo()->associate($r->get('tipo'));
-        $this->historico()->associate($r->get('historico'));
-        $this->autor()->associate(auth()->user());
+
+        $this->data         =   Carbon::createFromFormat('d/m/Y',$data);
+        $this->descricao    =   $descricao;
+        $this->tipo()->associate($tipo);
+        $this->historico()->associate($historico);
+
+        $this->autor()->associate($autor);
 
         $this->save();
     }

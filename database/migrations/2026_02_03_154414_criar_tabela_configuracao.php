@@ -34,6 +34,7 @@ return new class extends Migration
             $t->integer('retorno_id');
             $t->integer('cancelado_id');
             $t->integer('nao_autorizado_id');
+            $t->integer('descricao_cliente_id');
 
         });
     }

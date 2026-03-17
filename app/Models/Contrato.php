@@ -137,6 +137,24 @@ class Contrato extends Model
         return $this->historicos->map->entradas->flatten()->sum('valor_original');
     }
 
+    public function cobrarServicos($cobrar)
+    {
+        foreach ($this->historicos->map->servicos->flatten() as $servico) {
+            $servico->pivot->cobrar = $cobrar;
+            $servico->pivot->save();
+        }
+    }
+
+    public function cobrarPecasAvulsas($cobrar)
+    {
+        foreach ($this->historicos->map->pecasAvulsas->flatten() as $pecas) {
+            $pecas->cobrar = $cobrar;
+            $pecas->save();
+        }
+    }
+
+
+
     public function gravar(User $cliente,$data_inicio, $descricao_cliente, Veiculo $veiculo=null,$observacao=null,$solucao=null,User $autor=null, User $tecnico=null  )
     {
         $this->cliente()->associate($cliente);

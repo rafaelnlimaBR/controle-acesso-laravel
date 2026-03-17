@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Configuracao;
 use App\Models\Contrato;
 use App\Models\Montadora;
+use App\Models\Registro;
 use App\Models\User;
 use App\Models\Veiculo;
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ class SiteController extends Controller
         try{
 
 //            return $r->all();
-           /* $regras         =   [
+            $regras         =   [
                 'nome'=>'required',
                 'email'=>'required|email',
                 'contato'=>'required',
@@ -55,7 +56,7 @@ class SiteController extends Controller
 
                 return redirect()->route('site.fazer.orcamento')->withInput()->withErrors($validacao)->with('modelos_retorno',$modelos)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
 
-            }*/
+            }
             $cliente        =   User::where('email',$r->input('email'))->first();
 
 
@@ -95,6 +96,16 @@ class SiteController extends Controller
             );
 
             $contrato->status()->attach($this->conf->orcamento_online_id,['descricao'=>'Solicitação de orçamento criano online','data'=>Carbon::now(),'autor_id'=>null]);
+            $registro       =   new Registro();
+
+            $registro->gravar(
+                Carbon::now()->format('d/m/Y'),
+                $r->input('descricao'),
+                $this->conf->descricao_cliente_id,
+                $contrato->historicos->last(),
+                null
+            );
+
 
             return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Cadastrado com sucesso!."]);
 

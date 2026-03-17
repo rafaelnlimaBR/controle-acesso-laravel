@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Types\Relations\Car;
 
 class ContratoController extends Controller
 {
@@ -43,6 +44,7 @@ class ContratoController extends Controller
                 PesquisarPorVeiculo(\request()->has('placa')?\request()->input('placa'):"",)
                 ->PesquisarPorCliente(request('cliente'))
                 ->PesquisarPorData(request('data'))
+                ->orderBy('data_inicio','desc')
                 ->paginate(15)
                 ->withQueryString(),
 
@@ -207,10 +209,36 @@ class ContratoController extends Controller
 
     }
 
-    public function mudarStatus(Contrato $contrato)
+    public function mudarStatus(Request $r ,Contrato $contrato)
     {
         try {
-            $status     =   Status::find(request('status_id'));
+            $status_id  =   $r->input('status_id');
+
+            switch ($status_id) {
+                case $this->conf->andamento_id : //ANDAMENTO
+                    $contrato->cobrarServicos(1);
+                    $contrato->cobrarPecasAvulsas(1);
+                    break;
+                case $this->conf->concluido_id : //CONCLUIDO
+                    $contrato->data_garantia    =   Carbon::now()->addDays(90);
+                    $contrato->save();
+                    break;
+
+                case $this->conf->cancelado_id : //CANCELADO
+                    $contrato->cobrarServicos(0);
+                    $contrato->cobrarPecasAvulsas(0);
+                    break;
+                case $this->conf->retorno_id :   //RETORNO
+
+                    break;
+                case $this->conf->nao_autorizado_id :   //NAO AUTORIZADO
+                    $contrato->cobrarServicos(0);
+                    $contrato->cobrarPecasAvulsas(0);
+                    break;
+            }
+
+
+            $status     =   Status::find($r->input('status_id'));
             $contrato->status()->attach($status,['descricao'=>request('descricao'),'autor_id'=>auth()->user()->id,'data'=>Carbon::now()]);
 
             return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$contrato->historicos->last(),'pagina'=>'dados'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Status alterado com sucesso!."]);

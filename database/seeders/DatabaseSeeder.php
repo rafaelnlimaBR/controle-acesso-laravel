@@ -177,11 +177,12 @@ class DatabaseSeeder extends Seeder
             'grupo_cliente_id'  =>  3,
             'orcamento_id'      =>  1,
             'orcamento_online_id'      =>  7,
-            'andamento_id'     =>  2,
-            'concluido_id'      =>  3,
-            'retorno_id'        =>  4,
-            'cancelado_id'      =>  5,
-            'nao_autorizado_id'  =>  6,
+            'andamento_id'     =>  3,
+            'concluido_id'      =>  4,
+            'retorno_id'        =>  5,
+            'cancelado_id'      =>  6,
+            'nao_autorizado_id'  =>  2,
+            'descricao_cliente_id'  =>  4,
         ]);
 
 
@@ -236,7 +237,8 @@ class DatabaseSeeder extends Seeder
         DB::table('registros_tipos')->insert([
             ['nome'=>'Recebimento','compartilhavel'=>true,'icon'=>'bi bi-file-earmark-text'],
             ['nome'=>'Testes em bancada','compartilhavel'=>true,'icon'=>'bi bi-joystick'],
-            ['nome'=>'Defeito','compartilhavel'=>true,'icon'=>'bi bi-exclamation-triangle-fill']
+            ['nome'=>'Defeito','compartilhavel'=>true,'icon'=>'bi bi-exclamation-triangle-fill'],
+            ['nome'=>'Descricao do cliente','compartilhavel'=>true,'icon'=>'bi bi-exclamation-triangle-fill'],
         ]);
 
         \Laravel\Prompts\info('Inserindo Registros');

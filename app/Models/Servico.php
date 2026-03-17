@@ -14,4 +14,6 @@ class Servico extends Model
     public function scopePesquisarPorNome($query, $nome){
         return $query->where('nome','like','%'.$nome.'%');
     }
+
+
 }

@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-2">
                             <label  class="form-label">Fim da Garantia<span class="sr-only"> </span></label>
-                            <input name="data_garantia" class="form-control datepicker">
+                            <input name="data_garantia" class="form-control datepicker" value="{{isset($contrato)?\Carbon\Carbon::parse($contrato->data_garantia)->format('d/m/Y'):""}}">
                             @error('data_garantia')
                             <div class="invalid-feedback">{{$message}}</div>
                             @enderror

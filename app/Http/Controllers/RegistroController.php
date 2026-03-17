@@ -57,7 +57,13 @@ class RegistroController extends Controller
             }
             $registro = new Registro();
 
-            $registro->gravar(request());
+            $registro->gravar(
+                $r->get('data'),
+                $r->get('descricao'),
+                $r->get('tipo'),
+                $historico->id,
+                auth()->user()->id,
+            );
 
             return redirect()->route('contrato.registro.editar',['contrato'=>$contrato,'historico'=>$historico,'registro'=>$registro])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
@@ -99,8 +105,13 @@ class RegistroController extends Controller
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
-
-            $registro->gravar(request());
+            $registro->gravar(
+                $r->get('data'),
+                $r->get('descricao'),
+                $r->get('tipo'),
+                $historico->id,
+                auth()->user()->id,
+            );
 
             return redirect()->route('contrato.registro.editar',['contrato'=>$contrato,'historico'=>$historico,'registro'=>$registro])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 
