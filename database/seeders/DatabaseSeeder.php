@@ -8,6 +8,7 @@ use Illuminate\Console\View\Components\Info;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\table;
 
 class DatabaseSeeder extends Seeder
 {
@@ -119,6 +120,16 @@ class DatabaseSeeder extends Seeder
 
             ['nome'=>'configuracao-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'configuracao-visualizar','created_at'=>now(),'updated_at'=>now()],
+
+            ['nome'=>'categoria-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'categoria-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'categoria-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'categoria-deletar','created_at'=>now(),'updated_at'=>now()],
+
+            ['nome'=>'postagem-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'postagem-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'postagem-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'postagem-deletar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([
@@ -288,6 +299,33 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('historico_entrada')->insert([
             ['entrada_id'=>1,'historico_id'=>1],
+        ]);
+
+        DB::table('categorias')->insert([
+            ['nome'=>'Reparo em paineis de instrumentos','ativo'=>1],
+            ['nome'=>'Reparo em modulos de injeção','ativo'=>1],
+        ]);
+        DB::table('postagens')->insert([
+            ['titulo'=>'teste 01','meta_descricao'=>'meda descricao','titulo_link'=>'teste_01','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+        ]);
+        DB::table('categoria_postagem')->insert([
+            ['postagem_id'=>1,'categoria_id'=>1]
+        ]);
+        DB::table('comentarios')->insert([
+            ['conteudo'=>'comentario 001','user_id'=>1,'ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['conteudo'=>'resposta 001','user_id'=>1,'ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+        ]);
+        DB::table('comentario_postagem')->insert([
+            ['postagem_id'=>1,'comentario_id'=>1],
+        ]);
+        DB::table('comentario_resposta')->insert([
+            ['comentario_id'=>1,'resposta_id'=>2]
+        ]);
+        DB::table('imagens_posts')->insert([
+            ['nome'=>'imagem 001','descricao'=>'descricao 001','ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+        ]);
+        DB::table('postagens_imagens')->insert([
+            ['postagem_id'=>1,'imagem_id'=>1]
         ]);
 
     }

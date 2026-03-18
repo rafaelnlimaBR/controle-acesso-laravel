@@ -33,6 +33,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/grupo/atualizar/{grupo}', [App\Http\Controllers\GrupoController::class, 'atualizar'])->name('grupo.atualizar');
     Route::get('/grupo/excluir/{grupo}', [App\Http\Controllers\GrupoController::class, 'excluir'])->name('grupo.excluir');
 
+//CATEGORIAS
+    Route::get('/categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categoria.index');
+    Route::get('/categoria/novo', [App\Http\Controllers\CategoriaController::class, 'novo'])->name('categoria.novo');
+    Route::get('/categoria/editar/{categoria}', [App\Http\Controllers\CategoriaController::class, 'editar'])->name('categoria.editar');
+    Route::post('/categoria/cadastrar', [App\Http\Controllers\CategoriaController::class, 'cadastrar'])->name('categoria.cadastrar');
+    Route::post('/categoria/atualizar/{categoria}', [App\Http\Controllers\CategoriaController::class, 'atualizar'])->name('categoria.atualizar');
+    Route::get('/categoria/excluir/{categoria}', [App\Http\Controllers\CategoriaController::class, 'excluir'])->name('categoria.excluir');
+
+//CATEGORIAS
+    Route::get('/postagens', [App\Http\Controllers\PostagemController::class, 'index'])->name('postagem.index');
+    Route::get('/postagem/novo', [App\Http\Controllers\PostagemController::class, 'novo'])->name('postagem.novo');
+    Route::get('/postagem/editar/{postagem}', [App\Http\Controllers\PostagemController::class, 'editar'])->name('postagem.editar');
+    Route::post('/postagem/cadastrar', [App\Http\Controllers\PostagemController::class, 'cadastrar'])->name('postagem.cadastrar');
+    Route::post('/postagem/atualizar/{postagem}', [App\Http\Controllers\PostagemController::class, 'atualizar'])->name('postagem.atualizar');
+    Route::get('/postagem/excluir/{postagem}', [App\Http\Controllers\PostagemController::class, 'excluir'])->name('postagem.excluir');
+
 //VEICULOS
     Route::get('/veiculos', [App\Http\Controllers\VeiculoController::class, 'index'])->name('veiculo.index');
     Route::get('/veiculo/novo', [App\Http\Controllers\VeiculoController::class, 'novo'])->name('veiculo.novo');
@@ -137,11 +153,17 @@ View::composer(['admin.contratos.includes.pagamentos'],function($view){
     $view->with(['tipos_entradas'=>$tipos_entradas]);
 });
 
+View::composer(['admin.postagens.formulario'],function($view){
+    $categorias         =   \App\Models\CategoriaPostagem::status(1)->get();
+
+    $view->with(['categorias'=>$categorias]);
+});
+
 Route::get('/', function () {
 
-    $contrato =     Contrato::find(3);
-    foreach ($contrato->historicos->map->servicos->flatten() as $servico) {
-      echo $servico->pivot->cobrar;
+    $postagem   =   \App\Models\Postagem::find(1);
+    foreach($postagem->comentarios as $comentario){
+        echo $comentario->respostas;
     }
 
 });

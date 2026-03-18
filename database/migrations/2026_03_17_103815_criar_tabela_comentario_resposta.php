@@ -15,7 +15,7 @@ return new class extends Migration
             $t->id();
             $t->foreignId('comentario_id')->references('id')->on('comentarios')->onDelete('cascade')->onUpdate('cascade');
             $t->foreignId('resposta_id')->references('id')->on('comentarios')->onDelete('cascade')->onUpdate('cascade');
-            $t->timestamps();
+
         });
     }
 

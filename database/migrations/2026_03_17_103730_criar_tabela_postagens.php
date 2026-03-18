@@ -17,7 +17,9 @@ return new class extends Migration
            $t->string('titulo_link');
            $t->boolean('ativo')->default(1);
            $t->text('conteudo');
-           $t->foreignId('autor_id')->nullable()->references('id')->on('users')->onDelete('set null')->onUpdate('set null');
+           $t->text('meta_descricao');
+           $t->foreignId('imagem_id')->nullable()->references('id')->on('imagens_posts')->onDelete('set null')->onUpdate('cascade');
+           $t->foreignId('autor_id')->nullable()->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
            $t->integer('visualizacoes')->default(0);
 
            $t->timestamps();

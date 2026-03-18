@@ -369,8 +369,27 @@
                             </a>
                         </li>
                     @endcan
+                    <li class="nav-header">SITE</li>
+                    @can('categoria-lista')
+                    <li  class="nav-item">
+                        <a href="{{route('categoria.index')}}" class="nav-link">
+                            <i class="fa fa-id-card" aria-hidden="true"></i>
 
 
+                            <p>Categorias</p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('postagem-lista')
+                        <li  class="nav-item">
+                            <a href="{{route('postagem.index')}}" class="nav-link">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
+
+
+                                <p>Postagens</p>
+                            </a>
+                        </li>
+                    @endcan
 
 
 

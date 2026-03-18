@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comentarios', function (Blueprint $t) {
+        Schema::create('postagens_imagens', function (Blueprint $t) {
             $t->id('id');
-            $t->text('conteudo');
-            $t->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $t->boolean('ativo')->default(1);
-            $t->timestamps();
-
+            $t->foreignId('postagem_id')->references('id')->on('postagens')->onDelete('cascade')->onUpdate('cascade');
+            $t->foreignId('imagem_id')->references('id')->on('imagens_posts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comentarios');
+        Schema::dropIfExists('postagens_imagens');
     }
 };
