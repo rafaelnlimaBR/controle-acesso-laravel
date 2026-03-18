@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('imagens_posts', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome');
+            $t->string('imagem');
             $t->text('descricao');
             $t->boolean('ativo')->default(1);
 

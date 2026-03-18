@@ -322,7 +322,7 @@ class DatabaseSeeder extends Seeder
             ['comentario_id'=>1,'resposta_id'=>2]
         ]);
         DB::table('imagens_posts')->insert([
-            ['nome'=>'imagem 001','descricao'=>'descricao 001','ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['nome'=>'imagem 001','imagem'=>'123.jpg','descricao'=>'descricao 001','ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
         ]);
         DB::table('postagens_imagens')->insert([
             ['postagem_id'=>1,'imagem_id'=>1]

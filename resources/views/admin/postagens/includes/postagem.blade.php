@@ -26,7 +26,7 @@
                 <!--begin::Col-->
                 <div class="col-md-5">
                     <label  class="form-label">Titulo<span class="sr-only"> </span></label>
-                    <input type="text" class="form-control" name="titulo_postagem" value="{{isset($titulo_postagem)?$titulo_postagem:old('titulo',isset($postagem)?$postagem->titulo:'')}}" >
+                    <input type="text" class="form-control" name="titulo_postagem" value="{{isset($titulo_postagem)?$titulo_postagem:old('titulo_postagem',isset($postagem)?$postagem->titulo:'')}}" >
                     @error('titulo_postagem')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-5">
                     <label  class="form-label">Link<span class="sr-only"> </span></label>
-                    <input type="text" class="form-control" name="titulo_link" value="{{isset($titulo_link)?$titulo_link:old('nome',isset($postagem)?$postagem->titulo_link:'')}}" >
+                    <input type="text" class="form-control" name="titulo_link" value="{{isset($titulo_link)?$titulo_link:old('titulo_link',isset($postagem)?$postagem->titulo_link:'')}}" >
                     @error('titulo_link')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror
@@ -69,10 +69,15 @@
                 </div>
                 <div class="col-md-2">
                     <label  class="form-label">Imagem<span class="sr-only"> </span></label>
-                    <select   class="form-control" name="categoria">
+                    <select   class="form-control" name="imagem">
                         @if(isset($postagem))
                             @foreach($postagem->imagens as $imagem)
-                                <option value="{{$imagem->id}}">{{$imagem->nome}}</option>
+                                @if($postagem->imagem_id == $imagem->id)
+                                    <option selected  value="{{$imagem->id}}">{{$imagem->nome}}</option>
+                                @else
+                                    <option  value="{{$imagem->id}}">{{$imagem->nome}}</option>
+                                @endif
+
                             @endforeach
                         @endif
 
@@ -87,7 +92,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label  class="form-label">Meta<span class="sr-only"> </span></label>
-                    <textarea size="" class="form-control" name="meta_descricao" >{{isset($conteudo)?$conteudo:old('meta_descricao',isset($postagem)?$postagem->meta_descricao:'')}}</textarea>
+                    <textarea size="" class="form-control" name="meta_descricao" >{{isset($postagem)?$postagem->meta_descricao:old('meta_descricao',isset($postagem)?$postagem->meta_descricao:'')}}</textarea>
                     @error('meta_descricao')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror
@@ -98,7 +103,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label  class="form-label">Conteudo<span class="sr-only"> </span></label>
-                    <textarea id="summernote-contrato" type="text" class="form-control" name="conteudo">{{isset($conteudo)?$conteudo:old('nome',isset($postagem)?$postagem->conteudo:'')}}</textarea>
+                    <textarea id="summernote-contrato" type="text" class="form-control" name="conteudo">{{isset($postagem)?$postagem->conteudo:old('conteudo',isset($postagem)?$postagem->conteudo:'')}}</textarea>
                     @error('conteudo')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror

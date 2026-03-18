@@ -48,6 +48,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/postagem/cadastrar', [App\Http\Controllers\PostagemController::class, 'cadastrar'])->name('postagem.cadastrar');
     Route::post('/postagem/atualizar/{postagem}', [App\Http\Controllers\PostagemController::class, 'atualizar'])->name('postagem.atualizar');
     Route::get('/postagem/excluir/{postagem}', [App\Http\Controllers\PostagemController::class, 'excluir'])->name('postagem.excluir');
+    Route::post('/postagem/{postagem}/cadastrar/imagem', [App\Http\Controllers\PostagemController::class, 'cadastrarImagem'])->name('postagem.cadastrar.imagem');
+    Route::get('/postagem/editar/{postagem}/imagem/editar/{imagem}', [App\Http\Controllers\PostagemController::class, 'editarImagem'])->name('postagem.editar.imagem');
+    Route::get('/postagem/editar/{postagem}/imagem/excluir/{imagem}', [App\Http\Controllers\PostagemController::class, 'excluirImagem'])->name('postagem.excluir.imagem');
+    Route::post('/postagem/editar/{postagem}/imagem/atualizar/{imagem}', [App\Http\Controllers\PostagemController::class, 'atualizarImagem'])->name('postagem.atualizar.imagem');
+    Route::post('/postagem/{postagem}/cadastrar/comentario', [App\Http\Controllers\PostagemController::class, 'cadastrarComentario'])->name('postagem.cadastrar.comentario');
+    Route::post('/postagem/{postagem}/cadastrar/resposta/{comentario}', [App\Http\Controllers\PostagemController::class, 'cadastrarResposta'])->name('postagem.cadastrar.resposta');
 
 //VEICULOS
     Route::get('/veiculos', [App\Http\Controllers\VeiculoController::class, 'index'])->name('veiculo.index');

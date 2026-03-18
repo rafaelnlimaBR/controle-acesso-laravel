@@ -689,6 +689,10 @@ progress {
   margin-bottom: 1rem;
   font-size: 1.25rem;
 }
+
+.fundo-selecionado{
+    background-color: #d3d6d2;
+}
 .blockquote > :last-child {
   margin-bottom: 0;
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('postagens', function (Blueprint $t) {
            $t->id('id');
            $t->string('titulo');
-           $t->string('titulo_link');
+           $t->string('titulo_link')->unique();
            $t->boolean('ativo')->default(1);
            $t->text('conteudo');
            $t->text('meta_descricao');
