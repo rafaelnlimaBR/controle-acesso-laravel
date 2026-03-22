@@ -172,7 +172,7 @@ class PostagemController extends Controller
         try {
 
             $postagem->excluir();
-            return redirect()->route('postagem.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Registro excluido com sucesso!']);
+            return redirect()->route('postagem.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>'Postagem excluida com sucesso!']);
         }catch (\Exception $e){
             return redirect()->route('postagem.editar',['postagem'=>$postagem])->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }

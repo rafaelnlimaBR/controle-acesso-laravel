@@ -112,7 +112,7 @@ class GrupoController extends Controller
 
             $r              =   \request();
 
-            $regras         =   ['nome'=>'required|min:3|max:100|unique:App\Models\Grupo,nome'.$grupo->id];
+            $regras         =   ['nome'=>'required|min:3|max:100|unique:App\Models\Grupo,nome,'.$grupo->id];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);

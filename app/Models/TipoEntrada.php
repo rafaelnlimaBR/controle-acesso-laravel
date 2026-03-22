@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TipoEntrada extends Model
 {
     protected $table = 'tipos_entradas';
+    public $timestamps = false;
 
     public function scopeAtivo($query)
     {
@@ -16,5 +17,24 @@ class TipoEntrada extends Model
     public function taxas()
     {
         return $this->hasMany(TaxaEntrada::class,'tipo_id');
+    }
+
+    public function scopePesquisarPorNome($query,$nome)
+    {
+        return $query->where('nome','LIKE',"%$nome%");
+    }
+
+    public function gravar($nome, $pix, $ativo)
+    {
+        $this->nome = $nome;
+        $this->pix = $pix;
+        $this->ativo = $ativo;
+
+        $this->save();
+    }
+
+    public function excluir()
+    {
+        $this->delete();
     }
 }

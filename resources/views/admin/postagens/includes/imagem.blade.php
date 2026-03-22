@@ -83,7 +83,7 @@
     </div>
 
     <div class="col-8">
-        <table class="table table-bordered" role="table">
+        <table class="table table-bordered shadow" role="table">
             <thead>
             <tr>
                 <th style="width: 10px" scope="col">#</th>

@@ -33,6 +33,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/grupo/atualizar/{grupo}', [App\Http\Controllers\GrupoController::class, 'atualizar'])->name('grupo.atualizar');
     Route::get('/grupo/excluir/{grupo}', [App\Http\Controllers\GrupoController::class, 'excluir'])->name('grupo.excluir');
 
+//TIPO DE ENTRADAS
+    Route::get('/tiposPagamentos', [App\Http\Controllers\TipoEntradaController::class, 'index'])->name('tipoPagamento.index');
+    Route::get('/tipoPagamento/novo', [App\Http\Controllers\TipoEntradaController::class, 'novo'])->name('tipoPagamento.novo');
+    Route::get('/tipoPagamento/editar/{tipo}', [App\Http\Controllers\TipoEntradaController::class, 'editar'])->name('tipoPagamento.editar');
+    Route::post('/tipoPagamento/cadastrar', [App\Http\Controllers\TipoEntradaController::class, 'cadastrar'])->name('tipoPagamento.cadastrar');
+    Route::post('/tipoPagamento/atualizar/{tipo}', [App\Http\Controllers\TipoEntradaController::class, 'atualizar'])->name('tipoPagamento.atualizar');
+    Route::get('/tipoPagamento/excluir/{tipo}', [App\Http\Controllers\TipoEntradaController::class, 'excluir'])->name('tipoPagamento.excluir');
+
+
 //CATEGORIAS
     Route::get('/categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categoria.index');
     Route::get('/categoria/novo', [App\Http\Controllers\CategoriaController::class, 'novo'])->name('categoria.novo');
@@ -41,7 +50,24 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/categoria/atualizar/{categoria}', [App\Http\Controllers\CategoriaController::class, 'atualizar'])->name('categoria.atualizar');
     Route::get('/categoria/excluir/{categoria}', [App\Http\Controllers\CategoriaController::class, 'excluir'])->name('categoria.excluir');
 
-//CATEGORIAS
+
+//MONTADORAS
+    Route::get('/modelos', [App\Http\Controllers\ModeloController::class, 'index'])->name('modelo.index');
+    Route::get('/modelo/novo', [App\Http\Controllers\ModeloController::class, 'novo'])->name('modelo.novo');
+    Route::get('/modelo/editar/{modelo}', [App\Http\Controllers\ModeloController::class, 'editar'])->name('modelo.editar');
+    Route::post('/modelo/cadastrar', [App\Http\Controllers\ModeloController::class, 'cadastrar'])->name('modelo.cadastrar');
+    Route::post('/modelo/atualizar/{modelo}', [App\Http\Controllers\ModeloController::class, 'atualizar'])->name('modelo.atualizar');
+    Route::get('/modelo/excluir/{modelo}', [App\Http\Controllers\ModeloController::class, 'excluir'])->name('modelo.excluir');
+
+//MONTADORAS
+    Route::get('/montadoras', [App\Http\Controllers\MontadoraController::class, 'index'])->name('montadora.index');
+    Route::get('/montadora/novo', [App\Http\Controllers\MontadoraController::class, 'novo'])->name('montadora.novo');
+    Route::get('/montadora/editar/{montadora}', [App\Http\Controllers\MontadoraController::class, 'editar'])->name('montadora.editar');
+    Route::post('/montadora/cadastrar', [App\Http\Controllers\MontadoraController::class, 'cadastrar'])->name('montadora.cadastrar');
+    Route::post('/montadora/atualizar/{montadora}', [App\Http\Controllers\MontadoraController::class, 'atualizar'])->name('montadora.atualizar');
+    Route::get('/montadora/excluir/{montadora}', [App\Http\Controllers\MontadoraController::class, 'excluir'])->name('montadora.excluir');
+
+//POSTAGENNS
     Route::get('/postagens', [App\Http\Controllers\PostagemController::class, 'index'])->name('postagem.index');
     Route::get('/postagem/novo', [App\Http\Controllers\PostagemController::class, 'novo'])->name('postagem.novo');
     Route::get('/postagem/editar/{postagem}', [App\Http\Controllers\PostagemController::class, 'editar'])->name('postagem.editar');
@@ -100,8 +126,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
     Route::get('/contrato/{contrato}/baixar/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'baixarReciboPDF'])->name('contrato.baixar.recibo.pdf');
 
-//MONTADORAS
-
 
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
@@ -117,6 +141,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 Route::get('/montadora/{id}/modelos', [App\Http\Controllers\MontadoraController::class, 'modelos'])->name('montadora.modelos.ajax');
 
 Route::get('/fazer-orcamento', [\App\Http\Controllers\SiteController::class,'fazerOrcamento'])->name('site.fazer.orcamento');
+Route::get('/', [\App\Http\Controllers\SiteController::class,'index'])->name('site.index');
 Route::post('/cadastrar-orcamento', [\App\Http\Controllers\SiteController::class,'cadastrarOrcamento'])->name('site.cadastrar.orcamento');
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
@@ -135,7 +160,7 @@ View::composer(['admin.grupos.formulario'],function($view){
     $view->with(['permissoes'=>$permissoes]);
 });
 
-View::composer(['site.fazer-orcamento'],function($view){
+View::composer(['site.fazer-orcamento','admin.modelos.formulario','admin.modelos.index'],function($view){
     $montadoras    =   \App\Models\Montadora::all();
 
     $view->with(['montadoras'=>$montadoras]);
@@ -165,11 +190,4 @@ View::composer(['admin.postagens.formulario'],function($view){
     $view->with(['categorias'=>$categorias]);
 });
 
-Route::get('/', function () {
 
-    $postagem   =   \App\Models\Postagem::find(1);
-    foreach($postagem->comentarios as $comentario){
-        echo $comentario->respostas;
-    }
-
-});

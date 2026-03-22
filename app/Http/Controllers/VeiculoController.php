@@ -91,7 +91,13 @@ class VeiculoController extends Controller
             $veiculo        =   new Veiculo();
 
 //            ($placa, $cor, $ano, $modelo_id)
-            $veiculo->gravar($r->input('placa'),$r->input('cor'),$r->input('ano'),$r->input('modelo'));
+            return $r->all();
+            $veiculo->gravar(
+                $r->input('placa'),
+                $r->input('cor'),
+                $r->input('ano'),
+                $r->input('modelo')
+            );
 
             if($modal){
                 return response()->json($veiculo);
@@ -143,7 +149,13 @@ class VeiculoController extends Controller
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
-            $veiculo->gravar(request());
+
+            $veiculo->gravar(
+                $r->input('placa'),
+                $r->input('cor'),
+                $r->input('ano'),
+                $r->input('modelo')
+            );
 
             return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Usuário cadastrado com sucesso!."]);
 

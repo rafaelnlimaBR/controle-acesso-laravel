@@ -130,6 +130,11 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'postagem-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'postagem-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'postagem-deletar','created_at'=>now(),'updated_at'=>now()],
+
+            ['nome'=>'tipopagamento-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'tipopagamento-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'tipopagamento-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'tipopagamento-deletar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([

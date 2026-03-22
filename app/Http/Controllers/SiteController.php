@@ -21,6 +21,11 @@ class SiteController extends Controller
         $this->conf = Configuracao::first();
     }
 
+    public function index()
+    {
+        return view('site.home');
+    }
+
     public function fazerOrcamento()
     {
         $dados  = [

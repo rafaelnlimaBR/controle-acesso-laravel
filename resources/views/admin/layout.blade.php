@@ -29,7 +29,7 @@
     <link rel="preload" href="{{ URL::asset('layout/css/adminlte.css') }}" as="style" />
     <!--end::Accessibility Features-->
     <!--begin::Fonts-->
-
+    <link href="{{url()->asset('favicon.png')}}" rel="icon">
     <link href="{{ URL::asset('layout/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('layout/css/icons.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('layout/plugins/colorpicker/colorpicker.css') }}" rel="stylesheet" type="text/css">
@@ -358,6 +358,24 @@
                             </a>
                         </li>
                     @endcan
+                    @can('montadora-lista')
+                        <li class="nav-item">
+                            <a href="{{route('montadora.index')}}" class="nav-link">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+
+                                <p>Montadora</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('modelos-lista')
+                        <li class="nav-item">
+                            <a href="{{route('modelo.index')}}" class="nav-link">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+
+                                <p>Modelos</p>
+                            </a>
+                        </li>
+                    @endcan
 
                     @can('contrato-lista')
                         <li class="nav-item">
@@ -391,8 +409,17 @@
                         </li>
                     @endcan
 
+                    <li class="nav-header">CONFIGURAÇÃO</li>
+                    @can('tipopagamento-lista')
+                        <li  class="nav-item">
+                            <a href="{{route('tipoPagamento.index')}}" class="nav-link">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
 
 
+                                <p>Tipo de Pagamentos</p>
+                            </a>
+                        </li>
+                    @endcan
 
 
 
@@ -982,7 +1009,10 @@
 
             return false;
         });
-
+            $('#montadora-select2').select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+            })
 
             $("#pesquisa-veiculo").select2({
                 width: '100%',
