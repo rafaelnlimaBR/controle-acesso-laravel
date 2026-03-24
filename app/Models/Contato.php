@@ -25,4 +25,14 @@ class Contato extends Model
         return $contato;
 
     }
+
+    public static function limparNumero ($numero)
+    {
+
+            // Define os caracteres a serem removidos
+            $padrao = array('/ /', '/\(/', '/\)/', '/-/');
+            // Substitui por nada
+            return preg_replace($padrao, '', $numero);
+
+    }
 }

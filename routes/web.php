@@ -198,4 +198,8 @@ View::composer(['admin.postagens.formulario'],function($view){
     $view->with(['categorias'=>$categorias]);
 });
 
+Route::get('/teste', function (){
+   $cliente     =   \App\Models\User::find(1);
 
+   return $cliente->contatos()->where('numero','85988')->exists() == false;
+});

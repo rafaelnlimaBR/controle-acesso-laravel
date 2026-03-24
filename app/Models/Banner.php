@@ -27,11 +27,12 @@ class Banner extends Model
         return $this->belongsTo('App\Models\User','autor_id');
     }
 
-    public function gravar($titulo, $descricao, $ativo ,UploadedFile $imagem =null,User $autor=null)
+    public function gravar($titulo, $descricao, $ativo ,$link = null,UploadedFile $imagem =null,User $autor=null)
     {
         $this->titulo   = $titulo;
         $this->descricao    = $descricao;
         $this->ativo    = $ativo;
+        $this->link     =   $link;
         if ($autor != null){
             $this->autor()->associate($autor);
         }

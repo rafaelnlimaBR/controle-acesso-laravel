@@ -34,7 +34,13 @@
                     @foreach($banners as $banner)
                         <div class="swiper-slide" style="background-image: url({{url('images/banners/'.$banner->imagem)}});">
                             <div class="content">
-                                <h2><a href="single-post.html">{{$banner->titulo}}</a></h2>
+                                <h2>
+                                @if($banner->link == null)
+                                   <a>{{$banner->titulo}}</a>
+                                @else
+                                        <a href="{{$banner->link}}">{{$banner->titulo}}</a>
+                                @endif
+                                </h2>
                                 <p>{{$banner->descricao}}</p>
                             </div>
                         </div>

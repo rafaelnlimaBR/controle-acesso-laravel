@@ -44,6 +44,20 @@
                         </div>
 
                     </div>
+                    <div class="row g-3">
+                        <!--begin::Col-->
+
+                        <div class="col-md-12">
+                            <label  class="form-label">Link<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="link" value="{{isset($link)?$link:old('link',isset($banner)?$banner->link:'')}}" >
+                            @error('link')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+
+
+                        </div>
+
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label  class="form-label">Descricao<span class="sr-only"> </span></label>

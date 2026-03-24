@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Configuracao;
+use App\Models\Contato;
 use App\Models\Contrato;
 use App\Models\Montadora;
 use App\Models\Registro;
@@ -68,7 +69,7 @@ class SiteController extends Controller
 
             }
             $cliente        =   User::where('email',$r->input('email'))->first();
-
+            $numero         =   Contato::limparNumero($r->input('contato'));
 
             if($cliente == null){
                 $cliente    =   new User();
@@ -78,9 +79,13 @@ class SiteController extends Controller
                     $r->input('senha'),
                     $this->conf->grupo_cliente_id,
                     '1',
-                    $r->input('contato'),
+                    $numero,
                     1,
                 );
+            }else{
+                if($cliente->contatos()->where('numero',$numero)->exists() == false){
+                    $cliente->adicionarContato($numero,1,'');
+                }
             }
             $veiculo    =   null;
             if ($r->has('cadastrar_veiculo')){
@@ -124,4 +129,6 @@ class SiteController extends Controller
             return redirect()->route('site.fazer.orcamento')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
+
+
 }

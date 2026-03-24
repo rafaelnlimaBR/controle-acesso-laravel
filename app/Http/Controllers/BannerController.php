@@ -79,6 +79,7 @@ class BannerController extends Controller
                 $r->input('titulo_banner'),
                 $r->input('descricao'),
                 $r->input('ativo'),
+                $r->input('link'),
                 $r->file('imagem'),
                 auth()->user(),
             );
@@ -135,6 +136,7 @@ class BannerController extends Controller
                 $r->input('titulo_banner'),
                 $r->input('descricao'),
                 $r->input('ativo'),
+                $r->input('link'),
                 $r->file('imagem')
             );
 

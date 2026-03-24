@@ -81,8 +81,8 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Whatsapp *</label>
-                        <input type="text" class="form-control @error('contato')is-invalid @enderror" name="contato" value="{{old('contato',request('whatsapp',''))}}">
+                        <label class="form-label">Whatsapp * ex: (85) 987067785</label>
+                        <input type="text" class="form-control @error('contato')is-invalid @enderror" name="contato" id="numero-contato" value="{{old('contato',request('whatsapp',''))}}">
                         @error('contato')
                         <div class="invalid-feedback">
                             {{$message}}
@@ -212,12 +212,14 @@
                     >
 
                 </div>
+                <div class="card-footer" style="margin: 10px">
+                    <H5 CLASS="text-center">A SOLICITAÇÃO SERÁ ANALISADA E O ORÇAMENTO SERÁ ENVIADO PARA SEU WHATSAPP O MAIS BREVE POSSÍVEL.</H5>
+                </div>
 
+                <div class="text-center  mt-4">
 
-                <div class="text-end mt-4">
-
-                    <button type="submit" class="btn btn-success">
-                        Enviar Orçamento
+                    <button type="submit" class="btn btn-success shadow">
+                        Enviar Solicitação de Orçamento
                     </button>
 
                 </div>
@@ -228,6 +230,7 @@
 
     </div>
 
+
 </div>
 
 
@@ -236,6 +239,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{url()->asset('layout/plugins/mask/jquery.mask.js')}}"></script>
 <script>
     $(document).ready(function (){
 
@@ -246,6 +250,17 @@
             verificarCheckBoxVeiculo();
 
         });
+
+        var behavior = function (val) {
+                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            options = {
+                onKeyPress: function (val, e, field, options) {
+                    field.mask(behavior.apply({}, arguments), options);
+                }
+            };
+
+        $('#numero-contato').mask(behavior, options);
 
         $('#montadoras').select2(
             {

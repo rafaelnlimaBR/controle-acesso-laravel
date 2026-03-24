@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-10">
                 <label  class="form-label">Nome Completo<span class="required-indicator sr-only"> </span></label>
-                <input type="text" class="form-control" name="nome_completo" value="{{isset($name)?$name:old('name',isset($usuario)?$usuario->name:'')}}" >
+                <input type="text" class="form-control" name="nome_completo" value="{{isset($name)?$name:old('nome_completo',isset($usuario)?$usuario->name:'')}}" >
                 @error('nome_completo')
                 <div class="invalid-feedback">{{$message}}</div>
                 @enderror
@@ -38,8 +38,9 @@
         <div class="row">
             <!--end::Col-->
             <!--begin::Col-->
-            @if(isset($grupo_selecionado))
-                <input value="{{$grupo_selecionado}}" name="grupos[]" hidden="">
+            @if(request()->has('grupo_selecionado') or isset($grupo_selecionado))
+
+                <input value="{{isset($grupo_selecionado)?$grupo_selecionado:request('grupo_selecionado')}}" name="grupos[]" hidden="">
             @else
             <div class="col-md-4">
 
