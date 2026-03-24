@@ -388,6 +388,16 @@
                         </li>
                     @endcan
                     <li class="nav-header">SITE</li>
+                    @can('banner-lista')
+                        <li  class="nav-item">
+                            <a href="{{route('banner.index')}}" class="nav-link">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
+
+
+                                <p>Banners</p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('categoria-lista')
                     <li  class="nav-item">
                         <a href="{{route('categoria.index')}}" class="nav-link">

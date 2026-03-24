@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Configuracao;
 use App\Models\Contrato;
 use App\Models\Montadora;
@@ -23,7 +24,11 @@ class SiteController extends Controller
 
     public function index()
     {
-        return view('site.home');
+        $dados  =[
+            'banners'       =>  Banner::pesquisarPorStatus(1)->get(),
+            'conf'          =>  $this->conf,
+        ];
+        return view('site.home', $dados);
     }
 
     public function fazerOrcamento()

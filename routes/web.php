@@ -67,6 +67,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/montadora/atualizar/{montadora}', [App\Http\Controllers\MontadoraController::class, 'atualizar'])->name('montadora.atualizar');
     Route::get('/montadora/excluir/{montadora}', [App\Http\Controllers\MontadoraController::class, 'excluir'])->name('montadora.excluir');
 
+//BANNERS
+    Route::get('/banners', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
+    Route::get('/banner/novo', [App\Http\Controllers\BannerController::class, 'novo'])->name('banner.novo');
+    Route::get('/banner/editar/{banner}', [App\Http\Controllers\BannerController::class, 'editar'])->name('banner.editar');
+    Route::post('/banner/cadastrar', [App\Http\Controllers\BannerController::class, 'cadastrar'])->name('banner.cadastrar');
+    Route::post('/banner/atualizar/{banner}', [App\Http\Controllers\BannerController::class, 'atualizar'])->name('banner.atualizar');
+    Route::get('/banner/excluir/{banner}', [App\Http\Controllers\BannerController::class, 'excluir'])->name('banner.excluir');
+
 //POSTAGENNS
     Route::get('/postagens', [App\Http\Controllers\PostagemController::class, 'index'])->name('postagem.index');
     Route::get('/postagem/novo', [App\Http\Controllers\PostagemController::class, 'novo'])->name('postagem.novo');
