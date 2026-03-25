@@ -149,8 +149,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 Route::get('/montadora/{id}/modelos', [App\Http\Controllers\MontadoraController::class, 'modelos'])->name('montadora.modelos.ajax');
 
 Route::get('/fazer-orcamento', [\App\Http\Controllers\SiteController::class,'fazerOrcamento'])->name('site.fazer.orcamento');
-Route::get('/', [\App\Http\Controllers\SiteController::class,'index'])->name('site.index');
 Route::post('/cadastrar-orcamento', [\App\Http\Controllers\SiteController::class,'cadastrarOrcamento'])->name('site.cadastrar.orcamento');
+Route::get('/', [\App\Http\Controllers\SiteController::class,'index'])->name('site.index');
+Route::get('/categoria/{link}', [\App\Http\Controllers\SiteController::class,'categoria'])->name('site.categoria');
+Route::get('/postagem/{link}', [\App\Http\Controllers\SiteController::class,'postagem'])->name('site.postagem');
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
@@ -192,8 +194,8 @@ View::composer(['admin.contratos.includes.pagamentos'],function($view){
     $view->with(['tipos_entradas'=>$tipos_entradas]);
 });
 
-View::composer(['admin.postagens.formulario'],function($view){
-    $categorias         =   \App\Models\CategoriaPostagem::status(1)->get();
+View::composer(['admin.postagens.formulario','site.layout'],function($view){
+    $categorias         =   \App\Models\CategoriaPostagem::PesquisarPorStatus(1)->get();
 
     $view->with(['categorias'=>$categorias]);
 });

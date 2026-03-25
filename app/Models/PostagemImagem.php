@@ -39,7 +39,7 @@ class PostagemImagem extends Model
             $filename = "";
             $filename = Str::random(16) . '.' . $imagem->getClientOriginalExtension();
 
-            $resize = ImageManager::gd()->read($imagem)->resize(350, 200);
+            $resize = ImageManager::gd()->read($imagem)->resize(1024, 768);
 //            $resize  =  Image::read($imagem)->resize(350,200);
             $resize->save(public_path('/images/postagens/') . $filename);
 

@@ -1,4 +1,5 @@
 <div class="row">
+    @if(isset($comentarios))
     <div class="col-6">
 
 
@@ -27,6 +28,7 @@
 
 
                     <!-- COMENTÁRIO 1 -->
+
                     @foreach($comentarios as $comentario)
                         <div class="border-bottom pb-3 mb-3">
 
@@ -90,4 +92,6 @@
     <div class="col-6">
         awd
     </div>
+    @endif
+
 </div>

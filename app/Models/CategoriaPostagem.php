@@ -19,14 +19,15 @@ class CategoriaPostagem extends Model
         return $query->where('nome','like','%'.$nome.'%');
     }
 
-    public function scopeStatus($query,$status)
+    public function scopePesquisarPorStatus($query,$status)
     {
         return $query->where('ativo',$status);
     }
 
-    public function gravar($nome, $ativo)
+    public function gravar($nome,$link,$ativo)
     {
         $this->nome         =   $nome;
+        $this->nome_link  =   $link;
         $this->ativo        =   $ativo;
         $this->save();
 

@@ -48,7 +48,8 @@
                         <th scope="col">Título</th>
                         <th scope="col">Link</th>
                         <th scope="col">Data</th>
-
+                        <th scope="col">Categorias</th>
+                        <th scope="col">Visitas</th>
                         <th style="width: 15%" scope="col">Ativo</th>
                         <th style="width: 5%" scope="col">Ações</th>
 
@@ -61,7 +62,8 @@
                             <td>{{$postagem->titulo}}</td>
                             <td>{{$postagem->titulo_link}}</td>
                             <td>{{\Carbon\Carbon::parse($postagem->created_at)->format('d/m/Y H:i')}}</td>
-
+                            <td>{{$postagem->categorias->count() >= 1? $postagem->categorias->pluck('nome')->join(', '):''}}</td>
+                            <td>{{$postagem->visualizacoes}}</td>
                             <td><span class="badge  {{$postagem->ativo==1?"bg-success":"bg-danger"}}">{{$postagem->ativo==1?"Sim":"Não"}}</span></td>
                             <td>
                                 @can('postagem-visualizar')

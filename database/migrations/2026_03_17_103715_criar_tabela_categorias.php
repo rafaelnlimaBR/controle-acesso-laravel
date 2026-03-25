@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('categorias', function (Blueprint $t) {
             $t->id('id');
             $t->string('nome');
+            $t->string('nome_link')->unique();
+//            $t->text('meta')->nullable();
             $t->boolean('ativo')->default(1);
         });
     }

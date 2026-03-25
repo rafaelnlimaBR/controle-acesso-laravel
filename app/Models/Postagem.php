@@ -57,7 +57,9 @@ class Postagem extends Model
     public function excluir()
     {
 
-
+        foreach ($this->imagens as $imagem) {
+            $imagem->excluir();
+        }
         $this->delete();
     }
 }

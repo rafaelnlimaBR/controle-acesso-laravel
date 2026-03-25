@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\CategoriaPostagem;
 use App\Models\Configuracao;
 use App\Models\Contato;
 use App\Models\Contrato;
 use App\Models\Montadora;
+use App\Models\Postagem;
 use App\Models\Registro;
 use App\Models\User;
 use App\Models\Veiculo;
@@ -30,6 +32,35 @@ class SiteController extends Controller
             'conf'          =>  $this->conf,
         ];
         return view('site.home', $dados);
+    }
+
+    public function categoria($link)
+    {
+        $categoria      =   CategoriaPostagem::where('nome_link', $link)->first();
+        if ($categoria == null) {
+            return abort(404);
+        }
+        $dados = [
+            'conf'      =>  $this->conf,
+            'categoria' =>  $categoria,
+            'postagens' =>  $categoria->postagens()->paginate(6),
+
+        ];
+        return view('site.categoria', $dados);
+    }
+
+    public function postagem($link)
+    {
+        $postagem  =   Postagem::where('titulo_link', $link)->first();
+        if ($postagem == null) {
+            return abort(404);
+        }
+        $dados = [
+            'conf'      =>  $this->conf,
+            'postagem'  =>  $postagem,
+        ];
+
+        return view('site.postagem', $dados);
     }
 
     public function fazerOrcamento()
@@ -129,6 +160,8 @@ class SiteController extends Controller
             return redirect()->route('site.fazer.orcamento')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
+
+
 
 
 }

@@ -14,16 +14,6 @@
                 <div class="card-body">
                     <!--begin::Row-->
                     <div class="row g-3">
-                        <!--begin::Col-->
-                        <div class="col-md-9">
-                            <label  class="form-label">Nome<span class="sr-only"> </span></label>
-                            <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($categoria)?$categoria->nome:'')}}" >
-                            @error('nome')
-                            <div class="invalid-feedback">{{$message}}</div>
-                            @enderror
-
-
-                        </div>
                         <div class="col-md-3">
                             <label  class="form-label">Ativo<span class="sr-only"> </span></label>
                             <select  class="form-control" name="ativo" >
@@ -40,6 +30,28 @@
                                     <option value="0" > Não</option>
                                 @endif
                             </select>
+
+                        </div>
+                        <!--begin::Col-->
+                        <div class="col-md-9">
+                            <label  class="form-label">Nome<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="nome" value="{{isset($nome)?$nome:old('nome',isset($categoria)?$categoria->nome:'')}}" >
+                            @error('nome')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  class="form-label">Nome Link<span class="sr-only"> </span></label>
+                            <input type="text" class="form-control" name="link" value="{{isset($link)?$link:old('link',isset($categoria)?$categoria->nome_link:'')}}" >
+                            @error('link')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+
 
                         </div>
                     </div>

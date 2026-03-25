@@ -340,15 +340,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('grupo-lista')
-                    <li class="nav-item">
-                        <a href="{{route('grupo.index')}}" class="nav-link">
-                            <i class="fa fa-cubes" aria-hidden="true"></i>
 
-                            <p>Grupos</p>
-                        </a>
-                    </li>
-                    @endcan
                     @can('veiculo-lista')
                         <li class="nav-item">
                             <a href="{{route('veiculo.index')}}" class="nav-link">
@@ -427,6 +419,15 @@
 
 
                                 <p>Tipo de Pagamentos</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('grupo-lista')
+                        <li class="nav-item">
+                            <a href="{{route('grupo.index')}}" class="nav-link">
+                                <i class="fa fa-cubes" aria-hidden="true"></i>
+
+                                <p>Grupos</p>
                             </a>
                         </li>
                     @endcan
