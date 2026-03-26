@@ -23,6 +23,11 @@ class Comentario extends Model
         return $this->belongsToMany(Comentario::class, 'comentario_resposta', 'comentario_id', 'resposta_id');
     }
 
+    public function scopePesquisarPorStatus($query, $status)
+    {
+        return $query->where('ativo', $status);
+    }
+
     public function salvar($conteudo, User $autor, $ativo,)
     {
         $this->conteudo         =   $conteudo;

@@ -1,5 +1,5 @@
 <div class="row">
-    @if(isset($comentarios))
+
     <div class="col-6">
 
 
@@ -30,22 +30,22 @@
                     <!-- COMENTÁRIO 1 -->
 
                     @foreach($comentarios as $comentario)
-                        <div class="border-bottom pb-3 mb-3">
+                        <div class="border-bottom pb-3 mb-3 {{$comentario->ativo ==0?'bg-danger-subtle':''}}">
 
                             <div class="d-flex justify-content-between">
                                 <strong>{{$comentario->autor->name}}</strong>
-                                <small class="text-muted">{{\Carbon\Carbon::parse($comentario->created_at)->format('d/m/Y H:i')}}</small>
+                                <small class="text-muted"><a href="{{route('postagem.editar.comentario',['postagem'=>$postagem,'comentario'=>$comentario,'pagina'=>'comentarios'])}}" class="btn btn-warning btn-sm">Editar </a> {{\Carbon\Carbon::parse($comentario->created_at)->format('d/m/Y H:i')}}</small>
                             </div>
 
                             <p>{{$comentario->conteudo}}</p>
 
                             <!-- RESPOSTAS -->
                            @foreach($comentario->respostas as $resposta)
-                                <div class="bg-light p-2 rounded mt-2 ms-4">
+                                <div class="bg-light p-2 rounded mt-2 ms-4 {{$resposta->ativo ==0?'bg-danger-subtle':''}}">
 
                                     <div class="d-flex justify-content-between">
                                         <strong>{{$resposta->autor->name}}</strong>
-                                        <small class="text-muted">{{\Carbon\Carbon::parse($resposta->created_at)->format('d/m/Y H:i')}}</small>
+                                        <small class="text-muted"><a href="{{route('postagem.editar.comentario',['postagem'=>$postagem,'comentario'=>$resposta,'pagina'=>'comentarios'])}}" class="btn btn-warning btn-sm">Editar </a>  {{\Carbon\Carbon::parse($resposta->created_at)->format('d/m/Y H:i')}}</small>
                                     </div>
 
                                     <p class="mb-0">{{$resposta->conteudo}}</p>
@@ -89,9 +89,47 @@
 
 
     </div>
-    <div class="col-6">
-        awd
-    </div>
+    @if(isset($comentario))
+        {{$comentario}}
+            <div class="col-6">
+                <div class="card shadow">
+                    <div class="card-header bg-light text-black">
+                        <h5>Editar Comentário</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label  class="form-label">Conteudo<span class="sr-only"> </span></label>
+                                <textarea class="form-control" name="conteudo">{{$comentario->conteudo}}</textarea>
+                                @error('conteudo')
+                                <div class="invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label  class="form-label">Conteudo<span class="sr-only"> </span></label>
+                                <select  class="form-control" name="ativo" >
+
+                                        @if($comentario->ativo == '1')
+                                            <option value="1" selected> Sim</option>
+                                            <option value="0" > Não</option>
+                                        @else
+                                            <option value="1" > Sim</option>
+                                            <option value="0" selected> Não</option>
+                                        @endif
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
     @endif
+
+
 
 </div>

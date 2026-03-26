@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\CategoriaPostagem;
+use App\Models\Comentario;
 use App\Models\Configuracao;
 use App\Models\Contato;
 use App\Models\Contrato;
@@ -38,26 +39,46 @@ class SiteController extends Controller
     {
         $categoria      =   CategoriaPostagem::where('nome_link', $link)->first();
         if ($categoria == null) {
-            return abort(404);
+            return redirect()->route('site.404');
         }
         $dados = [
             'conf'      =>  $this->conf,
             'categoria' =>  $categoria,
             'postagens' =>  $categoria->postagens()->paginate(6),
+            'titulo'    =>  $categoria->nome,
+            'titulo_pagina' =>  $categoria->nome,
 
         ];
-        return view('site.categoria', $dados);
+        return view('site.postagens', $dados);
     }
 
+    public function postagens()
+    {
+        $pesquisa       =   \request()->input('pesquisa');
+        $dados  =[
+            'conf'          =>  $this->conf,
+            'postagens'     =>  Postagem::PesquisarPorStatus(1)->PesquisarPorTitulo($pesquisa)->paginate(6),
+            'titulo'    =>  'Pesquisa de postagens',
+            'titulo_pagina' =>  'Pesquisa : '.$pesquisa,
+        ];
+
+
+        return view('site.postagens', $dados);
+    }
     public function postagem($link)
     {
         $postagem  =   Postagem::where('titulo_link', $link)->first();
+
         if ($postagem == null) {
-            return abort(404);
+            return redirect()->route('site.404');
         }
         $dados = [
             'conf'      =>  $this->conf,
             'postagem'  =>  $postagem,
+            'comentarios'   =>  $postagem->comentarios()->pesquisarPorStatus(1)->get(),
+            'titulo'    =>  $postagem->titulo,
+            'titulo_pagina' =>  $postagem->titulo,
+
         ];
 
         return view('site.postagem', $dados);
@@ -161,7 +182,84 @@ class SiteController extends Controller
         }
     }
 
+    public function paginanaoencontrada()
+    {
+        $dados  =   [
+            'conf'          =>  $this->conf,
+        ];
+        return view('site.includes.error404',$dados);
+    }
 
+    public function comentar()
+    {
+        try{
 
+            $r      =   request();
+            $regras         =   [
+                'nome'=>'required',
+                'email'=>'required|email',
+                'whatsapp'=>'required',
+                'conteudo'=>'required'
+            ];
+
+            $validacao      =   Validator::make($r->all(),$regras);
+
+            if($validacao->fails()){
+                $postagem       =   Postagem::find($r->input('postagem_id'));
+                $dados          =   [
+                    'postagem'  =>      $postagem,
+                    'comentarios'   =>  $postagem->comentarios,
+                ];
+                    $html       =   view('site.includes.comentarios',$dados)
+                    ->with('nome',$r->input('nome'))
+                    ->with('email',$r->input('email'))
+                    ->with('whatsapp',$r->input('whatsapp'))
+                    ->with('conteudo',$r->input('conteudo'))
+                    ->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."])
+                        ->render();
+                return response()->json(['comentarios'=>$html]);
+
+            }
+
+            $cliente        =   User::where('email',$r->input('email'))->first();
+            $numero         =   Contato::limparNumero($r->input('contato'));
+
+            if($cliente == null){
+                $cliente    =   new User();
+                $cliente->gravar(
+                    $r->input('nome'),
+                    $r->input('email'),
+                    '123456789',
+                    $this->conf->grupo_cliente_id,
+                    '1',
+                    $numero,
+                    1,
+                );
+            }else{
+                if($cliente->contatos()->where('numero',$numero)->exists() == false){
+                    $cliente->adicionarContato($numero,1,'');
+                }
+            }
+            $comentario   =   new Comentario();
+            $comentario->salvar(
+                $r->input('conteudo'),
+                $cliente,
+                1
+            );
+
+            $postagem       =   Postagem::find($r->input('postagem_id'));
+            $postagem->comentarios()->attach($comentario);
+            $dados          =   [
+                'postagem'  =>      $postagem,
+                'comentarios'   =>  $postagem->comentarios,
+            ];
+            $html       =   view('site.includes.comentarios',$dados);
+            return response()->json(['comentarios'=>$html->with('success','Castrado com sucesso')->render()]);
+
+        }catch (\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+
+    }
 
 }

@@ -315,4 +315,12 @@ class PostagemController extends Controller
             return redirect()->route('postagem.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }
     }
+
+    public function editarComentario( Postagem $postagem,Comentario $comentario)
+    {
+
+
+        return $comentario;
+
+    }
 }

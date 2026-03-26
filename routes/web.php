@@ -88,6 +88,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/postagem/editar/{postagem}/imagem/atualizar/{imagem}', [App\Http\Controllers\PostagemController::class, 'atualizarImagem'])->name('postagem.atualizar.imagem');
     Route::post('/postagem/{postagem}/cadastrar/comentario', [App\Http\Controllers\PostagemController::class, 'cadastrarComentario'])->name('postagem.cadastrar.comentario');
     Route::post('/postagem/{postagem}/cadastrar/resposta/{comentario}', [App\Http\Controllers\PostagemController::class, 'cadastrarResposta'])->name('postagem.cadastrar.resposta');
+    Route::get('/postagem/editar/{postagem}/comentario/editar/{comentario}', [App\Http\Controllers\PostagemController::class, 'editarComentario'])->name('postagem.editar.comentario');
 
 //VEICULOS
     Route::get('/veiculos', [App\Http\Controllers\VeiculoController::class, 'index'])->name('veiculo.index');
@@ -153,6 +154,9 @@ Route::post('/cadastrar-orcamento', [\App\Http\Controllers\SiteController::class
 Route::get('/', [\App\Http\Controllers\SiteController::class,'index'])->name('site.index');
 Route::get('/categoria/{link}', [\App\Http\Controllers\SiteController::class,'categoria'])->name('site.categoria');
 Route::get('/postagem/{link}', [\App\Http\Controllers\SiteController::class,'postagem'])->name('site.postagem');
+Route::post('/postagem/comentar', [\App\Http\Controllers\SiteController::class,'comentar'])->name('site.comentar');
+Route::get('/postagens', [\App\Http\Controllers\SiteController::class,'postagens'])->name('site.postagens');
+Route::get('/pagina-nao-encontrada', [\App\Http\Controllers\SiteController::class,'paginanaoencontrada'])->name('site.404');
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
@@ -199,6 +203,7 @@ View::composer(['admin.postagens.formulario','site.layout'],function($view){
 
     $view->with(['categorias'=>$categorias]);
 });
+
 
 Route::get('/teste', function (){
    $cliente     =   \App\Models\User::find(1);

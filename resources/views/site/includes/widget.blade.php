@@ -23,10 +23,10 @@
     <!-- Search Widget -->
     <div class="search-widget widget-item">
 
-        <h3 class="widget-title">Search</h3>
-        <form action="">
-            <input type="text">
-            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        <h3 class="widget-title">Pesquisa</h3>
+        <form action="{{route('site.postagens')}}" method="get">
+            <input type="text" name="pesquisa" >
+            <button type="submit" title="Pesquisa"><i class="bi bi-search"></i></button>
         </form>
 
     </div><!--/Search Widget -->

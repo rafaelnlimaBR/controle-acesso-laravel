@@ -33,6 +33,11 @@ class Postagem extends Model
         return $this->belongsTo(User::class, 'autor_id');
     }
 
+    public function scopePesquisarPorStatus($query, $status)
+    {
+        return $query->where('ativo',$status);
+    }
+
     public function scopePesquisarPorTitulo($query, $titulo)
     {
         return $query->where('titulo','like','%'.$titulo.'%');

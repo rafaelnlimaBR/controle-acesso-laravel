@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Starter Page - ZenBlog Bootstrap Template</title>
+    <title>{{isset($titulo)?$titulo:$conf->nome_simples}}</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
     <!-- Vendor CSS Files -->
     <link href="{{url()->asset('layout/css/bootstrap5/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{url()->asset('layout/plugins/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
@@ -77,6 +77,8 @@
 </header>
 
 <main class="main">
+
+
     @yield('conteudo')
 
 </main>
@@ -170,13 +172,34 @@
 <div id="preloader"></div>
 
 <!-- Vendor JS Files -->
+<script src="{{ URL::asset('layout/js/jquery-3.2.1.min.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+<script src="{{url()->asset('layout/js/bootstrap5/bootstrap.bundle.min.js')}}"></script>
 <script src="{{url()->asset('layout/js/bootstrap5/bootstrap.bundle.min.js')}}"></script>
 <script src="{{url()->asset('layout/plugins/aos/aos.js')}}"></script>
 <script src="{{url()->asset('layout/plugins/swiper/swiper-bundle.min.js')}}"></script>
 
 <!-- Main JS File -->
 <script src="{{url()->asset('layout/js/site.js')}}"></script>
+<script type="text/javascript">
+   $(document).ready(function (){
+       $(document).on("submit", "#comentario-form", function(e) {
+           var dados   = $(this).serialize();
+           var rota    =   $(this).attr("action");
+           $.post(rota, dados, function(data) {
+               if('error' in data){
+                   alert(data.error)
+               }
+               $('#comentarios').html(data.comentarios);
 
+           });
+
+
+           return false;
+       });
+   })
+
+</script>
 </body>
 
 </html>
