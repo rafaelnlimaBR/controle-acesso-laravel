@@ -18,9 +18,11 @@ return new class extends Migration
            $t->boolean('ativo')->default(1);
            $t->text('conteudo');
            $t->text('meta_descricao');
+           $t->text('meta_keywords');
            $t->foreignId('imagem_id')->nullable()->references('id')->on('imagens_posts')->onDelete('set null')->onUpdate('cascade');
            $t->foreignId('autor_id')->nullable()->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
            $t->integer('visualizacoes')->default(0);
+
 
            $t->timestamps();
         });

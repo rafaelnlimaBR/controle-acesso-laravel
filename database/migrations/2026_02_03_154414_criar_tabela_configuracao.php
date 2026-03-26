@@ -15,6 +15,8 @@ return new class extends Migration
             $t->id('id');
             $t->string('nome_simples')->nullable();
             $t->string('nome_completo')->nullable();
+            $t->text('meta_descricao')->nullable();
+            $t->text('meta_keywords')->nullable();
             $t->string('email')->nullable();
             $t->string('whatsapp')->nullable();
             $t->string('endereco')->nullable();

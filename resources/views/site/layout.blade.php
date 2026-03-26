@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>{{isset($titulo)?$titulo:$conf->nome_simples}}</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content="{{isset($meta_descricao)?$meta_descricao:$conf->meta_descricao}}">
+    <meta name="keywords" content="{{isset($meta_keywords)?$meta_keywords:$conf->meta_descricao}}">
 
     <!-- Favicons -->
     <link href="{{url()->asset('favicon.ico')}}" rel="icon">
@@ -49,19 +49,17 @@
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="{{route('site.index')}}">Início</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="single-post.html">Single Post</a></li>
+{{--                <li><a href="about.html">About</a></li>--}}
+
                 <li class="dropdown"><a href="#"><span>Categorias</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         @foreach($categorias as $categoria)
                             <li><a href="{{route('site.categoria',['link'=>$categoria->nome_link])}}">{{$categoria->nome}}</a></li>
                         @endforeach
-
-
-
                     </ul>
                 </li>
-                <li><a href="contact.html">Contact</a></li>
+                <li> <a target="new" class="" href="{{route('site.fazer.orcamento')}}">Fazer Orçamento</a></li>
+{{--                <li><a href="contact.html">Contact</a></li>--}}
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

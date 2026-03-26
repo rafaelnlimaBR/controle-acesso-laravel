@@ -31,6 +31,8 @@ class SiteController extends Controller
         $dados  =[
             'banners'       =>  Banner::pesquisarPorStatus(1)->get(),
             'conf'          =>  $this->conf,
+            'meta_descricao'          =>  $this->conf->meta_descricao,
+            'meta_keywords'          =>  $this->conf->meta_keywords,
         ];
         return view('site.home', $dados);
     }
@@ -47,6 +49,9 @@ class SiteController extends Controller
             'postagens' =>  $categoria->postagens()->paginate(6),
             'titulo'    =>  $categoria->nome,
             'titulo_pagina' =>  $categoria->nome,
+            'meta_descricao'          =>  $categoria->meta_descricao,
+            'meta_keywords'          =>  $categoria->meta_keywords,
+            'postagens_recentes'        =>  Postagem::pesquisarPorStatus(1)->orderBy('created_at','desc')->take(5)->get(),
 
         ];
         return view('site.postagens', $dados);
@@ -60,6 +65,7 @@ class SiteController extends Controller
             'postagens'     =>  Postagem::PesquisarPorStatus(1)->PesquisarPorTitulo($pesquisa)->paginate(6),
             'titulo'    =>  'Pesquisa de postagens',
             'titulo_pagina' =>  'Pesquisa : '.$pesquisa,
+            'postagens_recentes'        =>  Postagem::pesquisarPorStatus(1)->orderBy('created_at','desc')->take(5)->get(),
         ];
 
 
@@ -78,6 +84,9 @@ class SiteController extends Controller
             'comentarios'   =>  $postagem->comentarios()->pesquisarPorStatus(1)->get(),
             'titulo'    =>  $postagem->titulo,
             'titulo_pagina' =>  $postagem->titulo,
+            'postagens_recentes'        =>  Postagem::pesquisarPorStatus(1)->orderBy('created_at','desc')->take(5)->get(),
+            'meta_descricao'          =>  $postagem->meta_descricao,
+            'meta_keywords'          =>  $postagem->meta_keywords,
 
         ];
 

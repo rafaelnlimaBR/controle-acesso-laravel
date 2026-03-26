@@ -24,11 +24,13 @@ class CategoriaPostagem extends Model
         return $query->where('ativo',$status);
     }
 
-    public function gravar($nome,$link,$ativo)
+    public function gravar($nome,$link,$meta_descricao, $meta_keywords,$ativo)
     {
         $this->nome         =   $nome;
         $this->nome_link  =   $link;
         $this->ativo        =   $ativo;
+        $this->meta_descricao   =   strtolower($meta_descricao);
+        $this->meta_keywords    =   strtolower($meta_keywords);
         $this->save();
 
     }

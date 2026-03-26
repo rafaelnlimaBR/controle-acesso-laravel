@@ -15,6 +15,8 @@ return new class extends Migration
             $t->id('id');
             $t->string('nome');
             $t->string('nome_link')->unique();
+            $t->text('meta_descricao');
+            $t->text('meta_keywords');
 //            $t->text('meta')->nullable();
             $t->boolean('ativo')->default(1);
         });

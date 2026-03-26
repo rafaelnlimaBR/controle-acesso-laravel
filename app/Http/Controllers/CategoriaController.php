@@ -67,13 +67,15 @@ class CategoriaController extends Controller
             $regras         =   [
                 'nome'=>'required|min:3|max:250',
                 'link'=>'required|min:3|max:250|unique:App\Models\CategoriaPostagem,nome_link',
+                'descricao'=>'required|min:10',
+                'keywords'=>'required',
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
             $categoria        =   new CategoriaPostagem();
-            $categoria->gravar(\request()->input('nome'),$r->input('link'), $r->input('ativo'));
+            $categoria->gravar(\request()->input('nome'),$r->input('link'),$r->input('descricao'),$r->input('keywords'), $r->input('ativo'));
 
             return redirect()->route('categoria.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Categoria cadastrado com sucesso!."]);
 
@@ -115,14 +117,16 @@ class CategoriaController extends Controller
 
             $regras         =   [
                 'nome'=>'required|min:3|max:250',
-                'link'=>'required|min:3|max:250|unique:App\Models\CategoriaPostagem,nome_link,'.$categoria->id
+                'link'=>'required|min:3|max:250|unique:App\Models\CategoriaPostagem,nome_link,'.$categoria->id,
+                'descricao'=>'required',
+                'keywords'=>'required',
             ];
             $validacao      =   Validator::make($r->all(),$regras);
             if($validacao->fails()){
                 return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
             }
 
-            $categoria->gravar(\request()->input('nome'),$r->input('link'), $r->input('ativo'));
+            $categoria->gravar(\request()->input('nome'),$r->input('link'),$r->input('descricao'),$r->input('keywords'), $r->input('ativo'));
 
             return redirect()->route('categoria.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Categoria cadastrado com sucesso!."]);
 

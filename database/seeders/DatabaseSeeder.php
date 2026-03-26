@@ -186,6 +186,8 @@ class DatabaseSeeder extends Seeder
             'nome_completo'     =>'EMPRESA COMPLETO',
             'email'             => 'empresa@empresa.com.br',
             'whatsapp'          => '+55 11 987654321',
+            'meta_descricao'    =>  'TESTE',
+            'meta_keywords'     =>  'TESTE',
             'endereco'          => 'endereco endereco',
             'bairro'            => 'bairro bairro',
             'cidade'            => 'cidade cidade',
@@ -312,11 +314,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('categorias')->insert([
-            ['nome'=>'Reparo em paineis de instrumentos','ativo'=>1,'nome_link'=>'reparo-painel-de-instrumentos'],
-            ['nome'=>'Reparo em modulos de injeção','ativo'=>1,'nome_link'=>'reparo-injecao-eletronica'],
+            ['nome'=>'Reparo em paineis de instrumentos','ativo'=>1,'nome_link'=>'reparo-painel-de-instrumentos','meta_descricao'=>'Reparo em paineis de instrumentos','meta_keywords'=>'reparo de painel, conserto'],
+            ['nome'=>'Reparo em modulos de injeção','ativo'=>1,'nome_link'=>'reparo-injecao-eletronica','meta_descricao'=>'Reparo em injecao-eletronica','meta_keywords'=>'reparo de painel, conserto'],
         ]);
         DB::table('postagens')->insert([
-            ['titulo'=>'teste 01','meta_descricao'=>'meda descricao','titulo_link'=>'teste_01','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 01','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_01','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
         ]);
         DB::table('categoria_postagem')->insert([
             ['postagem_id'=>1,'categoria_id'=>1]

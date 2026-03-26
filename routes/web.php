@@ -88,6 +88,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/postagem/editar/{postagem}/imagem/atualizar/{imagem}', [App\Http\Controllers\PostagemController::class, 'atualizarImagem'])->name('postagem.atualizar.imagem');
     Route::post('/postagem/{postagem}/cadastrar/comentario', [App\Http\Controllers\PostagemController::class, 'cadastrarComentario'])->name('postagem.cadastrar.comentario');
     Route::post('/postagem/{postagem}/cadastrar/resposta/{comentario}', [App\Http\Controllers\PostagemController::class, 'cadastrarResposta'])->name('postagem.cadastrar.resposta');
+    Route::post('/postagem/{postagem}/cadastrar/atualizar/{comentario}', [App\Http\Controllers\PostagemController::class, 'atualizarComentario'])->name('postagem.atualizar.comentario');
     Route::get('/postagem/editar/{postagem}/comentario/editar/{comentario}', [App\Http\Controllers\PostagemController::class, 'editarComentario'])->name('postagem.editar.comentario');
 
 //VEICULOS

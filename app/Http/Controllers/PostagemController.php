@@ -71,6 +71,7 @@ class PostagemController extends Controller
                 'titulo_link'=>'required|unique:App\Models\Postagem,titulo_link',
                 'conteudo'=>'required',
                 'meta_descricao'=>'required',
+                'meta_keywords'=>'required',
                 'categoria'=>'required|array|min:1'
             ];
             $validacao      =   Validator::make($r->all(),$regras);
@@ -85,13 +86,14 @@ class PostagemController extends Controller
                 $r->input('ativo'),
                 $r->input('conteudo'),
                 $r->input('meta_descricao'),
+                $r->input('meta_keywords'),
                 auth()->user(),
 
             );
 
             $postagem->categorias()->sync($r->input('categoria'));
 
-            return redirect()->route('postagem.index')->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Grupo cadastrado com sucesso!."]);
+            return redirect()->route('postagem.editar',['postagem'=>$postagem])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Grupo cadastrado com sucesso!."]);
 
 
         }catch (\Exception $e){
@@ -135,6 +137,7 @@ class PostagemController extends Controller
                 'titulo_link'=>'required|unique:App\Models\Postagem,titulo_link,'.$postagem->id,
                 'conteudo'=>'required',
                 'meta_descricao'=>'required',
+                'meta_keywords'=>'required',
                 'categoria'=>'required|array|min:1'
             ];
 
@@ -151,6 +154,7 @@ class PostagemController extends Controller
                 $r->input('ativo'),
                 $r->input('conteudo'),
                 $r->input('meta_descricao'),
+                $r->input('meta_keywords'),
                 auth()->user(),
                 $r->input('imagem'),
             );
@@ -207,9 +211,13 @@ class PostagemController extends Controller
                 $r->input('descricao'),
                 $r->input('ativo'),
                 $r->file('imagem_post'),
-
             );
             $imagem->postagens()->attach($postagem);
+
+            if($r->has('principal')){
+                $postagem->imagem()->associate($imagem);
+                $postagem->save();
+            }
 
             return redirect()->route('postagem.editar',['postagem'=>$postagem,'pagina'=>'imagens'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Postagem cadastrado com sucesso!."]);
 
@@ -319,8 +327,40 @@ class PostagemController extends Controller
     public function editarComentario( Postagem $postagem,Comentario $comentario)
     {
 
+        try{
+            $this->dados    += [
+                'titulo_pagina'    =>  'Tecvel - Editar Postagem',
+                'titulo'            =>  'Editar Postagem',
+                'titulo_card'       =>  'Dados da Postagem',
+                'postagem'           =>  $postagem,
+                'comentario'            =>  $comentario,
+            ];
 
-        return $comentario;
+            return view('admin.postagens.includes.comentario-form',$this->dados);
 
+        }catch (\Exception $e){
+            return redirect()->route('postagen.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
+    }
+
+    public function atualizarComentario(Postagem $postagem, Comentario $comentario)
+    {
+        try{
+            $r              =   \request();
+            $regras         =   [
+                "conteudo"=>'required'
+            ];
+
+            $validacao      =   Validator::make($r->all(),$regras);
+
+            if($validacao->fails()){
+                return redirect()->back()->withInput()->withErrors($validacao)->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>"Preencher os campos obrigatórios!."]);
+            }
+            $comentario->salvar($r->input('conteudo'),null,$r->input('ativo'));
+
+            return redirect()->route('postagem.editar',['postagem'=>$postagem,'pagina'=>'comentarios'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Comentario atualizado com sucesso!."]);
+        }catch (\Exception $e){
+            return redirect()->back()->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
+        }
     }
 }

@@ -90,14 +90,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <label  class="form-label">Meta<span class="sr-only"> </span></label>
+                <div class="col-md-6">
+                    <label  class="form-label">Meta Descrição<span class="sr-only"> </span></label>
                     <textarea size="" class="form-control" name="meta_descricao" >{{isset($postagem)?$postagem->meta_descricao:old('meta_descricao',isset($postagem)?$postagem->meta_descricao:'')}}</textarea>
                     @error('meta_descricao')
                     <div class="invalid-feedback">{{$message}}</div>
                     @enderror
-
-
+                </div>
+                <div class="col-md-6">
+                    <label  class="form-label">Meta Palavras Chaves<span class="sr-only"> </span></label>
+                    <textarea size="" class="form-control" name="meta_keywords" >{{isset($postagem)?$postagem->meta_keywords:old('meta_keywords',isset($postagem)?$postagem->meta_keywords:'')}}</textarea>
+                    @error('meta_keywords')
+                    <div class="invalid-feedback">{{$message}}</div>
+                    @enderror
                 </div>
             </div>
             <div class="row">

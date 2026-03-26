@@ -43,13 +43,14 @@ class Postagem extends Model
         return $query->where('titulo','like','%'.$titulo.'%');
     }
 
-    public function gravar($titulo, $link, $ativo, $conteudo, $meta,User $autor,$imagem=null)
+    public function gravar($titulo, $link, $ativo, $conteudo, $descricao,$keywords,User $autor,$imagem=null)
     {
         $this->titulo           =   $titulo;
         $this->titulo_link      =   $link;
         $this->ativo            =   $ativo;
         $this->conteudo         =   $conteudo;
-        $this->meta_descricao   =   $meta;
+        $this->meta_descricao   =   strtolower($descricao);
+        $this->meta_keywords    =   strtolower($keywords);
 
             $this->imagem()->associate($imagem);
 

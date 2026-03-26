@@ -12,6 +12,15 @@
                         <form enctype="multipart/form-data" method="post" action="{{isset($imagem)?route('postagem.atualizar.imagem',['postagem'=>$postagem,'imagem'=>$imagem]):route('postagem.cadastrar.imagem',['postagem'=>$postagem])}}">
                             {{csrf_field()}}
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+
+                                        <input class="form-check-input" name="principal" type="checkbox" data-gtm-form-interact-field-id="0">
+                                        <label class="form-check-label">Imagem Principal</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2">
                                     <label  class="form-label">Ativo<span class="sr-only"> </span></label>
                                     <select  class="form-control" name="ativo" >
@@ -58,6 +67,7 @@
                                         <div class="invalid-feedback">{{$message}}</div>
                                         @enderror
                                     </div>
+
                                 </div>
                             @endif
                             <div class="card-footer">

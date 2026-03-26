@@ -44,9 +44,12 @@
                         </div>
 
                     </div>
-                    <div class="row">
+                    <div class="row ">
+
+
+                        <!--begin::Col-->
                         <div class="col-md-12">
-                            <label  class="form-label">Nome Link<span class="sr-only"> </span></label>
+                            <label  class="form-label">Link<span class="sr-only"> </span></label>
                             <input type="text" class="form-control" name="link" value="{{isset($link)?$link:old('link',isset($categoria)?$categoria->nome_link:'')}}" >
                             @error('link')
                             <div class="invalid-feedback">{{$message}}</div>
@@ -54,7 +57,29 @@
 
 
                         </div>
+
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  class="form-label">Descrição<span class="sr-only"> </span></label>
+                            <textarea class="form-control" name="descricao">{{isset($descricao)?$descricao:old('descricao',isset($categoria)?$categoria->meta_descricao:'')}}</textarea>
+                            @error('descricao')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  class="form-label">Keywords<span class="sr-only"> </span></label>
+                            <textarea class="form-control" name="keywords">{{isset($keywords)?$keywords:old('keywords',isset($categoria)?$categoria->meta_keywords:'')}}</textarea>
+                            @error('keywords')
+                            <div class="invalid-feedback">{{$message}}</div>
+                            @enderror
+                        </div>
+                    </div>
+
 
                     <!--end::Row-->
                 </div>
@@ -76,12 +101,7 @@
             </form>
             <!--end::Body-->
         </div>
-        <!--end::Different Height-->
-        <!--begin::Different Width-->
 
-        <!--end::Different Width-->
-        <!--begin::Form Validation-->
-        <!--end::Form Validation-->
     </div>
 
 </div>

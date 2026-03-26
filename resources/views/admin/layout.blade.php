@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--end::Accessibility Meta Tags-->
     <!--begin::Primary Meta Tags-->
     <meta name="title" content="Layout | AdminLTE 4" />
@@ -550,7 +550,11 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         Fancybox.bind(document.getElementById("gallery-wrap"), "[data-fancybox]", {
             Carousel: {
                 Thumbs: {
@@ -667,6 +671,7 @@
         });
 
         $(document).on("click", ".botao-atualizar-servico", function(e) {
+
             var id              =   $(this).attr("servico-id");
             var historico_id     =   $('#historico-id-'+id.toString()).val()
             var valor_bruto     =   $('#valor-bruto-'+id.toString()).val()
@@ -679,7 +684,7 @@
 
             $.ajax({
                 header:{
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
                 },
                 type: "POST",
                 url: rota,
@@ -932,15 +937,10 @@
                 success: function( data )
                 {
 
-                    if('error' in data){
 
-                        alert(data.error)
-
-
-                    }else{
                         console.log(data)
                         $("#tabela-servicos-atualizavel").html(data.tabela_servicos);
-                    }
+
                 },
                 error:function (data,e) {
 

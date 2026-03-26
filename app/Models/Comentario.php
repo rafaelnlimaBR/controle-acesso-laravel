@@ -28,10 +28,13 @@ class Comentario extends Model
         return $query->where('ativo', $status);
     }
 
-    public function salvar($conteudo, User $autor, $ativo,)
+    public function salvar($conteudo, User $autor = null, $ativo=null,)
     {
         $this->conteudo         =   $conteudo;
-        $this->autor()->associate($autor);
+        if($autor!=null){
+            $this->autor()->associate($autor);
+        }
+
         $this->ativo            =   $ativo;
 
         $this->save();
