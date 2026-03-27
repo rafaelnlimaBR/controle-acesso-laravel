@@ -14,9 +14,13 @@ use App\Models\Postagem;
 use App\Models\Registro;
 use App\Models\User;
 use App\Models\Veiculo;
+use App\Models\Whatsapp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use SamuelTerra22\LaravelEvolutionClient\src\Facades\Evolution;
+
 
 class SiteController extends Controller
 {
@@ -269,6 +273,18 @@ class SiteController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
 
+    }
+
+    public function teste()
+    {
+        try{
+            $zap        =   new Whatsapp();
+            return $zap->enviarMensagem('teste','85986607785','+55');
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
     }
 
 }
