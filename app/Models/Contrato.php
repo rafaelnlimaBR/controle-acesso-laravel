@@ -38,7 +38,7 @@ class Contrato extends Model
 
     public function status()
     {
-        return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data','autor_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data','autor_id','id')->withTimestamps();
     }
 
     public function scopePesquisarPorVeiculo($query, $placa)

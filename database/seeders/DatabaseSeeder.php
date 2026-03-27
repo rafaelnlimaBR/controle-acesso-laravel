@@ -317,11 +317,37 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'Reparo em paineis de instrumentos','ativo'=>1,'nome_link'=>'reparo-painel-de-instrumentos','meta_descricao'=>'Reparo em paineis de instrumentos','meta_keywords'=>'reparo de painel, conserto'],
             ['nome'=>'Reparo em modulos de injeção','ativo'=>1,'nome_link'=>'reparo-injecao-eletronica','meta_descricao'=>'Reparo em injecao-eletronica','meta_keywords'=>'reparo de painel, conserto'],
         ]);
+        DB::table('imagens_posts')->insert([
+            ['nome'=>'teste','imagem'=>'b23wEJ6b0QQiK4fb.jpg','descricao'=>'teste','ativo'=>1],
+            ['nome'=>'teste2','imagem'=>'rnGKpP6rBfUG28ee.png','descricao'=>'teste','ativo'=>1],
+            ['nome'=>'teste3','imagem'=>'vey7HAfUoV0gEqiv.jpeg','descricao'=>'teste','ativo'=>1],
+        ]);
         DB::table('postagens')->insert([
-            ['titulo'=>'teste 01','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_01','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 01','imagem_id'=>'1','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_01','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 02','imagem_id'=>'2','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_02','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 03','imagem_id'=>'3','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_03','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 04','imagem_id'=>'1','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_04','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 05','imagem_id'=>'2','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_05','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 06','imagem_id'=>'3','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_06','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+            ['titulo'=>'teste 07','imagem_id'=>'1','meta_keywords'=>'meta keywords','meta_descricao'=>'meta descricao','titulo_link'=>'teste_07','ativo'=>1,'conteudo'=>'teste 01','autor_id'=>1,'visualizacoes'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
         ]);
         DB::table('categoria_postagem')->insert([
-            ['postagem_id'=>1,'categoria_id'=>1]
+            ['postagem_id'=>1,'categoria_id'=>1],
+            ['postagem_id'=>2,'categoria_id'=>1],
+            ['postagem_id'=>3,'categoria_id'=>1],
+            ['postagem_id'=>4,'categoria_id'=>1],
+            ['postagem_id'=>5,'categoria_id'=>1],
+            ['postagem_id'=>6,'categoria_id'=>1],
+            ['postagem_id'=>7,'categoria_id'=>1],
+            ['postagem_id'=>1,'categoria_id'=>2],
+            ['postagem_id'=>2,'categoria_id'=>2],
+            ['postagem_id'=>3,'categoria_id'=>2],
+            ['postagem_id'=>4,'categoria_id'=>2],
+            ['postagem_id'=>5,'categoria_id'=>2],
+            ['postagem_id'=>6,'categoria_id'=>2],
+            ['postagem_id'=>7,'categoria_id'=>2],
+
+
         ]);
         DB::table('comentarios')->insert([
             ['conteudo'=>'comentario 001','user_id'=>1,'ativo'=>1,'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],

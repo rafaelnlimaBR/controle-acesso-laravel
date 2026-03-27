@@ -237,17 +237,9 @@ class ContratoController extends Controller
                     break;
             }
 
-
-//            $status     =   Status::find($r->input('status_id'));
-//            return $r->input('status_id');
-//            return $contrato->historicos->last()->status->nome;
             $contrato->status()->attach($r->input('status_id'),['descricao'=>request('descricao'),'autor_id'=>auth()->user()->id,'data'=>Carbon::now()]);
-
-            //VERIICAR PORQUEI QUANDO MUDAR PRA CANCELADO O HISTORICO SELECIONADO NÃO MUDA NA URL
-            return $contrato->status->last()->nome;
+            $contrato->load('historicos');
             return redirect()->route('contrato.editar',['contrato'=>$contrato,'historico'=>$contrato->historicos->last(),'pagina'=>'dados'])->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Status alterado com sucesso!."]);
-
-
         }catch (\Exception $e){
             return redirect()->route('contrato.index')->with('alerta',['tipo'=>'danger','icon'=>'','texto'=>$e->getMessage()]);
         }

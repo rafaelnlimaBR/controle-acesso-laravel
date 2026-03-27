@@ -5,6 +5,7 @@ use App\Models\Contrato;
 use App\Models\Servico;
 use App\Models\TaxaEntrada;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 
@@ -207,7 +208,21 @@ View::composer(['admin.postagens.formulario','site.layout'],function($view){
 
 
 Route::get('/teste', function (){
-   $cliente     =   \App\Models\User::find(1);
+    dd(Http::withHeaders([
+        'Content-Type'  =>  'application/json',
+        'apikey'       => "mmcVlmdaaGljY9s8NfH7wEde3HQMQtHg",
+    ])->post('http://104.251.210.46:8081/message/sendText/tecvel',[
 
-   return $cliente->contatos()->where('numero','85988')->exists() == false;
+
+        'delay'     =>  2,
+        'number'    =>  '+5585986607785',
+        'text'      =>  "teste",
+
+    ]));
+
+
+
+
+    $teste   =   new \App\Models\Whatsapp();
+   dd($teste->enviarMensagem('teste','85986607785','55'));
 });
