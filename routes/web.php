@@ -207,22 +207,4 @@ View::composer(['admin.postagens.formulario','site.layout'],function($view){
 });
 
 
-Route::get('/teste', function (){
-    dd(Http::withHeaders([
-        'Content-Type'  =>  'application/json',
-        'apikey'       => "mmcVlmdaaGljY9s8NfH7wEde3HQMQtHg",
-    ])->post('http://104.251.210.46:8081/message/sendText/tecvel',[
-
-
-        'delay'     =>  2,
-        'number'    =>  '+5585986607785',
-        'text'      =>  "teste",
-
-    ]));
-
-
-
-
-    $teste   =   new \App\Models\Whatsapp();
-   dd($teste->enviarMensagem('teste','85986607785','55'));
-});
+Route::get('/teste', [\App\Http\Controllers\SiteController::class,'teste'])->name('site.teste');
