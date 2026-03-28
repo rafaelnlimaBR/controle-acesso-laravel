@@ -15,6 +15,7 @@ use App\Models\Registro;
 use App\Models\User;
 use App\Models\Veiculo;
 use App\Models\Whatsapp;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -277,9 +278,53 @@ class SiteController extends Controller
 
     public function teste()
     {
-        try{
-            $zap        =   new Whatsapp();
-            return $zap->enviarMensagem('teste','85986607785','+55');
+        $contrato       =   Contrato::find(1);
+        try {
+            $dados = [
+                'titulo' => 'Ordem - ',
+                'conf' => $this->conf,
+                'contrato' => $contrato,
+            ];
+            $zap = new Whatsapp();
+            $pdf = Pdf::loadView('admin.contratos.pdf.contrato', $dados);
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+            $output = $pdf->output();
+
+            foreach ($contrato->historicos as $historico) {$mensagem = "*Olá! Segue seu resumo:*\n\n";
+                // 2. Dados da Ordem de Serviço (Exemplo)
+                $os_numero = "2024-0015";
+                $cliente = "João Silva";
+                $aparelho = "iPhone 13 Pro";
+                $defeito = "Troca de tela e conector de carga";
+                $valor = "R$ 850,00";
+                $data_entrega = "28/03/2024";
+
+// 3. Montando o texto com formatação WhatsApp
+// *texto* = Negrito | ```texto``` = Fonte Monoespaçada | \n = Quebra de linha
+                $mensagem = "🛠️ *ORDEM DE SERVIÇO* 🛠️\n\n";
+                $mensagem .= "📌 *Protocolo:* ```{$os_numero}```\n";
+                $mensagem .= "👤 *Cliente:* {$cliente}\n";
+                $mensagem .= "📱 *Equipamento:* {$aparelho}\n";
+                $mensagem .= "----------------------------------\n";
+                $mensagem .= "📝 *Defeito Relatado:*\n";
+                $mensagem .= "_{$defeito}_\n\n";
+                $mensagem .= "💰 *Valor Total:* *{$valor}*\n";
+                $mensagem .= "📅 *Previsão de Entrega:* {$data_entrega}\n\n";
+                $mensagem .= "✅ _Para aprovar o orçamento, responda esta mensagem._";
+                $zap->enviarMensagem($mensagem,'85986607785','+55');
+                foreach ($historico->registros->map->imagens->flatten() as $imagem){
+                    echo $imagem;
+                    $zap = new Whatsapp();
+                $img = url()->asset('layout/imagens/registros/' . $imagem->nome);
+                echo url()->asset('layout/imagens/registros/' . $imagem->nome);
+//
+                $zap->enivarMensagemMedia(base64_encode(file_get_contents($img)), '85986607785', $imagem->descricao, $imagem->nome, '2', '+55', 'image');
+                }
+            }
+
+
+//            return $zap->enivarMensagemMedia(base64_encode($output),'85986607785','Contrato','contrato.pdf','2','+55','document');
 
 
         }catch (\Exception $e){
