@@ -187,7 +187,29 @@ class SiteController extends Controller
                 null
             );
 
+            /*$os_numero = $contrato->id;
+            $cliente = $contrato->cliente->name;
+            $aparelho = $contrato->veiculo->placa.' - '.$contrato->veiculo->modelo->nome;
+            $defeito = $r->input('descricao');
+            $data_entrega = Carbon::now()->format('d/m/Y');
 
+// 3. Montando o texto com formatação WhatsApp
+// *texto* = Negrito | ```texto``` = Fonte Monoespaçada | \n = Quebra de linha
+            $mensagem = "🛠️ *SOLICITAÇÃO DE ORÇAMENTO* 🛠️\n\n";
+            $mensagem .= "📌 *Número da O.S.:* ```{$os_numero}```\n";
+            $mensagem .= "👤 *Cliente:* {$cliente}\n";
+            if ($contrato->veiculo != null){
+                $mensagem .= "📱 *Veículo:* {$aparelho}\n";
+            }
+
+            $mensagem .= "----------------------------------\n";
+            $mensagem .= "📝 *Defeito Relatado:*\n";
+            $mensagem .= "_{$defeito}_\n\n";
+//            $mensagem .= "💰 *Valor Total:* *{$valor}*\n";
+            $mensagem .= "📅 *Previsão de Entrega:* {$data_entrega}\n\n";
+            $mensagem .= "✅ _Para aprovar o orçamento, responda esta mensagem._";
+            $zap    =   new Whatsapp();
+            $zap->enviarMensagem($mensagem,'85986607785','+55');*/
             return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Cadastrado com sucesso!."]);
 
 
