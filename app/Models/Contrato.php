@@ -36,6 +36,8 @@ class Contrato extends Model
         return $this->belongsTo('App\Models\User','tecnico_id');
     }
 
+
+
     public function status()
     {
         return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data','autor_id','id')->withTimestamps();

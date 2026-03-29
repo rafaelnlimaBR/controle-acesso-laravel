@@ -20,6 +20,11 @@ class Historico extends Model
         return $this->belongsTo(Contrato::class);
     }
 
+    public function indicacoes()
+    {
+        return $this->hasMany(Indicacao::class,'historico_id');
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class);

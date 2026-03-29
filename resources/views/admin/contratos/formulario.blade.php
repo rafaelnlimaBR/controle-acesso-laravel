@@ -5,7 +5,7 @@
 
     <div class="row botoes" style="margin-bottom: 15px">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
 
                     <a target="new" class="btn btn-primary"  href="{{route('contrato.baixar.contrato.pdf',['contrato'=>$contrato])}}">
@@ -20,6 +20,9 @@
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Recibo
                         </a>
                     @endif
+                    <a  class="btn btn-success"  href="{{route('contrato.enviar.whatsapp.contrato.pdf',['contrato'=>$contrato])}}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Enviar Ordem Por Whatsapp
+                    </a>
 
                 </div>
                 <!-- /.card-body -->
@@ -33,6 +36,12 @@
             <div class="card card-dark card-outline card-tabs">
                 <div class="card-header p-0 pt-1 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                        @if(isset($contrato))
+                            <li class="pt-2 px-3"><h3 class="card-title">{{$historico_selecionado->status->nome}}</h3></li>
+                        @else
+                            <li class="pt-2 px-3"><h3 class="card-title">Novo</h3></li>
+                        @endif
+
                         <li class="nav-item">
                             <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='dados'?'active':'':'active'}}"
                                id="custom-tabs-three-home-tab" data-toggle="pill" href="#dados" role="tab"
@@ -58,6 +67,11 @@
                                 <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='pecasavulsas'?'active':'':''}}"
                                    id="custom-tabs-three-messages-tab" data-toggle="pill" href="#pecasavulsas" role="tab"
                                    aria-controls="custom-tabs-three-messages" aria-selected="false">Peças Avulsas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='indicacoes'?'active':'':''}}"
+                                   id="custom-tabs-three-messages-tab" data-toggle="pill" href="#indicacoes" role="tab"
+                                   aria-controls="custom-tabs-three-messages" aria-selected="false">Indicações</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{request()->has('pagina')?request()->get('pagina')=='pagamentos'?'active':'':''}}"
@@ -98,6 +112,11 @@
                                 class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='pecasavulsas'?'active':'':''}}"
                                 id="pecasavulsas" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                                 @include('admin.contratos.includes.pecas-avulsas')
+                            </div>
+                            <div
+                                class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='indicacoes'?'active':'':''}}"
+                                id="indicacoes" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                                @include('admin.contratos.includes.indicacoes')
                             </div>
                             <div
                                 class="tab-pane {{request()->has('pagina')?request()->get('pagina')=='pagamentos'?'active':'':''}}"

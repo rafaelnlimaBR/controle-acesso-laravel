@@ -29,6 +29,7 @@ return new class extends Migration
             $t->integer('grupo_admin_id');
             $t->integer('grupo_tecnico_id');
             $t->integer('grupo_cliente_id');
+            $t->integer('grupo_fornecedor_id');
             $t->integer('orcamento_id');
             $t->integer('orcamento_online_id');
             $t->integer('andamento_id');

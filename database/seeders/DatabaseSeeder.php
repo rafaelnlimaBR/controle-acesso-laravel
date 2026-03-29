@@ -61,6 +61,17 @@ class DatabaseSeeder extends Seeder
             'visivel'  =>  true,
         ]);
         User::factory()->create([
+            'name' => 'Fornecedor 001',
+
+            'email' => 'fornecedor@fornecedor.com.br',
+            'password' => bcrypt('3024'),
+            'ativo'     =>  true,
+            'imagem'    =>  'user-01.png',
+            'deletavel'  =>  true,
+            'editavel'  =>  true,
+            'visivel'  =>  true,
+        ]);
+        User::factory()->create([
             'name' => 'Administrador',
 
             'email' => 'admin@admin.com.br',
@@ -75,7 +86,8 @@ class DatabaseSeeder extends Seeder
         DB::table('grupos')->insert([
             ['nome'=>'ADMIN','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'TéCNICO','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
-            ['nome'=>'CLIENTE','visivel'=>true,'created_at'=>now(),'updated_at'=>now()]
+            ['nome'=>'CLIENTE','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'FORNECEDOR','visivel'=>true,'created_at'=>now(),'updated_at'=>now()],
         ]
         );
         \Laravel\Prompts\info('Inserindo permissoes');
@@ -140,13 +152,24 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'banner-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'banner-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'banner-deletar','created_at'=>now(),'updated_at'=>now()],
+
+            ['nome'=>'contrato-indicacao-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-indicacao-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-indicacao-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'contrato-indicacao-deletar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([
            ['user_id'=>1,'grupo_id'=>1],
            ['user_id'=>2,'grupo_id'=>2],
+           ['user_id'=>2,'grupo_id'=>3],
+
            ['user_id'=>3,'grupo_id'=>3],
-           ['user_id'=>4,'grupo_id'=>1],
+
+           ['user_id'=>4,'grupo_id'=>4],
+           ['user_id'=>4,'grupo_id'=>3],
+
+           ['user_id'=>5,'grupo_id'=>1],
         ]);
 
         DB::table('grupo_permissao')->insert([
@@ -198,6 +221,7 @@ class DatabaseSeeder extends Seeder
             'grupo_admin_id'    =>  1,
             'grupo_tecnico_id'  =>  2,
             'grupo_cliente_id'  =>  3,
+            'grupo_fornecedor_id'  =>  4,
             'orcamento_id'      =>  1,
             'orcamento_online_id'      =>  7,
             'andamento_id'     =>  3,
@@ -365,6 +389,14 @@ class DatabaseSeeder extends Seeder
         DB::table('postagens_imagens')->insert([
             ['postagem_id'=>1,'imagem_id'=>1]
         ]);
-
+        DB::table('indicacoes')->insert([
+           ['descricao'=>'teste','valor'=>150.00,'historico_id'=>1,'fornecedor_id'=>3,'data'=>Carbon::now(),'created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+        ]);
+        DB::table('saidas')->insert([
+            ['valor'=>150.00, 'descricao'=>'teste','created_at'=>Carbon::now(),'updated_at'=>Carbon::now()],
+        ]);
+        DB::table('indicacao_saida')->insert([
+           ['saida_id'=>1,'indicacao_id'=>1],
+        ]);
     }
 }

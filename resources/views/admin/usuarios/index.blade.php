@@ -62,6 +62,7 @@
                 <div class="card-tools">
                     <a class="btn btn-sm btn-primary" href="{{route('usuario.novo')}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo</a>
                     <a class="btn btn-sm btn-primary" href="{{route('usuario.novo',['grupo_selecionado'=>$conf->grupo_cliente_id],)}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo Cliente</a>
+                    <a class="btn btn-sm btn-primary" href="{{route('usuario.novo',['grupo_selecionado'=>$conf->grupo_fornecedor_id],)}}"><i class="fa fa-plus" aria-hidden="true"></i> Novo Fornecedor</a>
                 </div>
             </div>
             <!-- /.card-header -->

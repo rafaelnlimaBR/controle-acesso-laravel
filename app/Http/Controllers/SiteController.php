@@ -301,7 +301,10 @@ class SiteController extends Controller
     public function teste()
     {
         $contrato       =   Contrato::find(1);
-        try {
+        return $contrato->historicos->map->indicacoes->flatten();
+
+
+        /*try {
             $dados = [
                 'titulo' => 'Ordem - ',
                 'conf' => $this->conf,
@@ -344,14 +347,14 @@ class SiteController extends Controller
                 $zap->enivarMensagemMedia(base64_encode(file_get_contents($img)), '85986607785', $imagem->descricao, $imagem->nome, '2', '+55', 'image');
                 }
             }
-
+*/
 
 //            return $zap->enivarMensagemMedia(base64_encode($output),'85986607785','Contrato','contrato.pdf','2','+55','document');
 
-
+/*
         }catch (\Exception $e){
             return $e->getMessage();
-        }
+        }*/
     }
 
 }

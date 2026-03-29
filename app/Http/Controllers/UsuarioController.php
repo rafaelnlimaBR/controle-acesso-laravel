@@ -91,9 +91,9 @@ class UsuarioController extends Controller
             $usuario->gravar(
                 $r->input('nome_completo'),
                 $r->input('email'),
-                $r->input('senha'),
                 $r->input('grupos'),
                 $r->input('ativo'),
+                $r->input('senha'),
                 $r->input('contato'),
                 $r->has('whatsapp')?1:0,
                 ''
@@ -158,7 +158,6 @@ class UsuarioController extends Controller
             $usuario->gravar(
                 $r->input('nome_completo'),
                 $r->input('email'),
-                $r->input('senha'),
                 $r->input('grupos'),
                 $r->input('ativo'),
             );
@@ -267,6 +266,34 @@ class UsuarioController extends Controller
             $retorno    =   [];
 
             foreach ($clientes as $key => $value) {
+
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->name;
+                $retorno[$key]['nome'] = $value->name;
+
+                $retorno[$key]['telefone'] = ($value->contatos()->count() == 0?'Sem Numero':$value->contatos()->pluck('numero')->join(', '));
+
+            }
+            return response()->json($retorno);
+        }catch (\Exception $e){
+            return response()->json($e->getMessage());
+        }
+
+    }
+
+    public function pesquisarFornecedorAjax(Request $r)
+    {
+        try{
+            $fornecedor    =   "";
+            if(is_numeric($r->get('q'))){
+                $fornecedor   =   User::PesquisarPorGrupo($this->conf->grupo_fornecedor_id)->PesquisarPorTelefone($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
+            }else{
+                $fornecedor = User::PesquisarPorGrupo($this->conf->grupo_fornecedor_id)->PesquisarPorNome($r->get('q'))->orderBy('created_at', 'desc')->limit(20)->get();
+            }
+
+            $retorno    =   [];
+
+            foreach ($fornecedor as $key => $value) {
 
                 $retorno[$key]['id'] = $value->id;
                 $retorno[$key]['text'] = $value->name;

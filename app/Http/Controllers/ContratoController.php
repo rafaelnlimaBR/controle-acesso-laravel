@@ -13,6 +13,7 @@ use App\Models\TaxaEntrada;
 use App\Models\TipoEntrada;
 use App\Models\User;
 use App\Models\Veiculo;
+use App\Models\Whatsapp;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -626,5 +627,36 @@ class ContratoController extends Controller
         }
     }
 
+    public function enviarOrdemZap(Contrato $contrato)
+    {
+        try{
+            $dados = [
+                'titulo' => 'Ordem - ',
+                'conf' => $this->conf,
+                'contrato' => $contrato,
+            ];
+            $zap = new Whatsapp();
+            $pdf = Pdf::loadView('admin.contratos.pdf.contrato', $dados);
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+            $output = $pdf->output();
+            $mensagem   =   "";
+            foreach ($contrato->cliente->contatos as $contato) {
+                if($contato->pivot->whatsapp){
+                    $retorno    =   $zap->enivarMensagemMedia(base64_encode($output),$contato->numero, 'Segue','contrato.pdf','2','+55','document');
+                    if($retorno){
+                        $mensagem   .=   "Enviado com sucesso para o número <b>".$contato->numero."</b><br>";
+                    }else{
+                        $mensagem   .=   "Erro ao enviar para o número <b>".$contato->numero."</b><br>";
+                    }
+                }
+            }
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>$mensagem]);
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
 
 }

@@ -1224,6 +1224,57 @@
             },
 
         });
+
+
+        $("#pesquisar-fornecedor").select2({
+            width: '100%',
+            theme: 'bootstrap-5',
+            // placeholder: "Selecione um cliente",
+            ajax: {
+                type: 'POST',
+                url: "{{route('fornecedor.pesquisar.json')}}",
+                dataType: 'json',
+
+                beforeSend: function (xhr) {
+                    var token = '{{csrf_token()}}'
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                quietMillis: 400,
+                delay:400,
+                data: function (term, page) {
+
+                    return {
+                        q: term.term, //search term
+                        // page size
+                    };
+                },
+                processResults: function (data) {
+
+                    return {
+                        results: data
+                    };
+                },
+            },
+            templateResult: function (data) {
+
+                var html    =   $('<div class="select2-user-result"><h5>'+data.nome+'</h5>' +
+                    '<h6>Telefone: <b>'+data.telefone+'</b></h6>'+
+
+                    '</div>'
+                );
+                return html;
+            },
+            templateSelection:function (data) {
+
+                var html    =   $('<div class="select2-user-result">'+data.text+'</div><br>'
+                );
+                return html;
+            },
+
+        });
     });
 </script>
 <!--end::OverlayScrollbars Configure-->

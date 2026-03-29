@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/usuario/mudar/senha', [App\Http\Controllers\UsuarioController::class, 'formularioNovaSenha'])->name('usuario.mudar.senha');
     Route::post('/usuario/cadastrar/nova/senha', [App\Http\Controllers\UsuarioController::class, 'postNovaSenha'])->name('usuario.cadastrar.nova.senha');
     Route::post('usuario/pesquisar/cliente',[App\Http\Controllers\UsuarioController::class, 'pesquisarClienteAjax'])->name('cliente.pesquisar.json');
+    Route::post('usuario/pesquisar/fornecedor',[App\Http\Controllers\UsuarioController::class, 'pesquisarFornecedorAjax'])->name('fornecedor.pesquisar.json');
 //GRUPOS
     Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupo.index');
     Route::get('/grupo/novo', [App\Http\Controllers\GrupoController::class, 'novo'])->name('grupo.novo');
@@ -134,10 +135,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/editar/{contrato}/historico/{historico}/entrada/excluir/{pagamento}', [App\Http\Controllers\ContratoController::class, 'excluirPagamento'])->name('contrato.pagamento.excluir');
     Route::get('/contrato/{contrato}/visualizar/ordem', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
     Route::get('/contrato/{contrato}/baixar/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'baixarOrdemPDF'])->name('contrato.baixar.contrato.pdf');
+    Route::get('/contrato/{contrato}/enviar/whatsapp/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'enviarOrdemZap'])->name('contrato.enviar.whatsapp.contrato.pdf');
     Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
     Route::get('/contrato/{contrato}/baixar/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'baixarReciboPDF'])->name('contrato.baixar.recibo.pdf');
-
-
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/indicacao/novo',[App\Http\Controllers\IndicacaoController::class, 'novo'])->name('contrato.indicacao.novo');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/indicacao/editar/{indicacao}',[App\Http\Controllers\IndicacaoController::class, 'editar'])->name('contrato.indicacao.editar');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/indicacao/cadastrar',[App\Http\Controllers\IndicacaoController::class, 'cadastrar'])->name('contrato.indicacao.cadastrar');
+    Route::post('/contrato/editar/{contrato}/historico/{historico}/indicacao/atualizar/{indicacao}',[App\Http\Controllers\IndicacaoController::class, 'atualizar'])->name('contrato.indicacao.atualizar');
+    Route::get('/contrato/editar/{contrato}/historico/{historico}/indicacao/excluir/{indicacao}',[App\Http\Controllers\IndicacaoController::class, 'excluir'])->name('contrato.indicacao.excluir');
 //SERVIÇOS
     Route::post('/servicos/pesquisar', [App\Http\Controllers\ServicoController::class, 'pesquisarServicoAjax'])->name('servico.pesquisar.json');
 

@@ -115,13 +115,14 @@ class User extends Authenticatable
     }
 
 
-    public function gravar($nome, $email, $senha, $grupo_id,$ativo,$contato=null,$whatapp=null, $descricao=null)
+    public function gravar($nome, $email,  $grupo_id,$ativo,$senha =null,$contato=null,$whatapp=null, $descricao=null)
     {
         $this->name             = strtoupper($nome);
 
         $this->email             =   strtolower($email);
-
-        $this->password          =   Hash::make($senha);
+        if ($senha != null){
+            $this->password     =   $senha;
+        }
 
         $this->ativo            =   $ativo;
 
