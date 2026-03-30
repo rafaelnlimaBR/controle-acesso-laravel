@@ -136,6 +136,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/contrato/{contrato}/visualizar/ordem', [App\Http\Controllers\ContratoController::class, 'visualizarPDF'])->name('contrato.visualizar.pdf');
     Route::get('/contrato/{contrato}/baixar/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'baixarOrdemPDF'])->name('contrato.baixar.contrato.pdf');
     Route::get('/contrato/{contrato}/enviar/whatsapp/ordem/pdf', [App\Http\Controllers\ContratoController::class, 'enviarOrdemZap'])->name('contrato.enviar.whatsapp.contrato.pdf');
+    Route::get('/contrato/{contrato}/enviar/whatsapp/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'enviarReciboZap'])->name('contrato.enviar.whatsapp.recibo.pdf');
     Route::get('/contrato/{contrato}/baixar/historico/pdf', [App\Http\Controllers\ContratoController::class, 'baixarHistoricoPDF'])->name('contrato.baixar.historico.pdf');
     Route::get('/contrato/{contrato}/baixar/recibo/pdf', [App\Http\Controllers\ContratoController::class, 'baixarReciboPDF'])->name('contrato.baixar.recibo.pdf');
     Route::get('/contrato/editar/{contrato}/historico/{historico}/indicacao/novo',[App\Http\Controllers\IndicacaoController::class, 'novo'])->name('contrato.indicacao.novo');

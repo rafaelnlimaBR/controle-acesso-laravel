@@ -659,4 +659,36 @@ class ContratoController extends Controller
         }
     }
 
+    public function enviarReciboZap(Contrato $contrato)
+    {
+        try{
+            $dados = [
+                'titulo' => 'Recibo - ',
+                'conf' => $this->conf,
+                'contrato' => $contrato,
+            ];
+            $zap = new Whatsapp();
+            $pdf        =   Pdf::loadView('admin.contratos.pdf.recibo',$dados);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $output = $pdf->output();
+            $mensagem   =   "";
+            foreach ($contrato->cliente->contatos as $contato) {
+                if($contato->pivot->whatsapp){
+                    $retorno    =   $zap->enivarMensagemMedia(base64_encode($output),$contato->numero, 'Segue','recibo.pdf','2','+55','document');
+                    if($retorno){
+                        $mensagem   .=   "Enviado com sucesso para o número <b>".$contato->numero."</b><br>";
+                    }else{
+                        $mensagem   .=   "Erro ao enviar para o número <b>".$contato->numero."</b><br>";
+                    }
+                }
+            }
+            return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>$mensagem]);
+
+
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
 }

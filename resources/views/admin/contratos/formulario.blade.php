@@ -19,10 +19,14 @@
                         <a target="new" class="btn btn-primary"  href="{{route('contrato.baixar.recibo.pdf',['contrato'=>$contrato])}}">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Imprimir Recibo
                         </a>
+                        <a  class="btn btn-success"  href="{{route('contrato.enviar.whatsapp.recibo.pdf',['contrato'=>$contrato])}}">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Recibo Por Whatsapp
+                        </a>
                     @endif
                     <a  class="btn btn-success"  href="{{route('contrato.enviar.whatsapp.contrato.pdf',['contrato'=>$contrato])}}">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Enviar Ordem Por Whatsapp
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Ordem Por Whatsapp
                     </a>
+
 
                 </div>
                 <!-- /.card-body -->
