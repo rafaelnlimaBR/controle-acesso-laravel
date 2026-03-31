@@ -58,4 +58,17 @@
     </tbody>
 </table>
 <br>
-<h4>R$ {{$contrato->valorLiquidoTotalAutorizadoPecaAvulsa()}}</h4>
+<div class="row">
+    <div class="col-md-3">
+        <table class="table table-bordered" role="table">
+            <tr>
+                <td> Valor Bruto : </td>
+                <td> R$ : {{$contrato->valorBrutoTotalServicoAutorizado()}}</td>
+            </tr>
+            <tr>
+                <td>Valor Líquido : </td>
+                <td> R$ : {{$contrato->valorLiquidoTotalAutorizadoServico()}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

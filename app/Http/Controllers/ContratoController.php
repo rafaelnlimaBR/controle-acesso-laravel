@@ -407,7 +407,7 @@ class ContratoController extends Controller
                 'historico_selecionado'   =>  $historico,
                 'tipo'              =>  $tipo,
                 'descricao'         =>  "Pagamento do contrato ".$contrato->id,
-                'valor_original'    =>  ($contrato->valorLiquidoTotalAutorizadoPecaAvulsa()+$contrato->valorLiquidoTotalAutorizadoServico())-$contrato->valorTotaoPago(),
+                'valor_original'    =>  ($contrato->valorLiquidoTotalAutorizadoPecaAvulsa()+$contrato->valorLiquidoTotalAutorizadoServico())-$contrato->valorTotalPago(),
                 'route_back'        =>  route('contrato.editar',['contrato'=>$contrato,'historico'=>$historico,'pagina'=>'pagamentos']),
 
             ];

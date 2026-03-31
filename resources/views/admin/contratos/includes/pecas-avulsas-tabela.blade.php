@@ -63,4 +63,18 @@
     </tbody>
 </table>
 <br>
-<h4>R$ {{$contrato->valorLiquidoTotalServico()}}</h4>
+<div class="row">
+    <div class="col-md-3">
+        <table class="table table-bordered" role="table">
+            <tr>
+                <td> Valor Bruto : </td>
+                <td> R$ : {{$contrato->valorBrutoTotalAutorizadoPecaAvulsa()}}</td>
+            </tr>
+            <tr>
+                <td>Valor Líquido : </td>
+                <td> R$ : {{$contrato->valorLiquidoTotalAutorizadoPecaAvulsa()}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+

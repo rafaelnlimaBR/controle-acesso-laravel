@@ -31,7 +31,7 @@
 
             @foreach($contrato->historicos as $h)
                 @foreach($h->entradas as $s)
-                    <tr class="align-middle " >
+                    <tr class="align-middle {{$s->valor_original <0?'table-danger':''}}" >
 
 
                         <td >{{$s->valor_original}}</td>

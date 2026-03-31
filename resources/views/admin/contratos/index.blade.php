@@ -57,6 +57,8 @@
                         <th style="width: 10%"  scope="col">Placa</th>
                         <th style="width: 30%"  scope="col">Veículo</th>
                         <th style="width: 20%"  scope="col">Status</th>
+                        <th style="width: 20%"  scope="col">Valor</th>
+                        <th style="width: 20%"  scope="col">Pagamento</th>
                         <th style="width: 15%" scope="col">Criado</th>
                         <th style="width: 5%" scope="col">Ações</th>
 
@@ -72,9 +74,16 @@
                             <td>{{is_null($c->veiculo)?"":$c->veiculo->placa}}</td>
                             <td>{{is_null($c->veiculo)?"":$c->veiculo->modelo->nome}}</td>
                             <td><span style="background-color: {{'#'.$c->status->last()->cor_fundo}}; color: {{'#'.$c->status->last()->cor_letra}}; padding: 3px 5px 3px 5px;border-radius: 10px;">{{$c->status->last()->nome}}</span></td>
+                            <td>{{$c->valorTotalLiquidoAutorizado()}}</td>
+
+                            @if($c->situacaoPagamento())
+                                <td><span style="background-color: #3a8e31; color: #efefe6; padding: 3px 5px 3px 5px;border-radius: 10px;">Pago</span></td>
+                            @else
+                                <td><span style="background-color: #992818; color: #efefe6; padding: 3px 5px 3px 5px;border-radius: 10px;">Pendente</span></td>
+                            @endif
+
+
                             <td>{{\Carbon\Carbon::parse($c->data_inicio)->format('d/m/Y')}}</td>
-
-
                             <td>
                                 @can('contrato-visualizar')
                                 <a  title="detalhar" href="{{route('contrato.visualizar.pdf',['contrato'=>$c])}}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
