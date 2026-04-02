@@ -139,12 +139,13 @@ class SiteController extends Controller
 
             if($cliente == null){
                 $cliente    =   new User();
+//                $nome, $email,  $grupo_id,$ativo,$senha =null,$contato=null,$whatapp=null, $descricao=null
                 $cliente->gravar(
                     $r->input('nome'),
                     $r->input('email'),
-                    $r->input('senha'),
                     $this->conf->grupo_cliente_id,
                     '1',
+                    '123456789',
                     $numero,
                     1,
                 );
