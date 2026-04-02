@@ -91,21 +91,26 @@
     <div class="section">Serviços Realizados</div>
 
     <table class="borda">
-
         <tr>
+            @if($contrato->status->last()->cobrar == false)
+                <th>Aut</th>
+            @endif
             <th>Descrição</th>
             <th width="120">Valor</th>
-        </tr>
 
-        <tr>
-            <td>Aferição de painel de instrumentos</td>
-            <td>R$ 150,00</td>
         </tr>
+        @foreach($contrato->historicos->map->servicos->flatten() as $servico)
+            <tr>
+                @if($contrato->status->last->cobrar == false)
+                    <th>{{$servico->pivot->cobrar?"V":"X"}}</th>
+                @endif
+                <td>{{ $servico->nome}}</td>
+                <td width="120">{{$servico->pivot->valor_liquido}}</td>
+            </tr>
+        @endforeach
 
-        <tr>
-            <td>Reparo no marcador de velocidade</td>
-            <td>R$ 200,00</td>
-        </tr>
+
+
 
     </table>
 
@@ -116,22 +121,29 @@
     <table class="borda">
 
         <tr>
+            @if($contrato->status->last()->cobrar == false)
+                <th>Aut</th>
+            @endif
             <th>Peça</th>
-            <th width="60">Qtd</th>
-            <th width="120">Valor</th>
+            <th>Marca</th>
+            <th width="60">Valor</th>
+            <th width="30">Qtd</th>
+            <th width="60">Total</th>
         </tr>
+        @foreach($contrato->historicos->map->pecasAvulsas->flatten() as $peca)
+            <tr>
+                @if($contrato->status->last->cobrar == false)
+                    <th>{{$servico->cobrar?"V":"X"}}</th>
+                @endif
+                <td>{{$peca->nome}}</td>
+                <td>{{$peca->marca}}</td>
+                <td>{{$peca->valor_liquido}}</td>
+                <td>{{$peca->qnt}}</td>
+                <td>{{$peca->valor_liquido * $peca->qnt}}</td>
+            </tr>
+        @endforeach
 
-        <tr>
-            <td>Sensor de velocidade</td>
-            <td>1</td>
-            <td>R$ 120,00</td>
-        </tr>
 
-        <tr>
-            <td>Resistor eletrônico</td>
-            <td>2</td>
-            <td>R$ 10,00</td>
-        </tr>
 
     </table>
 
@@ -142,38 +154,53 @@
         <tr>
 
             <td width="65%" valign="top">
-
+                @if($contrato->status->last()->id == $conf->orcamento_id)
                 <div class="section">Observações</div>
 
                 <p>
-                    Realizado reparo no painel e aferição do marcador de velocidade para garantir leitura correta.
-                    Sistema testado e funcionando normalmente.
+                    Garantia de 90 dias a partir autorização do orçamento
                 </p>
-
+                @endif
             </td>
 
 
             <td width="35%" valign="top">
 
-                <div class="section">Pagamento</div>
+                <div class="section">Total</div>
 
                 <table class="borda" width="100%">
-
+                    @if($contrato->status->last()->id == $conf->orcamento_id or $contrato->status->last()->id == $conf->orcamento_online_id)
                     <tr>
                         <td>Serviços</td>
-                        <td align="right">R$ 350,00</td>
+                        <td align="right">R$ {{$contrato->valorLiquidoTotalServico()}}</td>
                     </tr>
 
                     <tr>
                         <td>Peças</td>
-                        <td align="right">R$ 130,00</td>
+                        <td align="right">R$ {{$contrato->valorLiquidoTotalPecaAvulsa()}}</td>
                     </tr>
 
                     <tr>
                         <td><b>Total</b></td>
-                        <td align="right"><b>R$ 480,00</b></td>
+                        <td align="right"><b>R$ {{$contrato->valorLiquidoTotalServico()+$contrato->valorLiquidoTotalPecaAvulsa()}}</b></td>
                     </tr>
+                    @else
 
+                        <tr>
+                            <td>Serviços</td>
+                            <td align="right">R$ {{$contrato->valorLiquidoTotalAutorizadoServico()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Peças</td>
+                            <td align="right">R$ {{$contrato->valorLiquidoTotalAutorizadoPecaAvulsa()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td align="right"><b>R$ {{$contrato->valorLiquidoTotalAutorizadoPecaAvulsa()+$contrato->valorLiquidoTotalAutorizadoServico()}}</b></td>
+                        </tr>
+                    @endif
                 </table>
 
             </td>
@@ -198,9 +225,12 @@
         </tr>
 
     </table>
+    @elseif($contrato->status->last()->id == $conf->nao_autorizado_id)
+
+
+    @elseif($contrato->status->last()->id == $conf->cancelado_id)
 
         @endif
-
 
 </div>
 

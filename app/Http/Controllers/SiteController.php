@@ -12,6 +12,7 @@ use App\Models\Contrato;
 use App\Models\Montadora;
 use App\Models\Postagem;
 use App\Models\Registro;
+use App\Models\RegistroImagem;
 use App\Models\User;
 use App\Models\Veiculo;
 use App\Models\Whatsapp;
@@ -123,6 +124,7 @@ class SiteController extends Controller
                 'ano'=>'required_if:cadastrar_veiculo,on',
                 'modelo'=>'required_if:cadastrar_veiculo,on',
                 'montadora'=>'required_if:cadastrar_veiculo,on',
+                'imagens'=>'image|mimes:jpg,png,jpeg',
             ];
 
 
@@ -187,6 +189,18 @@ class SiteController extends Controller
                 $contrato->historicos->last(),
                 null
             );
+            if($r->has('imagens')){
+                foreach ($r->file('imagens') as $i){
+                    $imagem         =   new RegistroImagem();
+                    $imagem->gravar(
+                        $registro,
+                        $i,
+                        null
+                    );
+                }
+
+
+            }
 
             /*$os_numero = $contrato->id;
             $cliente = $contrato->cliente->name;
@@ -266,9 +280,9 @@ class SiteController extends Controller
                 $cliente->gravar(
                     $r->input('nome'),
                     $r->input('email'),
-                    '123456789',
                     $this->conf->grupo_cliente_id,
-                    '1',
+                    1,
+                    '123456789',
                     $numero,
                     1,
                 );

@@ -200,17 +200,21 @@
 
                 <div class="mt-3">
 
-                    <label class="form-label">Envie algumas imagens para demonstrar o defeito</label>
+                    <label class="form-label ">Envie algumas imagens para demonstrar o defeito</label>
 
                     <input
                         type="file"
-                        class="form-control"
+                        class="form-control @error('imagens')is-invalid @enderror"
                         name="imagens[]"
                         multiple
                         accept="image/*"
                         capture="environment"
                     >
-
+                    @error('imagens')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
                 <div class="card-footer" style="margin: 10px">
                     <H5 CLASS="text-center">A SOLICITAÇÃO SERÁ ANALISADA E O ORÇAMENTO SERÁ ENVIADO PARA SEU WHATSAPP O MAIS BREVE POSSÍVEL.</H5>

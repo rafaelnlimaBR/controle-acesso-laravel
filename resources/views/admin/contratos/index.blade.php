@@ -85,10 +85,10 @@
 
                             <td>{{\Carbon\Carbon::parse($c->data_inicio)->format('d/m/Y')}}</td>
                             <td>
-                                @can('contrato-visualizar')
+                                {{--@can('contrato-visualizar')
                                 <a  title="detalhar" href="{{route('contrato.visualizar.pdf',['contrato'=>$c])}}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
                                 </a>
-                                @endcan
+                                @endcan--}}
                                 @can('contrato-editar')
                                 <a href="{{route('contrato.editar',['contrato'=>$c,'historico'=>$c->historicos->last()])}}" class="text-decoration-none">
                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>

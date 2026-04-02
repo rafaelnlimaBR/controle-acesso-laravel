@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
@@ -19,7 +20,7 @@ class RegistroImagem extends Model
         return $this->belongsTo(Registro::class);
     }
 
-    public function gravar(Registro $registro,$image, $descricao ,)
+    public function gravar(Registro $registro,UploadedFile $image, $descricao = null )
     {
             if (!file_exists(public_path('/layout/imagens/registros/'))){
                 mkdir(public_path('/layout/imagens/registros/'), 0777, true);

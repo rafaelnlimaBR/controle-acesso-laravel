@@ -301,7 +301,19 @@ class DatabaseSeeder extends Seeder
         \Laravel\Prompts\info('Inserindo Serviços');
         DB::table('servicos')->insert([
             ['nome'=>'Reparo do painel','valor'=>'100'],
-            ['nome'=>'Reparo do modulo','valor'=>'100']
+            ['nome'=>'Reparo do modulo','valor'=>'100'],
+            ['nome'=>'Diagnóstico','valor'=>'100'],
+            ['nome'=>'Reparo da placa do painel de instrumentos','valor'=>'100'],
+            ['nome'=>'Troca das peliculas polarizadas do painel de instrumentos','valor'=>'100'],
+            ['nome'=>'Troca das peliculas polarizadas do mid','valor'=>'100'],
+            ['nome'=>'Troca das peliculas polarizadas do radio','valor'=>'100'],
+            ['nome'=>'Troca do display do painel de instrumentos','valor'=>'100'],
+            ['nome'=>'Troca da bobina de velocidade','valor'=>'100'],
+            ['nome'=>'Troca da bobina de rpm','valor'=>'100'],
+            ['nome'=>'Troca da bobina de combustível','valor'=>'100'],
+            ['nome'=>'Troca da bobina de temperatura','valor'=>'100'],
+            ['nome'=>'Conserto do marcador de óleo do painel de instrumentos','valor'=>'100'],
+            ['nome'=>'Troca do cabo flat do display do painel','valor'=>'100'],
         ]);
 
         DB::table('historico_servico')->insert([
