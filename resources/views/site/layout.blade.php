@@ -61,7 +61,7 @@
                 <li> <a target="new" class="" href="{{route('site.fazer.orcamento')}}">Fazer Orçamento</a></li>
 {{--                <li><a href="contact.html">Contact</a></li>--}}
                 @if(auth()->check())
-                    <li><a href="{{route('dashboard.index')}}">Área Administrativa</a></li>
+                    <li><a href="{{route('dashboard.index')}}">Área do Usuário</a></li>
                 @endif
 
             </ul>

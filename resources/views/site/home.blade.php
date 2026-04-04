@@ -76,8 +76,8 @@
             <!-- Section Title -->
             <div class="container section-title aos-init aos-animate" data-aos="fade-up">
                 <div class="section-title-container d-flex align-items-center justify-content-between">
-                    <h2>Lifestyle</h2>
-                    <p><a href="categories.html">See All Lifestyle</a></p>
+                    <h2>{{$categoria->nome}}</h2>
+                    <p><a href="{{route('site.categoria',['link'=>$categoria->nome_link])}}">Veja todos </a></p>
                 </div>
             </div><!-- End Section Title -->
 
@@ -85,21 +85,26 @@
 
                 <div class="row g-5">
                     <div class="col-lg-4">
-                        <div class="post-list lg">
-                            <a href="blog-details.html"><img src="assets/img/post-landscape-8.jpg" alt="" class="img-fluid"></a>
-                            <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                            <h2><a href="blog-details.html">11 Work From Home Part-Time Jobs You Can Do Now</a></h2>
-                            <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi atque eveniet, quo, praesentium dignissimos</p>
 
-                            <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="assets/img/person-7.jpg" alt="" class="img-fluid"></div>
-                                <div class="name">
-                                    <h3 class="m-0 p-0">Esther Howard</h3>
+                            <h6>Mais visualizado</h6>
+                            <div class="post-list lg">
+                                <a href="{{route('site.postagem',['link'=>$categoria->maisVisualizada()->titulo_link])}}"><img src="{{url()->asset('images/postagens/'.$categoria->maisVisualizada()->imagem->imagem)}}" alt="" class="img-fluid"></a>
+                                <div class="post-meta"><span class="date"></span> <span class="mx-1">•</span> <span>{{\Carbon\Carbon::parse($categoria->maisVisualizada()->created_at)->format('d/m/Y')}}</span></div>
+                                <h2><a href="{{route('site.postagem',['link'=>$categoria->maisVisualizada()->titulo_link])}}">{{$categoria->maisVisualizada()->titulo}}</a></h2>
+                                <p class="mb-4 d-block">{!!   Str::limit(strip_tags($categoria->maisVisualizada()->conteudo), 130,'........')!!}</p>
+
+                                <div class="d-flex align-items-center author">
+{{--                                        <div class="photo"><img src="assets/img/person-7.jpg" alt="" class="img-fluid"></div>--}}
+                                    <div class="name">
+                                        <h3 class="m-0 p-0">{{$categoria->maisVisualizada()->autor->name}}</h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="post-list border-bottom">
+
+
+
+                        {{--<div class="post-list border-bottom">
                             <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
                             <h2 class="mb-2"><a href="blog-details.html">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
                             <span class="author mb-3 d-block">Jenny Wilson</span>
@@ -109,83 +114,45 @@
                             <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
                             <h2 class="mb-2"><a href="blog-details.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
                             <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
+                        </div>--}}
 
                     </div>
 
                     <div class="col-lg-8">
                         <div class="row g-5">
+
                             <div class="col-lg-4 border-start custom-border">
+                                <h6>Ultimas postagens</h6>
+                                @foreach($categoria->ultimasPostagens(3) as $postagem)
                                 <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-6.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2><a href="blog-details.html">Let’s Get Back to Work, New York</a></h2>
+                                    <a href="{{route('site.postagem',['link'=>$postagem->titulo_link])}}"><img src="{{url()->asset('images/postagens/'.$postagem->imagem->imagem)}}" alt="" class="img-fluid"></a>
+                                    <div class="post-meta"><span class="date"></span> <span class="mx-1">•</span> <span>{{\Carbon\Carbon::parse($postagem->created_at)->format('d/m/Y')}}</span></div>
+                                    <h2><a href="{{route('site.postagem',['link'=>$postagem->titulo_link])}}">{{$postagem->titulo}}</a></h2>
                                 </div>
-                                <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-5.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 17th '22</span></div>
-                                    <h2><a href="blog-details.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                                </div>
-                                <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-4.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Mar 15th '22</span></div>
-                                    <h2><a href="blog-details.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
-                                </div>
+                                @endforeach
+
                             </div>
                             <div class="col-lg-4 border-start custom-border">
+                                <h6>Mais visualizadas</h6>
+
+                                @foreach($categoria->postagensMaisVisualizadas(3) as $postagem)
                                 <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-3.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2><a href="blog-details.html">6 Easy Steps To Create Your Own Cute Merch For Instagram</a></h2>
+                                    <a href="{{route('site.postagem',['link'=>$postagem->titulo_link])}}"><img src="{{url()->asset('images/postagens/'.$postagem->imagem->imagem)}}" alt="" class="img-fluid"></a>
+                                    <div class="post-meta"><span class="date"></span> <span class="mx-1">•</span> <span>{{\Carbon\Carbon::parse($postagem->created_at)->format('d/m/Y')}}</span></div>
+                                    <h2><a href="{{route('site.postagem',['link'=>$postagem->titulo_link])}}">{{$postagem->titulo}}</a></h2>
                                 </div>
-                                <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-2.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Mar 1st '22</span></div>
-                                    <h2><a href="blog-details.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                                </div>
-                                <div class="post-list">
-                                    <a href="blog-details.html"><img src="assets/img/post-landscape-1.jpg" alt="" class="img-fluid"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2><a href="blog-details.html">5 Great Startup Tips for Female Founders</a></h2>
-                                </div>
+                                @endforeach
+
                             </div>
                             <div class="col-lg-4">
-
+                                @foreach($categoria->primeirasPostagens(6) as $postagem)
                                 <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
+                                    <div class="post-meta"><span class="date"></span> <span class="mx-1">•</span> <span>{{\Carbon\Carbon::parse($postagem->created_at)->format('d/m/Y')}}</span></div>
+                                    <h2 class="mb-2"><a href="{{route('site.postagem',['link'=>$postagem->titulo_link])}}">{{$postagem->titulo}}</a></h2>
                                     <span class="author mb-3 d-block">Jenny Wilson</span>
                                 </div>
+                                @endforeach
 
-                                <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-list border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">•</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="blog-details.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
 
                             </div>
                         </div>

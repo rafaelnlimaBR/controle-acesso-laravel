@@ -26,7 +26,12 @@ class CategoriaPostagem extends Model
 
     public function ultimasPostagens($quantidade = 6)
     {
-        return $this->postagens()->orderBy('created_at','desc')->take($quantidade);
+        return $this->postagens()->orderBy('created_at','desc')->take($quantidade)->get();
+    }
+
+    public function primeirasPostagens($quantidade = 6)
+    {
+        return $this->postagens()->orderBy('created_at','asc')->take($quantidade)->get();
     }
 
     public function maisVisualizada()
