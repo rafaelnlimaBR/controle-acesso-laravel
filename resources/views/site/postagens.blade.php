@@ -43,7 +43,7 @@
 
                                         </div>
 
-                                        {!!   Str::limit(strip_tags($postagem->conteudo), 150)!!}
+                                        {!!   Str::limit(strip_tags($postagem->conteudo), 190)!!}
 
                                         <hr>
 

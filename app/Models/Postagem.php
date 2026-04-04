@@ -43,6 +43,12 @@ class Postagem extends Model
         return $query->where('titulo','like','%'.$titulo.'%');
     }
 
+    public function adicionarVisita()
+    {
+        $this->visualizacoes += 1;
+        $this->save();
+    }
+
     public function gravar($titulo, $link, $ativo, $conteudo, $descricao,$keywords,User $autor,$imagem=null)
     {
         $this->titulo           =   $titulo;

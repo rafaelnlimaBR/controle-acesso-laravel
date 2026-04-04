@@ -24,6 +24,21 @@ class CategoriaPostagem extends Model
         return $query->where('ativo',$status);
     }
 
+    public function ultimasPostagens($quantidade = 6)
+    {
+        return $this->postagens()->orderBy('created_at','desc')->take($quantidade);
+    }
+
+    public function maisVisualizada()
+    {
+        return $this->postagens()->orderBy('visualizacoes','desc')->first();
+    }
+
+    public function postagensMaisVisualizadas($quantidate = 5)
+    {
+        return $this->postagens()->orderBy('visualizacoes','desc')->take($quantidate)->get();
+    }
+
     public function gravar($nome,$link,$meta_descricao, $meta_keywords,$ativo)
     {
         $this->nome         =   $nome;

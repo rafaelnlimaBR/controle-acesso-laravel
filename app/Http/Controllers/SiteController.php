@@ -39,6 +39,7 @@ class SiteController extends Controller
             'conf'          =>  $this->conf,
             'meta_descricao'          =>  $this->conf->meta_descricao,
             'meta_keywords'          =>  $this->conf->meta_keywords,
+            'cat'            =>  CategoriaPostagem::all(),
         ];
         return view('site.home', $dados);
     }
@@ -95,7 +96,7 @@ class SiteController extends Controller
             'meta_keywords'          =>  $postagem->meta_keywords,
 
         ];
-
+        $postagem->adicionarVisita();
         return view('site.postagem', $dados);
     }
 
