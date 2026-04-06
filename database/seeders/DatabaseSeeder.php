@@ -153,10 +153,17 @@ class DatabaseSeeder extends Seeder
             ['nome'=>'banner-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'banner-deletar','created_at'=>now(),'updated_at'=>now()],
 
+            ['nome'=>'servico-visualizar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'servico-criar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'servico-editar','created_at'=>now(),'updated_at'=>now()],
+            ['nome'=>'servico-deletar','created_at'=>now(),'updated_at'=>now()],
+
             ['nome'=>'contrato-indicacao-visualizar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-indicacao-criar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-indicacao-editar','created_at'=>now(),'updated_at'=>now()],
             ['nome'=>'contrato-indicacao-deletar','created_at'=>now(),'updated_at'=>now()],
+
+            ['nome'=>'area-cliente-visualizar','created_at'=>now(),'updated_at'=>now()],
         ]);
 
         DB::table('user_grupo')->insert([

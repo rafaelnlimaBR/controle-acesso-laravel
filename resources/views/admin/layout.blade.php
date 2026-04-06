@@ -379,6 +379,15 @@
                             </a>
                         </li>
                     @endcan
+                    @can('servico-lista')
+                        <li class="nav-item">
+                            <a href="{{route('servico.index')}}" class="nav-link">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+
+                                <p>Servico</p>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="nav-header">SITE</li>
                     @can('banner-lista')
                         <li  class="nav-item">
@@ -431,7 +440,16 @@
                             </a>
                         </li>
                     @endcan
+                    @can('area-cliente-visualizar')
+                        <li class="nav-header">ÁREA DO CLIENTE</li>
+                            <li class="nav-item">
+                                <a href="{{route('cliente.meuscontratos')}}" class="nav-link">
+                                    <i class="fa fa-cubes" aria-hidden="true"></i>
 
+                                    <p>Meus Contratos</p>
+                                </a>
+                            </li>
+                    @endcan
 
 
                 </ul>

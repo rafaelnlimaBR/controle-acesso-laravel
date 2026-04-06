@@ -69,6 +69,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('/montadora/atualizar/{montadora}', [App\Http\Controllers\MontadoraController::class, 'atualizar'])->name('montadora.atualizar');
     Route::get('/montadora/excluir/{montadora}', [App\Http\Controllers\MontadoraController::class, 'excluir'])->name('montadora.excluir');
 
+//SERVIÇOS
+    Route::get('/servicos', [App\Http\Controllers\ServicoController::class, 'index'])->name('servico.index');
+    Route::get('/servico/novo', [App\Http\Controllers\ServicoController::class, 'novo'])->name('servico.novo');
+    Route::get('/servico/editar/{servico}', [App\Http\Controllers\ServicoController::class, 'editar'])->name('servico.editar');
+    Route::post('/servico/cadastrar', [App\Http\Controllers\ServicoController::class, 'cadastrar'])->name('servico.cadastrar');
+    Route::post('/servico/atualizar/{servico}', [App\Http\Controllers\ServicoController::class, 'atualizar'])->name('servico.atualizar');
+    Route::get('/servico/excluir/{servico}', [App\Http\Controllers\ServicoController::class, 'excluir'])->name('servico.excluir');
+
 //BANNERS
     Route::get('/banners', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
     Route::get('/banner/novo', [App\Http\Controllers\BannerController::class, 'novo'])->name('banner.novo');
@@ -153,6 +161,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 
 //ENTRADAS
     Route::post('/entrada/gravar', [App\Http\Controllers\EntradaController::class, 'gravar'])->name('entrada.gravar');
+
+//AREA DO CLIENTE
+    Route::get('/meuscontratos', [App\Http\Controllers\AreaClienteController::class, 'meuscontratos'])->name('cliente.meuscontratos');
 
 });
 Route::get('/montadora/{id}/modelos', [App\Http\Controllers\MontadoraController::class, 'modelos'])->name('montadora.modelos.ajax');

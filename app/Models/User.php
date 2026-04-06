@@ -109,6 +109,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Contato','user_contato','user_id','contato_id')->withPivot('id','observacao','whatsapp');
     }
 
+    public function contratos()
+    {
+        return $this->hasMany('App\Models\Contrato','cliente_id','id');
+    }
+
     public function grupos()
     {
         return $this->belongsToMany('App\Models\Grupo','user_grupo','user_id','grupo_id');

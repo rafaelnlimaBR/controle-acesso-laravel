@@ -125,7 +125,7 @@ class SiteController extends Controller
                 'ano'=>'required_if:cadastrar_veiculo,on',
                 'modelo'=>'required_if:cadastrar_veiculo,on',
                 'montadora'=>'required_if:cadastrar_veiculo,on',
-                'imagens'=>'image|mimes:jpg,png,jpeg',
+                'imagens[]'=>'image|mimes:jpg,png,jpeg',
             ];
 
 
@@ -274,7 +274,7 @@ class SiteController extends Controller
             }
 
             $cliente        =   User::where('email',$r->input('email'))->first();
-            $numero         =   Contato::limparNumero($r->input('contato'));
+            $numero         =   Contato::limparNumero($r->input('whatsapp'));
 
             if($cliente == null){
                 $cliente    =   new User();

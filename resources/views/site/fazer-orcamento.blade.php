@@ -207,7 +207,7 @@
                         class="form-control @error('imagens')is-invalid @enderror"
                         name="imagens[]"
                         multiple
-                        accept="image/*"
+                        accept="image/png, image/jpeg, image/jpg"
                         capture="environment"
                     >
                     @error('imagens')
