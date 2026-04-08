@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3">
             {{ csrf_field() }}
-            <label  class="form-label">Serviço</label>
+            <label  class="form-label">Serviço <a href="{{route('servico.novo')}}" target="_new">Novo</a></label>
 
             <select required name="servico" class="form-control " id="pesquisa-servico">
 
