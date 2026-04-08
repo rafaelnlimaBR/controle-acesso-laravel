@@ -45,6 +45,7 @@ class ContratoController extends Controller
                 PesquisarPorVeiculo(\request()->has('placa')?\request()->input('placa'):"",)
                 ->PesquisarPorCliente(request('cliente'))
                 ->PesquisarPorData(request('data'))
+                ->PesquisarPorId(\request()->input('id'))
                 ->orderBy('data_inicio','desc')
                 ->paginate(15)
                 ->withQueryString(),

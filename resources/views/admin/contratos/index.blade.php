@@ -10,6 +10,10 @@
             <div class="card-body">
                 <form  action="{{route('contrato.index')}}">
                     <div class="row g-3">
+                        <div class="col-md-1">
+                            <label  class="form-label">Id<span class="sr-only"> </span></label>
+                            <input autocomplete="off" type="text" class="form-control" name="id"  value="{{request()->has('id')?request()->get('id'):""}}">
+                        </div>
                         <div class="col-md-2">
                             <label  class="form-label">Nome Cliente / Número Telefone<span class="sr-only"> </span></label>
                             <input autocomplete="off" type="text" class="form-control" name="cliente"  value="{{request()->has('cliente')?request()->get('cliente'):""}}">

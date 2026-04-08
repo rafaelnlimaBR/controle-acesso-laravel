@@ -12,6 +12,8 @@ class Contrato extends Model
 {
     protected $table = 'contratos';
 
+    protected $fillable = ['id'];
+
     public function cliente()
     {
         return $this->belongsTo('App\Models\User','cliente_id');
@@ -43,6 +45,13 @@ class Contrato extends Model
         return $this->belongsToMany('App\Models\Status','historicos','contrato_id','status_id')->withPivot('descricao','data','autor_id','id')->withTimestamps();
     }
 
+    public function scopePesquisarPorId($query, $id = null)
+    {
+        if($id != null){
+            return $query->where('id','like', '%'.$id.'%');
+        }
+       return $query;
+    }
     public function scopePesquisarPorVeiculo($query, $placa)
     {
         if($placa == null){

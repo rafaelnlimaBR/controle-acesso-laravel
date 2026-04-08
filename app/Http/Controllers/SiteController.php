@@ -203,9 +203,9 @@ class SiteController extends Controller
 
             }
 
-            /*$os_numero = $contrato->id;
+            $os_numero = $contrato->id;
             $cliente = $contrato->cliente->name;
-            $aparelho = $contrato->veiculo->placa.' - '.$contrato->veiculo->modelo->nome;
+
             $defeito = $r->input('descricao');
             $data_entrega = Carbon::now()->format('d/m/Y');
 
@@ -214,7 +214,9 @@ class SiteController extends Controller
             $mensagem = "🛠️ *SOLICITAÇÃO DE ORÇAMENTO* 🛠️\n\n";
             $mensagem .= "📌 *Número da O.S.:* ```{$os_numero}```\n";
             $mensagem .= "👤 *Cliente:* {$cliente}\n";
+            $mensagem .= "📅 *Data:* {$data_entrega}\n\n";
             if ($contrato->veiculo != null){
+                $aparelho = $contrato->veiculo->placa.' - '.$contrato->veiculo->modelo->nome;
                 $mensagem .= "📱 *Veículo:* {$aparelho}\n";
             }
 
@@ -222,10 +224,10 @@ class SiteController extends Controller
             $mensagem .= "📝 *Defeito Relatado:*\n";
             $mensagem .= "_{$defeito}_\n\n";
 //            $mensagem .= "💰 *Valor Total:* *{$valor}*\n";
-            $mensagem .= "📅 *Previsão de Entrega:* {$data_entrega}\n\n";
-            $mensagem .= "✅ _Para aprovar o orçamento, responda esta mensagem._";
+
+//            $mensagem .= "✅ _Para aprovar o orçamento, responda esta mensagem._";
             $zap    =   new Whatsapp();
-            $zap->enviarMensagem($mensagem,'85986607785','+55');*/
+            $zap->enviarMensagem($mensagem,$this->conf->whatsapp,'+55');
             return redirect()->back()->with('alerta',['tipo'=>'success','icon'=>'','texto'=>"Cadastrado com sucesso!."]);
 
 
