@@ -137,7 +137,7 @@ class ContratoController extends Controller
         try{
             $dados  = [
                 'titulo_pagina'    =>  'Tecvel - Editar Contrato',
-                'titulo'            =>  'Editar Contrato - '.$historico->status->nome,
+                'titulo'            =>  '#'.$contrato->id.' - Editar Contrato - '.$historico->status->nome,
                 'titulo_card'       =>  'Dados do Contrato',
                 'contrato'           =>  $contrato,
                 'historico_selecionado'   =>  $historico,
